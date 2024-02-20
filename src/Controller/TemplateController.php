@@ -11,14 +11,21 @@ class TemplateController extends AbstractController
     #[Route('/front', name: 'app_front')]
     public function indexFront(): Response
     {
-        return $this->render('baseFront.html.twig', [
+        return $this->render('home.html.twig', [
             'controller_name' => 'TemplateController',
         ]);
     }
-    #[Route('/front/profile', name: 'app_front_profile')]
-    public function profile(): Response
+    #[Route('/frontabout', name: 'app_front_about')]
+    public function indexFrontabout(): Response
     {
-        return $this->render('profile.html.twig', [
+        return $this->render('about.html.twig', [
+            'controller_name' => 'TemplateController',
+        ]);
+    }
+    #[Route('/frontcontact', name: 'app_front_contact')]
+    public function indexFrontcontact(): Response
+    {
+        return $this->render('contact.html.twig', [
             'controller_name' => 'TemplateController',
         ]);
     }
