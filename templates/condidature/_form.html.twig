@@ -1,0 +1,70 @@
+<div class="card-body card-block">
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'attr':{'class':'form-horizontal'}}) }}
+    
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.nom_c,"Nom condidat :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.nom_c,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.nom_c) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.nom_c) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.email_c,"Email condidat :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.email_c,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.email_c) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.email_c) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.cv_c,"CV condidat :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.cv_c,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.cv_c) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.cv_c) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.lettre_mo,"Lettre motivation :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.lettre_mo,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.lettre_mo) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.lettre_mo) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+      <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.offer,"Offer :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.offer,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.offer) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.offer) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div align="center" class="card-footer">
+        <button class="btn btn-outline-success btn-sm">{{ button_label|default('Postulate') }}</button>
+       
+    </div>
+{{ form_end(form) }}
+</div>
+

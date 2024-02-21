@@ -1,0 +1,39 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Show Condidature</title>{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Condidature</h1>
+        {% set img = condidature.cvC %}
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Nom de condidat </th>
+                    <td>{{condidature.nomC }}</td>
+                </tr>
+                <tr>
+                    <th>Email de condidat</th>
+                    <td>{{ condidature.emailC }}</td>
+                </tr>
+                <tr>
+                    <th>La lettre de motivation</th>
+                    <td>{{ condidature.lettreMo }}</td>
+                </tr>
+                <tr>
+                    <th>CV de condidat</th>
+                    <td><img style="width:150px;height:150px;" src="{{ asset(img) }}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div align="center">
+            <a href="{{ path('app_condidature_index') }}" class="btn btn-secondary btn-sm" style="margin:2px;">Back to List</a>
+            <a href="{{ path('app_condidature_edit', {'id': condidature.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit</a>
+            <div style="margin-right:47px;margin-top:3px;">
+                {{ include('condidature/_delete_form.html.twig') }}
+            </div>
+        </div>
+</div>
+{% endblock %}
+

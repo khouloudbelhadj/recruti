@@ -1,0 +1,93 @@
+<div class="card-body card-block">
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'attr':{'class':'form-horizontal'}}) }}
+    
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.titre_o,"Titre :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.titre_o,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.titre_o) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.titre_o) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.description_o,"Description :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.description_o,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.description_o) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.description_o) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.type_o,"Type :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.type_o,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.type_o) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.type_o) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.localisation_o,"Localisation :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.localisation_o,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.localisation_o) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.localisation_o) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.date_o,"Date :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.date_o,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.date_o) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.date_o) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.dure_o,"Duree :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.dure_o,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.dure_o) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.dure_o) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.salarie_o,"Salaire :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.salarie_o,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.salarie_o) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.salarie_o) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div align="center" class="card-footer">
+        <button class="btn btn-outline-success btn-sm">{{ button_label|default('Add') }}</button>
+        
+    </div>
+{{ form_end(form) }}
+</div>

@@ -1,0 +1,56 @@
+    {% extends 'basefront.html.twig' %}
+{% block title %}<title>Liste des Offres</title>{% endblock %}
+
+{% block body %}
+        <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Offers</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Offer List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% for offer in offers %}
+        <div class="tab-content">
+                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <div class="text-start ps-4">
+                                        
+                                            <h5 class="mb-3">{{ offer.titreO }}</h5>
+                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ offer.localisationO }}</span>
+                                            <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{ offer.dureO }}</span>
+                                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>{{ offer.salarieO }} DT</span>
+                                            
+                                            <span class="text-truncate me-0">
+                                                    <img src="{{ asset('FrontOffice/img/list.png') }}" alt="Icone personnalisée" class="icon-img me-2"style="width: 18px; height: auto;margin-left:20px;">{{ offer.typeO }}</span>
+                                            <br>
+                                            </br>
+                                            <span class="text-truncate me-0">
+                                                    <img src="{{ asset('FrontOffice/img/book.png') }}" alt="Icone personnalisée" class="icon-img me-2"style="width: 17px; height: auto;">{{ offer.descriptionO }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            
+                                            <a class="btn btn-primary" href="{{ path('app_condidature_new_front') }}">Postulate</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{ offer.dateO ? offer.dateO|date('Y-m-d') : '' }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+    {% endfor %}
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Create new Condidature</title>{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin-left:40px;margin-top:25px;margin-right:40px;">
+        <div class="card-header" align="center">
+            <strong>Ajouter condidature</strong> 
+        </div>
+            {{ include('condidature/_form.html.twig') }}
+            <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+                <a href="{{ path('app_condidature_index') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;"></a>
+            </button>
+    </div>
+{% endblock %}
