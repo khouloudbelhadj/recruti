@@ -1,0 +1,202 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}<title> Libraries</title>{% endblock %}
+
+{% block body %}
+
+        <!-- Header End -->
+        <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Libraries Listing</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Libraries </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- Header End -->
+
+
+        <!-- Libraries Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Libraries Listing</h1>
+                <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/law_library.png') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Law Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Legal Studies</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a href="{{ path('app_ressource_show_front_biblio') }}"class="btn btn-outline-danger float-end"style="margin-block-end: 20px; background-color:#a90909; color:white;;" >Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 15 Jan, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/business_library.png') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Business Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Business and Management</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 17 Fev, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/Art_Library.jpg') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Art Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Art History</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 01 Jan, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/Engineering_Library.jpg') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Engineering Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Engineering </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 06 Fev, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/Science_Library.png') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Science Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Natural Sciences</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 08 Fev, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/Music_Library.png') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Music Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Music and performing arts</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 12 Jan, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/History_Library.jpg') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">History Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : History</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 01 Fev, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/Design_Library.jpg') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Design Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Design and Visual Communication</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 30 Jan, 2024</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset('FrontOffice/img/Medical_library.jpg') }}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">Health Library</h5>
+                                            <span class="text-truncate me-3"><i class=""></i>Field : Healthcare and Medicine</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="{{ path('app_ressource_show_front_biblio') }}">Find Resources</a>
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Creation Date : 20 Jan, 2024</small>
+                                    </div>
+                                </div>
+                            </div>                                                                                                                                                                                                    
+
+                            <a class="btn btn-primary py-3 px-5" href="">Browse More Libraries</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Libraries End -->
+
+
+{% endblock %}

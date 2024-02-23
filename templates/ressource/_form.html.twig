@@ -1,0 +1,81 @@
+<div class="card-body card-block">
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'attr':{'class':'form-horizontal'}}) }}
+    
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.titre_b,"Title :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.titre_b,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.titre_b) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.titre_b) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.type_b,"Type :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.type_b,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.type_b) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.type_b) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br> 
+
+<div class="row form-group">
+    <div class="col col-md-3">
+        {{ form_label(form.date_publica_b, "Date Publication :") }}
+    </div>
+    <div class="col-12 col-md-9">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                {{ form_widget(form.date_publica_b.day) }}
+                {{ form_widget(form.date_publica_b.month) }}
+                {{ form_widget(form.date_publica_b.year) }}
+            </div>
+        </div>
+        {% if form_errors(form.date_publica_b) is not empty %}
+            <small class="form-text text-muted">{{ form_errors(form.date_publica_b) }}</small>
+        {% endif %}
+    </div>
+</div>
+
+
+    <br>
+
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.categorie_resso_b,"Field :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.categorie_resso_b,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.categorie_resso_b) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.categorie_resso_b) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+
+    <div class="row form-group">
+        <div class="col col-md-3">
+           {{ form_label(form.biblio, "Library:") }}
+        </div>
+     <div class="col-12 col-md-9">
+        {{ form_widget(form.biblio, {'attr': {'class': 'form-control'}}) }}
+        {% if form_errors(form.biblio) is not empty %}
+            <small class="form-text text-muted">{{ form_errors(form.biblio) }}</small>
+        {% endif %}
+     </div>
+    <br><br><br><br>
+    <div align="center" class="">
+        <button class="btn btn-outline-secondary btn-sm" style="margin:2px;">{{ button_label|default('Add Resource') }}</button>
+      
+    </div>
+
+{{ form_end(form) }}
+</div>    
