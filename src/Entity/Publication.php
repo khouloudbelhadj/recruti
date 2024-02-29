@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\PublicationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Media;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
+
 class Publication
 {
     #[ORM\Id]
@@ -26,7 +29,7 @@ class Publication
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user_id = null;
 
-    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'publication')]
+    #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'publication',orphanRemoval:true, cascade: ["persist"])]
     private Collection $media;
 
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'publication')]
@@ -103,7 +106,7 @@ class Publication
 
     public function removeMedium(Media $medium): static
     {
-        if ($this->media->removeElement($medium)) {
+        if ($this->medium->removeElement($medium)) {
             // set the owning side to null (unless already changed)
             if ($medium->getPublication() === $this) {
                 $medium->setPublication(null);

@@ -15,6 +15,11 @@ class Like
     #[ORM\Column]
     private ?int $id = null;
 
+    private ?int $userID = null;
+
+    private ?int $publicationID = null;
+
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_creationLike = null;
 
@@ -51,6 +56,20 @@ class Like
     public function setPublication(?Publication $publication): static
     {
         $this->publication = $publication;
+
+        return $this;
+    }
+
+    public function setPublicationID(?int $publication): static
+    {
+        $this->publicationID = $publication;
+
+        return $this;
+    }
+
+    public function setUserID(?int $userID): static
+    {
+        $this->userID = $userID;
 
         return $this;
     }

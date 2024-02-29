@@ -1,0 +1,106 @@
+    <style>
+/* CSS pour le bouton de suppression d'image */
+.delete-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Afficher le bouton de suppression au survol de l'image */
+.position-relative:hover .delete-image-btn {
+    opacity: 1;
+}
+</style>  
+
+{% set i = 0 %}
+
+{% for publication in publications|reverse %}
+
+    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">{{ publication.dateCreationpub ? publication.dateCreationpub|date('Y-m-d H:i:s') : '' }}</span>
+        
+      
+        <!-- Boîte modale -->
+         <div class="modal fade" id="publicationModal{{ publication.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ publication.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel{{ publication.id }}">Modifier la publication</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                   
+                           <!-- Formulaire pour modifier le contenu de la publication --> 
+                             <div class="modal-body">
+                 <form action="{{ path('app_publication_edit', {id: publication.id}) }}" method="post" id="editPublicationForm{{ publication.id }}">
+                        {{ form(forms[loop.index0]) }}
+                  
+                </form> 
+                 {% if publication.media is not empty %}
+                    {% for media in publication.media %}
+                    <div class="position-relative">
+    <img src="{{ vich_uploader_asset(media, 'file') }}" alt="Image associée à la publication" class="img-fluid">
+    <form method="post" action="{{ path('app_media_delete', {'id': media.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+        <button type="submit" class="btn btn-danger delete-image-btn" data-media-id="{{ media.id }}">X</button>
+    </form>
+</div>
+                    {% endfor %}
+                
+                {% endif %}
+   
+                        <!-- Formulaire pour modifier le contenu de la publication --> 
+                        {# {{ form_start(forms[loop.index0]) }}
+                        {{ form_row(forms[loop.index0].contenu, {'attr': {'class': 'form-control'}}) }}
+                        <hr> <!-- Ajoutez une ligne de séparation --> #}
+                    </div>  
+                    <div class="modal-footer">
+                     <button type="button" class="btn btn-primary" id="addImageBtn">Ajouter une image</button>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                   
+                       {# <button type="submit" class="btn btn-primary">Enregistrer</button> #}
+                       {# {{ form_end(forms[loop.index0]) }} #}
+                           {{ include('publication/_delete_form.html.twig') }}
+                        
+                    </div>
+            
+                 
+                </div>
+            </div>
+        </div> 
+
+        <h4>John Doe</h4><br>
+          <!-- Bouton "Éditer" -->
+          <div class="text-right">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#publicationModal{{ publication.id }}">Éditer</button>
+          </div>
+        <hr class="w3-clear">
+        <p>{{ publication.contenu }}</p>
+        <div class="w3-row-padding" style="margin:0 -16px">
+             
+             <!-- Affichage des images -->
+           
+            {% for media in publication.media %}
+                {% if media.chemin %}
+                   
+                        <img src="{{ vich_uploader_asset(media, 'file') }}" style="width:100%" alt="Image" class="w3-margin-bottom">
+                   
+                {% endif %}
+            {% endfor %}
+        
+        </div>
+        {# <button type="button" class="w3-button colrouge2-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> {{pubLikes[i]}} <a href="{{ path('app_like_new', {'idP': publication.id , 'idU': 1 }) }}">Like</a></button>  #}
+        <button type="button" class="w3-button colrouge2-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
+    </div>
+    {% set i = i + 1 %}
+{% endfor %} 
+

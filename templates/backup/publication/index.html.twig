@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<title>Publication index</title>
+
+{% block body %}
+
+
+ 
+{% for publication in publications|reverse %}
+    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">{{ publication.dateCreationpub ? publication.dateCreationpub|date('Y-m-d H:i:s') : '' }}</span>
+        
+        <!-- Bouton "Éditer" -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#publicationModal{{ publication.id }}">Éditer</button>
+
+        <!-- Boîte modale -->
+        <div class="modal fade" id="publicationModal{{ publication.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ publication.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel{{ publication.id }}">Modifier la publication</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formulaire pour modifier le contenu de la publication -->
+
+                        <form id="editPublicationForm{{ publication.id }}" action="{{ path('app_publication_edit', {'id': publication.id}) }}" method="post">
+                            <div class="form-group">
+                                <label for="publicationContent{{ publication.id }}">Contenu de la publication</label>
+                                <textarea class="form-control" id="publicationContent{{ publication.id }}" name="publicationContent" rows="3">{{ publication.contenu }}</textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary" form="editPublicationForm{{ publication.id }}">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4>John Doe</h4><br>
+        <hr class="w3-clear">
+        <p>{{ publication.contenu }}</p>
+        <div class="w3-row-padding" style="margin:0 -16px">
+            {# <div class="w3-half">
+                <img src="/w3images/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
+            </div>
+            <div class="w3-half">
+                <img src="/w3images/nature.jpg" style="width:100%" alt="Nature" class="w3-margin-bottom">
+            </div>#}
+        </div>
+        <button type="button" class="w3-button colrouge2-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
+        <button type="button" class="w3-button colrouge2-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
+    </div>
+{% endfor %}
+
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Contenu</th>
+                <th>Date_creationpub</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+
+       !--
+     {% for publication in publications %} 
+            <tr>
+                <td>{{ publication.id }}</td>
+                <td>{{ publication.contenu }}</td>
+                <td>{{ publication.dateCreationpub ? publication.dateCreationpub|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_publication_show', {'id': publication.id}) }}">show</a>
+                    <a href="{{ path('app_publication_edit', {'id': publication.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}--!
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_publication_new') }}">Create new</a>
+{% endblock %}

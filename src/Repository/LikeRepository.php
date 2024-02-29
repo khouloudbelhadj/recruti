@@ -21,6 +21,16 @@ class LikeRepository extends ServiceEntityRepository
         parent::__construct($registry, Like::class);
     }
 
+    public function getCountByPublicationId($pubID): int
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb->select($qb->expr()->count('e.id'));
+        $qb->andWhere('e.publication = :pubID');
+        $qb->setParameter('pubID', $pubID);
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Like[] Returns an array of Like objects
 //     */

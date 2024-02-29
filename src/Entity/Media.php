@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\MediaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
+#[Vich\Uploadable]
 class Media
 {
     #[ORM\Id]
@@ -18,6 +21,10 @@ class Media
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
+
+    #[Vich\UploadableField(mapping: 'media_file', fileNameProperty: 'chemin')]
+    private ?File $file = null; 
+
 
     #[ORM\ManyToOne(inversedBy: 'media')]
     #[ORM\JoinColumn(nullable: false)]
@@ -33,7 +40,7 @@ class Media
         return $this->chemin;
     }
 
-    public function setChemin(string $chemin): static
+    public function setChemin(?string $chemin): static
     {
         $this->chemin = $chemin;
 
@@ -48,6 +55,17 @@ class Media
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+    public function getFile(): ?File // Ajoutez le getter pour le champ 'file'
+    {
+        return $this->file;
+    }
+
+    public function setFile(?File $file): static // Ajoutez le setter pour le champ 'file'
+    {
+        $this->file = $file;
 
         return $this;
     }
