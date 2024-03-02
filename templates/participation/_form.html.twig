@@ -1,0 +1,70 @@
+<div class="card-body card-block">
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'attr':{'class':'form-horizontal'}}) }}
+    
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.nom_participant,"Name_participant :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.nom_participant,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.nom_participant) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.nom_participant) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.role,"Role :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.role,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.role) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.role) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.statut,"Status :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.statut,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.statut) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.statut) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.feedback ,"Feedback :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.feedback ,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.feedback ) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.feedback ) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.event,"Event name :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.event,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.event) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.event) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <div align="center" class="card-footer">
+        <button class="btn btn-outline-success btn-sm">{{ button_label|default('Add') }}</button>
+        
+    </div>
+{{ form_end(form) }}
+</div>

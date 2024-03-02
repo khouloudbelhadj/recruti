@@ -1,0 +1,30 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}<title>New Event</title>{% endblock %}
+
+{% block body %}
+
+    <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Add Event</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Paticipations</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    <div class="card" style="margin-left:40px;margin-top:25px;margin-right:40px;">
+        <div class="card-header" align="center">
+            <strong>Add Event</strong> 
+        </div>
+
+        {{ include('event/_form.html.twig') }}
+        <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+                <a href="{{ path('app_event_index_front') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;"></a>
+        </button>
+    </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+
+
+{% extends 'basefront.html.twig' %}
+{% block stylesheetsP %}
+    <link href="{{ asset('FrontOffice/css/participationfront.css') }}" rel="stylesheet">
+{% endblock %}
+{% block jsparticipation %}
+<script src="{{ asset('FrontOffice/js/participation.js') }}"></script>
+{% endblock %}
+
+{% block title %}<title>Participation index</title>{% endblock %}
+
+{% block body %}
+
+    <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">List Of Participations</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Events</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    <div class="container mt-4">
+        <h1 class="mb-4">List Of Participations</h1>
+        <a href="{{ path('app_participation_new_front') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
+
+
+            {% for participation in participations %}
+                <a href="{{ path('app_participation_show_front', {'id': participation.id}) }}" >
+                <div class="slide-container">
+                    <section class="demo">
+                        <dl class="list maki">
+                            <dt>{{ participation.nomParticipant }}</dt>
+                            <dd>{{ participation.role }}</dd>
+                            <dd>{{ participation.statut }}</dd>
+                            <dd>{{ participation.event }}</dd>
+                            <dd>{{ participation.feedback }}</dd>
+
+                        </dl>
+                    </section>
+                </div> 
+                </a>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+
+    </div>
+{% endblock %}
+

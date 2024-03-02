@@ -1,0 +1,45 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Participation index</title>{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">List of Participations</h1>
+        <a href="{{ path('app_participation_new') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
+
+
+    <table class="table table-borderless table-data3">
+                <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name_participant</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Feedback</th>
+                <th scope="col">Name Event</th>
+                <th scope="col">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participation in participations %}
+            <tr>
+                <td>{{ participation.id }}</td>
+                <td>{{ participation.nomParticipant }}</td>
+                <td>{{ participation.role }}</td>
+                <td>{{ participation.statut }}</td>
+                <td>{{ participation.feedback }}</td>
+                <td>{{ participation.event }}</td>
+                <td>
+                    <a href="{{ path('app_participation_show', {'id': participation.id}) }}" class="btn btn-outline-secondary btn-sm">show</a>
+                    <a href="{{ path('app_participation_edit', {'id': participation.id}) }}" class="btn btn-outline-danger btn-sm">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

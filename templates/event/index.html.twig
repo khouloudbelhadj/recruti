@@ -1,0 +1,52 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Event index</title>{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">List of Events</h1>
+        <a href="{{ path('app_event_new') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
+
+
+        <table class="table table-borderless table-data3">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">Place</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Theme</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for event in events %}
+                {% set img = event.imageE %}
+                <tr>
+                    <td>{{ event.id }}</td>
+                    <td>{{ event.nomE }}</td>
+                    <td>{{ event.dateE ? event.dateE|date('Y-m-d') : '' }}</td>
+                    <td>{{ event.heureE }}</td>
+                    <td>{{ event.lieuE }}</td>
+                    <td>{{ event.description }}</td>
+                    <td><img style="width:150px;height:150px;" src="{{asset(img) }}"></td>
+                    <td>{{ event.themeE }}</td>
+                    <td>{{ event.cantactE }}</td>
+                    <td>
+                        <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-outline-secondary btn-sm">show</a>
+                        <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-outline-danger btn-sm">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

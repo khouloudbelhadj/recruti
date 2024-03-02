@@ -1,0 +1,55 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}<title>Participation</title>{% endblock %}
+
+{% block body %}
+
+            <div class="container-xxl py-5 bg-dark page-header mb-5">
+                        <div class="container my-5 pt-5 pb-4">
+                            <h1 class="display-3 text-white mb-3 animated slideInDown">Paticipation Details</h1>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb text-uppercase">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                                    <li class="breadcrumb-item text-white active" aria-current="page">Events</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+    <div class="container mt-4">
+        <h1 class="mb-4">Participation</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name_participant :</th>
+                <td>{{ participation.nomParticipant }}</td>
+            </tr>
+            <tr>
+                <th>Role :</th>
+                <td>{{ participation.role }}</td>
+            </tr>
+            <tr>
+                <th>Status :</th>
+                <td>{{ participation.statut }}</td>
+            </tr>
+            <tr>
+                <th>Feedback :</th>
+                <td>{{ participation.feedback }}</td>
+            </tr>
+            <tr>
+                <th>Event name :</th>
+                <td>{{ participation.event }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div align="center">
+            <a href="{{ path('app_participation_edit_front', {'id': participation.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit</a>
+            <div style="margin-right:47px;margin-top:3px;">
+                {{ include('participation/_delete_formfront.html.twig') }}
+            </div>
+        </div>
+        <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+                <a href="{{ path('app_participation_index_front') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;"></a>
+        </button>
+{% endblock %}

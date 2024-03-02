@@ -21,28 +21,38 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-//    /**
-//     * @return Event[] Returns an array of Event objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Recherche les événements en fonction du terme de recherche.
+     *
+     * @param string $searchTerm Le terme de recherche
+     *
+     * @return Event[] Liste des événements correspondant au terme de recherche
+     */
+    public function findBySearchTermAndCriteria(string $searchTerm, string $criteria): array
+    {
+        $qb = $this->createQueryBuilder('e');
 
-//    public function findOneBySomeField($value): ?Event
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if ($criteria === 'nom_e') {
+            $qb->where('e.nom_e LIKE :searchTerm');
+        } elseif ($criteria === 'theme_e') {
+            $qb->where('e.theme_e LIKE :searchTerm');
+        } else {
+            throw new \InvalidArgumentException('Invalid search criteria.');
+        }
+
+        return $qb
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByCombinedSearch(string $nameSearch, string $themeSearch): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.nom_e LIKE :nameSearch')
+            ->andWhere('e.theme_e LIKE :themeSearch')
+            ->setParameter('nameSearch', '%' . $nameSearch . '%')
+            ->setParameter('themeSearch', '%' . $themeSearch . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }

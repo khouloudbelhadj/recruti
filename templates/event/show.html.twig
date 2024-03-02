@@ -1,0 +1,56 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Event</title>{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Event</h1>
+        {% set img = event.imageE %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Title :</th>
+                <td>{{ event.nomE }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ event.dateE ? event.dateE|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Start Time</th>
+                <td>{{ event.heureE }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ event.lieuE }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ event.description }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td><img style="width:150px;height:150px;" src="{{ asset(img) }}"></td>
+            </tr>
+            <tr>
+                <th>Theme</th>
+                <td>{{ event.themeE }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ event.cantactE }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+   <div align="center">
+            <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit</a>
+            <div style="margin-right:47px;margin-top:3px;">
+                {{ include('event/_delete_form.html.twig') }}
+            </div>
+        </div>
+            <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+                <a href="{{ path('app_event_index') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;"></a>
+        </button>
+{% endblock %}

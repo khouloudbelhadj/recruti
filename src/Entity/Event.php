@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -16,27 +18,47 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message:"Please enter the event title.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "The maximum length allowed is {{50}} characters."
+    )]
     #[ORM\Column(length: 255)]
     private ?string $nom_e = null;
 
+    #[Assert\NotBlank(message:"Please enter the event date.")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_e = null;
 
+    #[Assert\NotBlank(message:"Please enter the time of the event")]
+    #[Assert\Regex(
+        pattern: "/^([01]\d|2[0-3]):[0-5]\d$/",
+        message: "Please enter a valid time in HH:mm format."
+    )]
     #[ORM\Column(length: 255)]
     private ?string $heure_e = null;
 
+    #[Assert\NotBlank(message:"Please enter the location of the event.")]
     #[ORM\Column(length: 255)]
     private ?string $lieu_e = null;
 
+    #[Assert\NotBlank(message:"Please enter the event description.")]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[Assert\NotBlank(message:"Please choose an image for the event.")]
     #[ORM\Column(length: 255)]
     private ?string $image_e = null;
 
+    #[Assert\NotBlank(message:"Please enter the theme of the event.")]
     #[ORM\Column(length: 255)]
     private ?string $theme_e = null;
 
+    #[Assert\NotBlank(message:"Please enter the event contact.")]
+    #[Assert\Regex(
+        pattern: "/^(\d{8}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/",
+        message: "Please enter a valid phone number (8 digits) or valid email address."
+    )]
     #[ORM\Column(length: 255)]
     private ?string $cantact_e = null;
 
@@ -177,5 +199,9 @@ class Event
         }
 
         return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->nom_e; 
     }
 }

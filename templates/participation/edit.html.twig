@@ -1,0 +1,20 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Edit Participation</title>{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin-left:40px;margin-top:25px;margin-right:40px;">
+        <div class="card-header" align="center">
+            <strong>Update</strong> Participation
+        </div>
+
+    {{ include('participation/_form.html.twig', {'button_label': 'Update'}) }}
+
+            <div style="margin-left:400px; margin-top:-17px;">
+                {{ include('participation/_delete_form.html.twig') }}
+            </div>
+            <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+                    <a href="{{ path('app_participation_index') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;"></a>
+                </button>
+        </div>
+{% endblock %}

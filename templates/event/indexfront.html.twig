@@ -1,0 +1,76 @@
+
+{% extends 'basefront.html.twig' %}
+{% block title %}<title>List Of Events</title>{% endblock %}
+
+{% block body %}
+        <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">List Of Events</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Paticipations</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="container mt-4">
+            <h1 class="mb-4">List Of Events</h1>
+            <form method="get" action="{{ path('app_event_index_front') }}" class="mb-3">
+                <div class="input-group">
+                    <input type="text" name="nameSearch" class="form-control" placeholder="Search by Name...">
+                    <select name="themeSearch" class="form-control">
+                        <option value="">Select Theme</option>
+                        <option value="Informatique">Informatique</option>
+                        <option value="Santé">Santé</option>
+                        <option value="Genie Civil">Genie Civil</option>
+                        <option value="Electromecanique">Electromecanique</option>
+                    </select>
+                    <input type="text" name="dateSearch" class="form-control" placeholder="Search by Date...">
+                    <input type="text" name="locationSearch" class="form-control" placeholder="Search by Location...">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+            <a href="{{ path('app_event_new_front') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
+                    {% for event in events %}
+                    {% set img = event.imageE %}
+                    <a href="{{ path('app_event_show_front', {'id': event.id}) }}">
+                    <div class="slide-container">
+                        <div class="wrapper">
+                            <div class="clash-card barbarian">
+                            <img style="width:100%;height:100%;border-radius: 14px ;" src="{{asset(img) }}">
+                            <div class="clash-card__level clash-card__level--barbarian">{{ event.themeE }}</div>
+                            <div class="clash-card__unit-name">{{ event.nomE }}</div>
+                            <div class="clash-card__unit-description">{{ event.description }}
+                            </div>
+
+                            <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+                                <div class="one-third">
+                                <div class="stat-value">Date</div>
+                                <div class="stat">{{ event.dateE ? event.dateE|date('Y-m-d') : '' }}</div>
+                                </div>
+
+                                <div class="one-third">
+                                <div class="stat-value">Lieu</div>
+                                <div class="stat">{{ event.lieuE }}</div>
+                                </div>
+
+                                <div class="one-third no-border">
+                                <div class="stat-value">Contact</div>
+                                <div class="stat">{{ event.cantactE }}</div>
+                                </div>
+
+                            </div>
+
+                            </div> <!-- end clash-card barbarian-->
+                        </div> <!-- end wrapper -->
+                
+            </div> <!-- end container -->
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+            {% endfor %}
+{% endblock %} 

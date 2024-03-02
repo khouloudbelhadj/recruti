@@ -3,30 +3,40 @@
 namespace App\Entity;
 
 use App\Repository\ParticipationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+#[UniqueEntity(fields: ['nom_participant'], message: 'This participant name is already in use. Please choose another one.')]
 #[ORM\Entity(repositoryClass: ParticipationRepository::class)]
 class Participation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id = null ;
 
+    #[Assert\NotBlank(message:"Please choose your role")]
     #[ORM\Column(length: 255)]
     private ?string $role = null;
 
+    #[Assert\NotBlank(message:"Please choose the status of your participation.")]
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
+    #[Assert\NotBlank(message:"Please enter the feedback.")]
     #[ORM\Column(length: 255)]
     private ?string $feedback = null;
 
+    #[Assert\NotBlank(message:"Please enter your name.")]
     #[ORM\Column(length: 255)]
     private ?string $nom_participant = null;
 
     #[ORM\ManyToOne(inversedBy: 'participations')]
-    private ?event $event = null;
+    private ?Event $event = null;
 
     public function getId(): ?int
     {

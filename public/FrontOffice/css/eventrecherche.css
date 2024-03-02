@@ -1,0 +1,19 @@
+/* styles.css */
+
+/* Ajoutez vos styles personnalisés ici */
+.form-container {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+}
+
+.form-control {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.btn {
+    cursor: pointer;
+}

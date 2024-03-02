@@ -1,0 +1,104 @@
+<div class="card-body card-block">
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'attr':{'class':'form-horizontal'}}) }}
+    
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.nom_e,"Title :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.nom_e,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.nom_e) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.nom_e) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.description,"Description :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.description,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.description) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.description) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.theme_e,"Theme :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.theme_e,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.theme_e) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.theme_e) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.lieu_e,"Place :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.lieu_e,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.lieu_e) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.lieu_e) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.date_e,"Date :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.date_e,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.date_e) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.date_e) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.heure_e,"Start Time :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.heure_e,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.heure_e) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.heure_e) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.cantact_e,"Contact :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.cantact_e,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.cantact_e) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.cantact_e) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.image_e,"Picture :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.image_e,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.image_e) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.image_e) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div align="center" class="card-footer">
+        <button class="btn btn-outline-success btn-sm">{{ button_label|default('Add') }}</button>
+        
+    </div>
+{{ form_end(form) }}
+</div>

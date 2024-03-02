@@ -1,0 +1,70 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}<title>Event</title>{% endblock %}
+
+{% block body %}
+
+    <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Event Detail </h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Paticipations</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Event</h1>
+        {% set img = event.imageE %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Picture</th>
+                <td><img style="width:150px;height:150px;" src="{{ asset(img) }}"></td>
+            </tr>
+            <tr>
+                <th>Title :</th>
+                <td>{{ event.nomE }}</td>
+            </tr>
+            <tr>
+                <th>Theme</th>
+                <td>{{ event.themeE }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ event.dateE ? event.dateE|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Start Time</th>
+                <td>{{ event.heureE }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ event.lieuE }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ event.description }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ event.cantactE }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div align="center">
+            <a href="{{ path('app_event_edit_front', {'id': event.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit</a>
+            <div style="margin-right:47px;margin-top:3px;">
+                {{ include('event/_delete_formfront.html.twig') }}
+            </div>
+        </div>
+           <button class="btn btn-sm" style="background-color: white; margin-right:auto;" > 
+                <a href="{{ path('app_event_index_front') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;"></a>
+            </button>
+{% endblock %}
