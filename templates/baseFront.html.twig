@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}Recruti{% endblock %}</title>
+    {% block title %}<title>Recruti</title>{% endblock %}
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -35,6 +35,7 @@
 
 <body>
     <div class="container-xxl bg-white p-0">
+     {% block Spinner %}
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -42,8 +43,8 @@
             </div>
         </div>
         <!-- Spinner End -->
-
-
+ {% endblock %}
+{% block navbar %}
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
             <div class="logo">
@@ -57,36 +58,182 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="{{ path('app_front') }}" class="nav-item nav-link active">Home</a>
-                    <a href="{{ path('app_front_about') }}" class="nav-item nav-link">About</a>
-                   
-                    <a href="{{ path('app_front_contact') }}" class="nav-item nav-link">Contact</a>
-                    <a href="#"  class="nav-item nav-link">Profil</a>
-                    <a href="#"  class="nav-item nav-link">Offers</a>
-                    <a href="#"  class="nav-item nav-link">Planification</a>
-                    <a href="#"  class="nav-item nav-link">Events</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Libraries</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{{ path('app_biblio_show_front_ressource') }}" class="dropdown-item">Libraries</a>
-                                <a href="{{ path('app_biblio_index_front') }}" class="dropdown-item">Libraries List </a>
-                            </div>
-                    </div>
-                    
+                    <a href="{{ path('home') }}" class="nav-item nav-link ">Home</a>
+                    <a href="{{ path('about') }}" class="nav-item nav-link">About</a>
+                    <a href="{{ path('contact') }}" class="nav-item nav-link">CONTACT</a>
+                    <a href="#" class="nav-item nav-link">PROFIL</a>
+                    <a href="#" class="nav-item nav-link">OFFERS</a>
+
+                    <a href="{{ path('app_plan') }}"  class="nav-item nav-link">Planification</a>
+                   <a href="#" class="nav-item nav-link">EVENTS</a>
+                    <a href="#" class="nav-item nav-link">Libraries</a>
                 </div>
                 <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">SIGN IN<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
         <!-- Navbar End -->
 
-
-
-{% block body %}
-
 {% endblock %}
-        
-        
+ {% block body %}{% endblock %}
+        <!-- Carousel Start -->
+        <div class="container-fluid p-0">
+            <div class="owl-carousel header-carousel position-relative">
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="{{ asset('FrontOffice/img/carousel-1.jpg') }}" alt="">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(43, 57, 64, .5);">
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-10 col-lg-8">
+                                    <h1 class="display-3 text-white animated slideInDown mb-4">YOUR FUTURE STARTS HERE WITH US</h1>
+                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">At The Heart Of Recruti, There's An Ambition: To Redefine How Professionals And Businesses Interact And Seize Opportunities In Today's Dynamic Employment Landscape.</p>
+                                    <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Event</a>
+                                    <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">library</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="{{ asset('FrontOffice/img/carousel-2.jpg') }}" alt="">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(43, 57, 64, .5);">
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-10 col-lg-8">
+                                    <h1 class="display-3 text-white animated slideInDown mb-4">YOUR FUTURE STARTS HERE WITH US</h1>
+                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">At The Heart Of Recruti, There's An Ambition: To Redefine How Professionals And Businesses Interact And Seize Opportunities In Today's Dynamic Employment Landscape.</p>
+                                    <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Event</a>
+                                    <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">library</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carousel End -->
 
+
+
+        <!-- Category Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Explore By Category</h1>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-mail-bulk text-primary mb-4"></i>
+                            <h6 class="mb-3">Marketing</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-headset text-primary mb-4"></i>
+                            <h6 class="mb-3">Customer Service</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
+                            <h6 class="mb-3">Human Resource</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-tasks text-primary mb-4"></i>
+                            <h6 class="mb-3">Project Management</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-chart-line text-primary mb-4"></i>
+                            <h6 class="mb-3">Business Development</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-hands-helping text-primary mb-4"></i>
+                            <h6 class="mb-3">Sales & Communication</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-book-reader text-primary mb-4"></i>
+                            <h6 class="mb-3">Teaching & Education</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <a class="cat-item rounded p-4" href="">
+                            <i class="fa fa-3x fa-drafting-compass text-primary mb-4"></i>
+                            <h6 class="mb-3">Design & Creative</h6>
+                            <p class="mb-0">123 Vacancy</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category End -->
+
+        <!-- Testimonial Start -->
+        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <h1 class="text-center mb-5">Our Clients Say!!!</h1>
+                <div class="owl-carousel testimonial-carousel">
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>Thanks to your site, I found the ideal position in record time, a big thank you to the whole team</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src="{{ asset('FrontOffice/img/testimonial-1.jpg') }}" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">Client Name</h5>
+                                <small>Profession</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>Your platform made my internship search incredibly simple and efficient, I'm really impressed</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src="{{ asset('FrontOffice/img/testimonial-2.jpg') }}" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">Client Name</h5>
+                                <small>Profession</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>I landed several freelance missions thanks to you, your site has become my essential tool for finding new projects</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src="{{ asset('FrontOffice/img/testimonial-3.jpg') }}" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">Client Name</h5>
+                                <small>Profession</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-item bg-light rounded p-4">
+                        <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p>Your platform made my internship search incredibly simple and efficient, I'm really impressed</p>
+                        <div class="d-flex align-items-center">
+                            <img class="img-fluid flex-shrink-0 rounded" src="{{ asset('FrontOffice/img/testimonial-4.jpg') }}" style="width: 50px; height: 50px;">
+                            <div class="ps-3">
+                                <h5 class="mb-1">Client Name</h5>
+                                <small>Profession</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
+        
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -94,8 +241,8 @@
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Quick Links</h5>
-                        <a class="btn btn-link text-white-50" href="{{ path('app_front_about') }}">About Us</a>
-                        <a class="btn btn-link text-white-50" href="{{ path('app_front_contact') }}">Contact Us</a>
+                        <a class="btn btn-link text-white-50" href="">About Us</a>
+                        <a class="btn btn-link text-white-50" href="">Contact Us</a>
                         <a class="btn btn-link text-white-50" href="">Our Services</a>
                         <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
                         <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
@@ -103,11 +250,11 @@
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Contact</h5>
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>18, rue de l'Usine - ZI Aéroport Charguia II 2035 Ariana</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+216 71 517 912</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+216 71517912</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>recruti@gmail.com</p>
                         <div class="d-flex pt-2">
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/profile.php?id=61555742926746&locale=fr_FR"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
                         </div>
@@ -124,7 +271,7 @@
                         </div>
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
-                                <a href="{{ path('app_front') }}">Home</a>
+                                <a href="">Home</a>
                                 <a href="">Cookies</a>
                                 <a href="">Help</a>
                                 <a href="">FQAs</a>

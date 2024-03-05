@@ -21,6 +21,15 @@ class RendezvousRepository extends ServiceEntityRepository
         parent::__construct($registry, Rendezvous::class);
     }
 
+    public function findByLieu($lieu)
+    {
+        return $this->createQueryBuilder('rendezvou')
+            ->andWhere('rendezvou.lieu = :val')
+            ->setParameter('val', $lieu)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 //    /**
 //     * @return Rendezvous[] Returns an array of Rendezvous objects
 //     */

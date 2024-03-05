@@ -1,0 +1,55 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}
+    <title>Create New Appointment</title>
+{% endblock %}
+
+{% block body %}
+    <div class="card" style="margin-left: 40px; margin-top: 25px; margin-right: 40px;">
+        <div class="card-header" align="center">
+            <strong>Create New Appointment</strong>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.dateRendez) }}
+                {{ form_widget(form.dateRendez, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'date'}}) }}
+                {% if form_errors(form.dateRendez) %}
+                    <div class="alert alert-danger">{{ form_errors(form.dateRendez) }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.heureRendez) }}
+                {{ form_widget(form.heureRendez, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'time'}}) }}
+                {% if form_errors(form.heureRendez) %}
+                    <div class="alert alert-danger">{{ form_errors(form.heureRendez) }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.lieu) }}
+                {{ form_widget(form.lieu, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+                {% if form_errors(form.lieu) %}
+                    <div class="alert alert-danger">{{ form_errors(form.lieu) }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.emailCondi) }}
+                {{ form_widget(form.emailCondi, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'email'}}) }}
+                {% if form_errors(form.emailCondi) %}
+                    <div class="alert alert-danger">{{ form_errors(form.emailCondi) }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.emailRepresen) }}
+                {{ form_widget(form.emailRepresen, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'email'}}) }}
+                {% if form_errors(form.emailRepresen) %}
+                    <div class="alert alert-danger">{{ form_errors(form.emailRepresen) }}</div>
+                {% endif %}
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" style="margin-bottom: 20px;">Create New Appointment</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

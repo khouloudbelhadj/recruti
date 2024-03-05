@@ -1,0 +1,11 @@
+<div class="card-body card-block">
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button type="submit">send</button>
+{{ form_end(form) }}
+
+{% for error in form.vars.errors %}
+    <div>{{ error.message }}</div>
+{% endfor %}
+

@@ -1,0 +1,31 @@
+{% extends 'baseBack.html.twig' %}
+{% block title %}<title>Calendrier</title>{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Calendrier</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Proprietaire</th>
+                    <td>{{ calendrier.proprietaire }}</td>
+                </tr>
+                <tr>
+                    <th>Liste</th>
+                    <td>{{ calendrier.liste }}</td>
+                </tr>
+                <tr>
+                    <th>Notification</th>
+                    <td>{{ calendrier.notification }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div align="center">
+            <a href="{{ path('app_calendrier_index') }}" class="btn btn-secondary btn-sm" style="margin: 2px;">Retour à la liste</a>
+           
+            </div>
+        </div>
+    </div>
+{% endblock %}

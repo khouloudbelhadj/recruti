@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RendezvousRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RendezvousRepository::class)]
 class Rendezvous
@@ -14,23 +14,30 @@ class Rendezvous
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_rendez = null;
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank(message: "La date du rendez-vous ne peut pas être vide")]
+    private ?\DateTimeInterface $dateRendez = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $heure_rendez = null;
+    #[Assert\NotBlank(message: "L'heure du rendez-vous ne peut pas être vide")]
+    private ?string $heureRendez = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le lieu du rendez-vous ne peut pas être vide")]
     private ?string $lieu = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email_condi = null;
+    #[Assert\NotBlank(message: "L'email du Condi ne peut pas être vide")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
+    private ?string $emailCondi = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email_represen = null;
+    #[Assert\NotBlank(message: "L'email du représentant ne peut pas être vide")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
+    private ?string $emailRepresen = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rendezvouses')]
-    private ?calendrier $calendrier = null;
+    #[ORM\ManyToOne(targetEntity: Calendrier::class, inversedBy: 'rendezvouses')]
+    private ?Calendrier $calendrier = null;
 
     public function getId(): ?int
     {
@@ -39,25 +46,23 @@ class Rendezvous
 
     public function getDateRendez(): ?\DateTimeInterface
     {
-        return $this->date_rendez;
+        return $this->dateRendez;
     }
 
-    public function setDateRendez(\DateTimeInterface $date_rendez): static
+    public function setDateRendez(\DateTimeInterface $dateRendez): self
     {
-        $this->date_rendez = $date_rendez;
-
+        $this->dateRendez = $dateRendez;
         return $this;
     }
 
     public function getHeureRendez(): ?string
     {
-        return $this->heure_rendez;
+        return $this->heureRendez;
     }
 
-    public function setHeureRendez(string $heure_rendez): static
+    public function setHeureRendez(string $heureRendez): self
     {
-        $this->heure_rendez = $heure_rendez;
-
+        $this->heureRendez = $heureRendez;
         return $this;
     }
 
@@ -66,46 +71,42 @@ class Rendezvous
         return $this->lieu;
     }
 
-    public function setLieu(string $lieu): static
+    public function setLieu(string $lieu): self
     {
         $this->lieu = $lieu;
-
         return $this;
     }
 
     public function getEmailCondi(): ?string
     {
-        return $this->email_condi;
+        return $this->emailCondi;
     }
 
-    public function setEmailCondi(string $email_condi): static
+    public function setEmailCondi(string $emailCondi): self
     {
-        $this->email_condi = $email_condi;
-
+        $this->emailCondi = $emailCondi;
         return $this;
     }
 
     public function getEmailRepresen(): ?string
     {
-        return $this->email_represen;
+        return $this->emailRepresen;
     }
 
-    public function setEmailRepresen(string $email_represen): static
+    public function setEmailRepresen(string $emailRepresen): self
     {
-        $this->email_represen = $email_represen;
-
+        $this->emailRepresen = $emailRepresen;
         return $this;
     }
 
-    public function getCalendrier(): ?calendrier
+    public function getCalendrier(): ?Calendrier
     {
         return $this->calendrier;
     }
 
-    public function setCalendrier(?calendrier $calendrier): static
+    public function setCalendrier(?Calendrier $calendrier): self
     {
         $this->calendrier = $calendrier;
-
         return $this;
     }
 }

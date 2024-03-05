@@ -1,0 +1,45 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Your appointment</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 200px;">Appointment date</th>
+                                    <td>{{ rendezvous.dateRendez ? rendezvous.dateRendez|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                 <tr>
+                                    <th>Appointment time</th>
+                                    <td>{{ rendezvous.heureRendez }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Place</th>
+                                    <td>{{ rendezvous.lieu }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Candidate email</th>
+                                    <td>{{ rendezvous.emailCondi }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email Company Representative</th>
+                                    <td>{{ rendezvous.emailRepresen }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer" align="center">
+                    <a href="{{ path('app_rendezvous_new') }}" class="btn btn-secondary mr-2">Back to the list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

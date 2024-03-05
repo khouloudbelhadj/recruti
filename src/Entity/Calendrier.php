@@ -6,6 +6,7 @@ use App\Repository\CalendrierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CalendrierRepository::class)]
 class Calendrier
@@ -16,12 +17,15 @@ class Calendrier
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le propriétaire ne peut pas être vide")]
     private ?string $proprietaire = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "La liste ne peut pas être vide")]
     private ?string $liste = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "La notification ne peut pas être vide")]
     private ?string $notification = null;
 
     #[ORM\OneToMany(targetEntity: Rendezvous::class, mappedBy: 'calendrier')]
@@ -42,7 +46,7 @@ class Calendrier
         return $this->proprietaire;
     }
 
-    public function setProprietaire(string $proprietaire): static
+    public function setProprietaire(string $proprietaire): self
     {
         $this->proprietaire = $proprietaire;
 
@@ -54,7 +58,7 @@ class Calendrier
         return $this->liste;
     }
 
-    public function setListe(string $liste): static
+    public function setListe(string $liste): self
     {
         $this->liste = $liste;
 
@@ -66,7 +70,7 @@ class Calendrier
         return $this->notification;
     }
 
-    public function setNotification(string $notification): static
+    public function setNotification(string $notification): self
     {
         $this->notification = $notification;
 
@@ -81,17 +85,17 @@ class Calendrier
         return $this->rendezvouses;
     }
 
-    public function addRendezvouse(Rendezvous $rendezvouse): static
+    public function addRendezvouse(Rendezvous $rendezvouse): self
     {
         if (!$this->rendezvouses->contains($rendezvouse)) {
-            $this->rendezvouses->add($rendezvouse);
+            $this->rendezvouses[] = $rendezvouse;
             $rendezvouse->setCalendrier($this);
         }
 
         return $this;
     }
 
-    public function removeRendezvouse(Rendezvous $rendezvouse): static
+    public function removeRendezvouse(Rendezvous $rendezvouse): self
     {
         if ($this->rendezvouses->removeElement($rendezvouse)) {
             // set the owning side to null (unless already changed)
@@ -101,5 +105,11 @@ class Calendrier
         }
 
         return $this;
+    }
+
+    // Add this method to provide a string representation of the entity
+    public function __toString(): string
+    {
+        return $this->proprietaire; // Adjust this according to your needs
     }
 }

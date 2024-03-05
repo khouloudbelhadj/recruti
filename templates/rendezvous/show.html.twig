@@ -1,0 +1,80 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block styles %}
+    <style>
+        /* Style pour les grands select */
+        .form-control-lg {
+            font-size: 16px; /* Taille de la police */
+            padding: 10px; /* Espacement interne */
+            border-radius: 8px; /* Bord arrondi */
+            border: 1px solid #ced4da; /* Bordure */
+        }
+
+        /* Style pour les select par défaut */
+        .form-control {
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+        }
+
+        /* Style pour les petits select */
+        .form-control-sm {
+            font-size: 12px;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <h1 class="mb-4">your appointment</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 200px;">Appointment date</th>
+                                    <td>{{ rendezvous.dateRendez ? rendezvous.dateRendez|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Appointment time</th>
+                                    <td>{{ rendezvous.heureRendez }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Place</th>
+                                    <td>
+                                        {{ rendezvous.lieu }}
+                                        <select class="form-control form-control-lg">
+                                            <option>{{ rendezvous.lieu }}</option>
+                                        </select>
+                                       
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>candidate email</th>
+                                    <td>{{ rendezvous.emailCondi }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email Company Representative</th>
+                                    <td>{{ rendezvous.emailRepresen }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer" align="center">
+                    <a href="{{ path('app_rendezvous_new') }}" class="btn btn-secondary mr-2">back to the list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
