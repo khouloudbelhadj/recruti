@@ -36,8 +36,9 @@
 }
 
 .pagination-button:hover {
-    background-color: #cc0000; /* Couleur de fond rouge légèrement plus foncée au survol */
+    background-color: #CD181F; /* Couleur de fond rouge légèrement plus foncée au survol */
 }
+
 .create-new-button {
     background-color: #ff0000; /* Couleur de fond rouge pour le bouton "Create new" */
     color: #fff; /* Couleur du texte en blanc */
@@ -96,11 +97,14 @@
             </tr>
         </thead>
         <tbody>
-         <form action="{{ path('app_rendezvous_index') }}" method="get" class="filter-form">
-       <label for="lieu">Lieu:</label>
-        <input type="text" id="lieu" name="lieu" class="filter-input">
-        <input type="submit" value="Filter" class="filter-button">
-    </form>
+        <form action="{{ path('app_rendezvous_index') }}" method="get" class="filter-form">
+    <label for="lieu">Lieu:</label>
+    <input type="text" id="lieu" name="lieu" class="filter-input">
+    <label for="emailRepresen">Email Company Representative:</label>
+    <input type="text" id="emailRepresen" name="emailRepresen" class="filter-input">
+    <input type="submit" value="Filter" class="filter-button">
+</form>
+
             {% for rendezvou in rendezvouses %}
                 <tr>
                     <td>{{ rendezvou.id }}</td>
@@ -125,7 +129,14 @@
                     <td colspan="7">No records found</td>
                 </tr>
             {% endfor %}
-        <div class="navigation">
+        
+
+        </tbody>
+    </table>
+    <div class="text-center">
+    <a href="{{ path('app_rendezvous_new') }}" class="btn btn-primary create-new-button" style="margin-bottom: 20px;">Create new</a>
+</div>
+ <div class="navigation">
             <ul class="pagination">
                 <li class="page-item">
                     {% if rendezvouses.currentPageNumber > 1 %}
@@ -143,12 +154,5 @@
                 </li>
             </ul>
         </div>
-
-        </tbody>
-    </table>
-    <div class="text-center">
-    <a href="{{ path('app_rendezvous_new') }}" class="btn btn-primary create-new-button" style="margin-bottom: 20px;">Create new</a>
-</div>
-
 </div>
 {% endblock %}

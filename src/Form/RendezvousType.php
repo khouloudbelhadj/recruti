@@ -22,7 +22,7 @@ class RendezvousType extends AbstractType
             ->add('lieu')
             ->add('emailCondi')
             ->add('emailRepresen')
-            ->add('calendrier')
+          //  ->add('calendrier')
         ;
     }
 

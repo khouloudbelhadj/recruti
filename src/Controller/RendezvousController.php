@@ -17,23 +17,38 @@ use Knp\Component\Pager\PaginatorInterface;
 class RendezvousController extends AbstractController
 {
     #[Route('/', name: 'app_rendezvous_index', methods: ['GET'])]
-    public function index(RendezvousRepository $rendezvousRepository, Request $request , PaginatorInterface $paginator): Response
-    {  $lieu = $request->query->get('lieu');
-        
-        if ($lieu) {
-            $query =$rendezvousRepository->findByLieu($lieu);
-        } else {
-            $query = $rendezvousRepository->findAll();
-        }
-        $query = $paginator->paginate(
-        $query, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            5/*limit per page*/
-        );
-        return $this->render('rendezvous/index.html.twig', [
-            'rendezvouses' =>  $query 
-        ]);
+public function index(RendezvousRepository $rendezvousRepository, Request $request, PaginatorInterface $paginator): Response
+{  
+    $lieu = $request->query->get('lieu');
+    $emailRepresen = $request->query->get('emailRepresen');
+
+    $repository = $this->getDoctrine()->getRepository(Rendezvous::class);
+    $queryBuilder = $repository->createQueryBuilder('r');
+
+    // Appliquer les filtres s'ils sont définis
+    if ($lieu) {
+        $queryBuilder->andWhere('r.lieu = :lieu')
+                     ->setParameter('lieu', $lieu);
     }
+
+    if ($emailRepresen) {
+        $queryBuilder->andWhere('r.emailRepresen = :emailRepresen')
+                     ->setParameter('emailRepresen', $emailRepresen);
+    }
+
+    // Paginer les résultats
+    $rendezvouses = $paginator->paginate(
+        $queryBuilder->getQuery(), // Query à paginer
+        $request->query->getInt('page', 1), // Numéro de la page à afficher, par défaut 1
+        6 // Nombre d'éléments par page
+    );
+
+    // Passer les rendez-vous paginés à votre modèle Twig
+    return $this->render('rendezvous/index.html.twig', [
+        'rendezvouses' => $rendezvouses,
+    ]);
+}
+
     #[Route('/rendezvous/{id}', name: 'app_rendezvous_show_detail', methods: ['GET'])]
     public function showDetail(int $id, RendezvousRepository $rendezvousRepository): Response
     {
