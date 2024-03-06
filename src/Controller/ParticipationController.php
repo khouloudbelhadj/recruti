@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/participation')]
 class ParticipationController extends AbstractController
@@ -23,10 +24,18 @@ class ParticipationController extends AbstractController
     }
 
     #[Route('/front', name: 'app_participation_index_front', methods: ['GET'])]
-    public function indexfront(ParticipationRepository $participationRepository): Response
+    public function indexfront(Request $request,ParticipationRepository $participationRepository, PaginatorInterface $paginator): Response
     {
+        $allparticipation =$participationRepository ->findAll();
+
+        $participations = $paginator->paginate(
+            $allparticipation, 
+            $request->query->getInt('page', 1), 
+            2//
+        );
+
         return $this->render('participation/indexfront.html.twig', [
-            'participations' => $participationRepository->findAll(),
+            'participations' => $participations ,
         ]);
     }
 

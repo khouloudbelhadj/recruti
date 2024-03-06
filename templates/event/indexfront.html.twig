@@ -28,8 +28,14 @@
                         <option value="Genie Civil">Genie Civil</option>
                         <option value="Electromecanique">Electromecanique</option>
                     </select>
-                    <input type="text" name="dateSearch" class="form-control" placeholder="Search by Date...">
                     <input type="text" name="locationSearch" class="form-control" placeholder="Search by Location...">
+                    <select name="sortOrder" class="form-control">
+                        <option value="">Select Order</option>
+                        <option value="asc">Ascending date</option>
+                        <option value="desc">Descending date</option>
+                        <option value="participationCountAsc">Participations (Low to High)</option>
+                        <option value="participationCountDesc">Participations (High to Low)</option>
+                    </select>
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
@@ -73,4 +79,7 @@
                     <td colspan="10">no records found</td>
                 </tr>
             {% endfor %}
+
+            
+
 {% endblock %} 

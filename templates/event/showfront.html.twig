@@ -1,5 +1,12 @@
 {% extends 'basefront.html.twig' %}
 
+{% block stylesheetsP %}
+    <link href="{{ asset('FrontOffice/css/participationfront.css') }}" rel="stylesheet">
+{% endblock %}
+{% block jsparticipation %}
+<script src="{{ asset('FrontOffice/js/participation.js') }}"></script>
+{% endblock %}
+
 {% block title %}<title>Event</title>{% endblock %}
 
 {% block body %}
@@ -55,6 +62,10 @@
                 <th>Contact</th>
                 <td>{{ event.cantactE }}</td>
             </tr>
+            <tr>
+                <th>Number of Participations</th>
+                <td>{{ event.participations.count() }}</td>
+            </tr>
         </tbody>
     </table>
 
@@ -64,7 +75,42 @@
                 {{ include('event/_delete_formfront.html.twig') }}
             </div>
         </div>
+        
            <button class="btn btn-sm" style="background-color: white; margin-right:auto;" > 
                 <a href="{{ path('app_event_index_front') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;"></a>
             </button>
+            <table class="table">
+            <tbody>
+                
+
+                 <!-- Ajout du titre "Participations for Event - {{ event.nomE }}" -->
+                <h2>Participations for Event - {{ event.nomE }}</h2>
+                <table class="table">
+            <tbody>
+                {% for participation in participations %}
+                    <a href="{{ path('app_participation_show_front', {'id': participation.id}) }}" >
+                <div class="slide-container">
+                    <section class="demo">
+                        <dl class="list maki">
+                            <dt>{{ participation.nomParticipant }}</dt>
+                            <dd>{{ participation.role }}</dd>
+                            <dd>{{ participation.statut }}</dd>
+                            <dd>{{ participation.event }}</dd>
+                            <dd>{{ participation.feedback }}</dd>
+
+                        </dl>
+                    </section>
+                </div> 
+                </a>
+                {% else %}
+                    <tr>
+                        <td colspan="2">No participations found for this event.</td>
+                    </tr>
+                {% endfor %}
+                </tr>
+                </tbody>
+        </table>
+        
+                
+           
 {% endblock %}

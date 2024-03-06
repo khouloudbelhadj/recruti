@@ -1,0 +1,27 @@
+ <!-- Ajout du titre "Participations for Event - {{ event.nomE }}" -->
+                <h2>Participations for Event - {{ event.nomE }}</h2>
+                <table class="table">
+            <tbody>
+                {% for participation in participations %}
+                    <a href="{{ path('app_participation_show_front', {'id': participation.id}) }}" >
+                <div class="slide-container">
+                    <section class="demo">
+                        <dl class="list maki">
+                            <dt>{{ participation.nomParticipant }}</dt>
+                            <dd>{{ participation.role }}</dd>
+                            <dd>{{ participation.statut }}</dd>
+                            <dd>{{ participation.event }}</dd>
+                            <dd>{{ participation.feedback }}</dd>
+
+                        </dl>
+                    </section>
+                </div> 
+                </a>
+                {% else %}
+                    <tr>
+                        <td colspan="2">No participations found for this event.</td>
+                    </tr>
+                {% endfor %}
+                </tr>
+                </tbody>
+        </table>

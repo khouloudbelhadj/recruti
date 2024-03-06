@@ -1,0 +1,73 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Statistics</title>{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Statistics</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Events</h5>
+                            <p class="card-text">{{ totalEvents }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Total Participations</h5>
+                            <p>{{ totalParticipations }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Events per Theme</h5>
+                        <ul class="list-group">
+                            {% for themeCount in themeCounts %}
+                                <li class="list-group-item">
+                                    <span class="badge bg-primary">{{ themeCount.eventCount }}</span>
+                                    {{ themeCount.themeE }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Participations per Theme</h5>
+                        <ul class="list-group">
+                            {% for participationCount in participationByTheme %}
+                                <li class="list-group-item">
+                                    <span class="badge bg-success">{{ participationCount.participationCount }}</span>
+                                    {{ participationCount.theme }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h5>Participations per Event</h5>
+            <ul class="list-group">
+                {% for event in events %}
+                    <li class="list-group-item">
+                        <span class="badge bg-info">{{ event.getParticipations().count() }}</span>
+                        {{ event.getNomE() }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

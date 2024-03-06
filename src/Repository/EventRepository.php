@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @extends ServiceEntityRepository<Event>
@@ -55,4 +57,37 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getThemeCounts(): array
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addScalarResult('themeE', 'themeE');
+        $rsm->addScalarResult('eventCount', 'eventCount');
+
+        $sql = 'SELECT theme_e AS themeE, COUNT(id) AS eventCount FROM event GROUP BY themeE';
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+
+        return $query->getResult();
+    }
+
+    public function getParticipationCountByTheme()
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('e.theme_e as theme, COUNT(p.id) as participationCount')
+            ->leftJoin('e.participations', 'p')
+            ->groupBy('e.theme_e');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getParticipationCounts()
+    {
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.participations', 'p')
+            ->select('e.id', 'e.nomE', 'COUNT(p.id) as participationCount')
+            ->groupBy('e.id')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
