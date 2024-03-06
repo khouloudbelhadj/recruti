@@ -41,7 +41,6 @@ class Rendezvous
 
     #[ORM\ManyToOne(inversedBy: 'rendezvouses')]
     #[ORM\JoinColumn(nullable: false)]
-    
     private ?Offer $offer = null;
 
 
@@ -55,7 +54,7 @@ class Rendezvous
         return $this->dateRendez;
     }
 
-    public function setDateRendez(\DateTimeInterface $dateRendez): self
+    public function setDateRendez(?\DateTimeInterface $dateRendez): self
     {
         $this->dateRendez = $dateRendez;
         return $this;
@@ -66,7 +65,7 @@ class Rendezvous
         return $this->heureRendez;
     }
 
-    public function setHeureRendez(string $heureRendez): self
+    public function setHeureRendez(?string $heureRendez): self
     {
         $this->heureRendez = $heureRendez;
         return $this;
@@ -77,7 +76,7 @@ class Rendezvous
         return $this->lieu;
     }
 
-    public function setLieu(string $lieu): self
+    public function setLieu(?string $lieu): self
     {
         $this->lieu = $lieu;
         return $this;
@@ -88,7 +87,7 @@ class Rendezvous
         return $this->emailCondi;
     }
 
-    public function setEmailCondi(string $emailCondi): self
+    public function setEmailCondi(?string $emailCondi): self
     {
         $this->emailCondi = $emailCondi;
         return $this;
@@ -99,7 +98,7 @@ class Rendezvous
         return $this->emailRepresen;
     }
 
-    public function setEmailRepresen(string $emailRepresen): self
+    public function setEmailRepresen(?string $emailRepresen): self
     {
         $this->emailRepresen = $emailRepresen;
         return $this;
@@ -116,15 +115,29 @@ class Rendezvous
         return $this;
     }
 
-    public function getManyToOne(): ?Offer
+    public function getOffer(): ?Offer
     {
-        return $this->ManyToOne;
+        return $this->offer;
     }
 
-    public function setManyToOne(?Offer $ManyToOne): static
+    public function setOffer(?Offer $offer): self
     {
-        $this->ManyToOne = $ManyToOne;
-
+        $this->offer = $offer;
         return $this;
     }
+
+    public function getCondidature(): ?Condidature
+    {
+        return $this->condidature;
+    }
+
+    public function setCondidature(?Condidature $condidature): self
+    {
+        $this->condidature = $condidature;
+        return $this;
+    }
+     /**
+     * @ORM\Column(type="string", length=255)
+     */
+   
 }

@@ -12,6 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\OfferRepository;
+
+
 
 
 
@@ -146,5 +149,17 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         return $this->redirectToRoute('app_rendezvous_index', [], Response::HTTP_SEE_OTHER);
     }
     
-
+    #[Route('/calendar/{emailRepresen}', name: 'app_rendezvous_calendar_by_email', methods: ['GET'])]
+    public function showCalendarByEmail(string $emailRepresen, RendezvousRepository $rendezvousRepository): Response
+    {
+        // Récupérer tous les rendez-vous associés à ce représentant
+        $rendezvouses = $rendezvousRepository->findBy(['emailRepresen' => $emailRepresen]);
+    
+        // Passer les rendez-vous au modèle Twig pour affichage, ainsi que l'email du représentant
+        return $this->render('rendezvous/calendar_by_email.html.twig', [
+            'rendezvouses' => $rendezvouses,
+            'emailRepresen' => $emailRepresen, // Passer l'email du représentant au template Twig
+        ]);
+    }
+    
 }

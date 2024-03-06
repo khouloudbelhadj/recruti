@@ -25,8 +25,9 @@ class Condidature
     #[ORM\Column(length: 255)]
     private ?string $lettre_mo = null;
 
-    #[ORM\ManyToOne(inversedBy: 'condidatures')]
-    private ?offer $offer = null;
+   
+
+  
 
     public function getId(): ?int
     {
@@ -89,6 +90,23 @@ class Condidature
     public function setOffer(?offer $offer): static
     {
         $this->offer = $offer;
+
+        return $this;
+    }
+
+    public function getRendezvous(): ?Rendezvous
+    {
+        return $this->rendezvous;
+    }
+
+    public function setRendezvous(Rendezvous $rendezvous): static
+    {
+        // set the owning side of the relation if necessary
+        if ($rendezvous->getRelation() !== $this) {
+            $rendezvous->setRelation($this);
+        }
+
+        $this->rendezvous = $rendezvous;
 
         return $this;
     }
