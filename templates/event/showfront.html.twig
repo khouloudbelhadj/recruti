@@ -66,8 +66,13 @@
                 <th>Number of Participations</th>
                 <td>{{ event.participations.count() }}</td>
             </tr>
+            <tr>
+                <th>Event QRcode</th>
+                <td><img id="qrCodeImage" src="data:image/png;base64,{{ qrCodeImage }}" alt="QR Code" ></td>
+            </tr>
         </tbody>
     </table>
+           
 
         <div align="center">
             <a href="{{ path('app_event_edit_front', {'id': event.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit</a>
@@ -110,6 +115,30 @@
                 </tr>
                 </tbody>
         </table>
+
+
+    
+    </div>
+     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function downloadTicket() {
+        const ticketElement = document.querySelector('.fils');
+        html2canvas(ticketElement).then(function (canvas) {
+          const imageData = canvas.toDataURL('image/png');
+          const downloadLink = document.createElement('a');
+          downloadLink.href = imageData;
+          downloadLink.download = 'ticket.png';
+          downloadLink.click();
+        });
+      }
+
+      const downloadTicketBtn = document.getElementById('downloadTicketBtn');
+      downloadTicketBtn.addEventListener('click', downloadTicket);
+    });
+  </script>
+
+
         
                 
            

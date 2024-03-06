@@ -40,7 +40,8 @@
                 </div>
             </form>
             <a href="{{ path('app_event_new_front') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
-                    {% for event in events %}
+            
+                     {% for event in pagination %}
                     {% set img = event.imageE %}
                     <a href="{{ path('app_event_show_front', {'id': event.id}) }}">
                     <div class="slide-container">
@@ -79,6 +80,11 @@
                     <td colspan="10">no records found</td>
                 </tr>
             {% endfor %}
+
+            </div>
+    <div class="pagination-item">
+                <span>{{ knp_pagination_render(pagination) }}</span>
+            </div>
 
             
 

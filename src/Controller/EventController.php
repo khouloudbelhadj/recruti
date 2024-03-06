@@ -18,11 +18,71 @@ use Pagerfanta\Pagerfanta;
 use App\Repository\ParticipationRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Knp\Component\Pager\PaginatorInterface;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+
+
 
 
 #[Route('/event')]
 class EventController extends AbstractController
 {
+    #[Route('/generateExcel', name: 'excel')]
+    public function generateeventExcel(EventRepository $eventRepository): BinaryFileResponse
+    {
+        $events = $eventRepository->findAll();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+    
+        // Define column names
+        $columnNames = ['Title', 'Date', 'Time', 'Location', 'Description', 'Theme', 'Contact'];
+    
+        // Set the entire first row at once and make it bold
+        $sheet->fromArray([$columnNames], null, 'A1');
+        $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+    
+        $row = 2; // Start from the second row
+        foreach ($events as $event) {
+            $data = [
+                $event->getNomE(),
+                $event->getDateE()->format('Y-m-d'),
+                $event->getHeureE(),
+                $event->getLieuE(),
+                $event->getDescription(),
+                $event->getThemeE(),
+                $event->getCantactE(),
+            ];
+    
+            // Set data starting from the second row
+            $sheet->fromArray([$data], null, 'A' . $row);
+    
+            $row++;
+        }
+    
+        // Apply bold style to the first row
+        $sheet->getStyle('A1:G1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
+    
+        $writer = new Xlsx($spreadsheet);
+    
+        $fileName = 'events.xlsx';
+        $tempFile = tempnam(sys_get_temp_dir(), $fileName);
+    
+        $writer->save($tempFile);
+    
+        return new BinaryFileResponse($tempFile, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => sprintf('inline; filename="%s"', $fileName),
+        ]);
+    }
+
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): Response
     {
@@ -61,48 +121,54 @@ class EventController extends AbstractController
 
     
     #[Route('/front', name: 'app_event_index_front', methods: ['GET'])]
-    public function indexfront(Request $request,EventRepository $eventRepository): Response
-    {
-        $nameSearch = $request->query->get('nameSearch');
-        $themeSearch = $request->query->get('themeSearch');
-        $dateSearch = $request->query->get('dateSearch');
-        $locationSearch = $request->query->get('locationSearch');
-        $sortOrder = $request->query->get('sortOrder', null);
-
-        $queryBuilder = $eventRepository->createQueryBuilder('e');
-        $events = $queryBuilder->getQuery()->getResult();
-
-        if ($nameSearch) {
-            $queryBuilder->andWhere('e.nom_e LIKE :nameSearch')
-                ->setParameter('nameSearch', '%' . $nameSearch . '%');
-        }
-
-        if ($themeSearch) {
-            $queryBuilder->andWhere('e.theme_e LIKE :themeSearch')
-                ->setParameter('themeSearch', '%' . $themeSearch . '%');
-        }
-
-        if ($dateSearch) {
-            $queryBuilder->andWhere('e.date_e LIKE :dateSearch')
-                ->setParameter('dateSearch', '%' . $dateSearch . '%');
-        }
-
-        if ($locationSearch) {
-            $queryBuilder->andWhere('e.lieu_e LIKE :locationSearch')
-                ->setParameter('locationSearch', '%' . $locationSearch . '%');
-        }
-
-        $events = $queryBuilder->getQuery()->getResult();
-        
-        if ($sortOrder !== null) {
-            $events = $this->sortEvents($events, $sortOrder);
-        }
-
-        return $this->render('event/indexfront.html.twig', [
-            'events' => $events,
-            'sortOrder' => $sortOrder,
-        ]);
+public function indexfront(Request $request, EventRepository $eventRepository, PaginatorInterface $paginator): Response
+{
+    $nameSearch = $request->query->get('nameSearch');
+    $themeSearch = $request->query->get('themeSearch');
+    $dateSearch = $request->query->get('dateSearch');
+    $locationSearch = $request->query->get('locationSearch');
+    $sortOrder = $request->query->get('sortOrder', null);
+    
+    $queryBuilder = $eventRepository->createQueryBuilder('e');
+    
+    if ($nameSearch) {
+        $queryBuilder->andWhere('e.nom_e LIKE :nameSearch')
+            ->setParameter('nameSearch', '%' . $nameSearch . '%');
     }
+    
+    if ($themeSearch) {
+        $queryBuilder->andWhere('e.theme_e LIKE :themeSearch')
+            ->setParameter('themeSearch', '%' . $themeSearch . '%');
+    }
+    
+    if ($dateSearch) {
+        $queryBuilder->andWhere('e.date_e LIKE :dateSearch')
+            ->setParameter('dateSearch', '%' . $dateSearch . '%');
+    }
+    
+    if ($locationSearch) {
+        $queryBuilder->andWhere('e.lieu_e LIKE :locationSearch')
+            ->setParameter('locationSearch', '%' . $locationSearch . '%');
+    }
+
+    if ($sortOrder !== null) {
+        $queryBuilder = $this->sortEventsQueryBuilder($queryBuilder, $sortOrder);
+    }
+
+    $pagination = $paginator->paginate(
+        $queryBuilder->getQuery(),
+        $request->query->getInt('page', 1),
+        9
+    );
+
+    $events = $pagination->getItems();
+    
+    return $this->render('event/indexfront.html.twig', [
+        'pagination' => $pagination,
+        'events' => $events,
+        'sortOrder' => $sortOrder,
+    ]);
+}
     #[Route('/front/condidat', name: 'app_event_index_front_condidat', methods: ['GET'])]
     public function indexfrontcondidat(Request $request,EventRepository $eventRepository): Response
     {
@@ -147,22 +213,22 @@ class EventController extends AbstractController
         ]);
     }
 
-    private function sortEvents(array $events, $sortOrder)
+    private function sortEventsQueryBuilder($queryBuilder, $sortOrder)
     {
-        // Tri les événements selon la colonne et l'ordre choisis
-        usort($events, function ($a, $b) use ($sortOrder) {
-            if ($sortOrder === 'asc') {
-                return $a->getDateE() <=> $b->getDateE();
-            } elseif ($sortOrder === 'desc') {
-                return $b->getDateE() <=> $a->getDateE();
-            } elseif ($sortOrder === 'participationCountAsc') {
-                return count($a->getParticipations()) <=> count($b->getParticipations());
-            } elseif ($sortOrder === 'participationCountDesc') {
-                return count($b->getParticipations()) <=> count($a->getParticipations());
-            }
-        });
+         $alias = $queryBuilder->getRootAliases()[0];
 
-        return $events;
+    // Add sorting conditions based on $sortOrder
+    if ($sortOrder === 'asc') {
+        $queryBuilder->orderBy($alias . '.date_e', 'ASC');
+    } elseif ($sortOrder === 'desc') {
+        $queryBuilder->orderBy($alias . '.date_e', 'DESC');
+    } elseif ($sortOrder === 'participationCountAsc') {
+        $queryBuilder->orderBy('SIZE(' . $alias . '.participations)', 'ASC');
+    } elseif ($sortOrder === 'participationCountDesc') {
+        $queryBuilder->orderBy('SIZE(' . $alias . '.participations)', 'DESC');
+    }
+
+        return $queryBuilder;;
     }
 
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
@@ -237,11 +303,22 @@ class EventController extends AbstractController
     
 
     #[Route('/front/{id}', name: 'app_event_show_front', methods: ['GET'])]
-    public function showfront(Event $event): Response
+    public function showfront(eventRepository $eventRepository, Event $event, $id): Response
     {
+        $writer = new PngWriter();
+
+        $event = $eventRepository->find($id);
+        // Concaténer tous les champs de l'entité event pour générer le contenu du code QR
+        $eventData = $event->geteventDataForQrCode();
+        $qrCode = new QrCode($eventData);
+
+        $pngResult = $writer->write($qrCode);
+        $qrCodeImage = base64_encode($pngResult->getString());
+
         return $this->render('event/showfront.html.twig', [
             'event' => $event,
             'participations' => $event->getParticipations(),
+            'qrCodeImage' => $qrCodeImage,
         ]);
     }
     
@@ -330,4 +407,26 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('app_event_index_front', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/load-event-content/{id}', name: 'load_event_content', methods: ['GET'])]
+    public function loadeventContent(eventRepository $eventRepository, $id): Response
+    {   
+        $writer = new PngWriter();
+
+        $event = $eventRepository->find($id);
+        // Concaténer tous les champs de l'entité event pour générer le contenu du code QR
+        $eventData = $event->geteventDataForQrCode();
+        $qrCode = new QrCode($eventData);
+
+        $pngResult = $writer->write($qrCode);
+        $qrCodeImage = base64_encode($pngResult->getString());
+
+        return $this->render('event/qr.html.twig', [  
+            'event'        => $event,
+            'qrCodeImage' => $qrCodeImage,
+        ]);
+    }
+
+    
+
 }

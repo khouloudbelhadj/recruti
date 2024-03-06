@@ -1,0 +1,74 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}event{% endblock %}
+
+{% block body %}
+<div class="fils" style="padding-left: 300px;">
+    <h1>event</h1>
+    {% set img = event.imageE %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Picture</th>
+                <td><img style="width:150px;height:150px;" src="{{ asset(img) }}"></td>
+            </tr>
+            <tr>
+                <th>Title :</th>
+                <td>{{ event.nomE }}</td>
+            </tr>
+            <tr>
+                <th>Theme</th>
+                <td>{{ event.themeE }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ event.dateE ? event.dateE|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Start Time</th>
+                <td>{{ event.heureE }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ event.lieuE }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ event.description }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ event.cantactE }}</td>
+            </tr>
+            <tr>
+                <th>Number of Participations</th>
+                <td>{{ event.participations.count() }}</td>
+            </tr>
+        </tbody>
+    </table>
+<div class ="qrcode">
+   <img id="qrCodeImage" src="data:image/png;base64,{{ qrCodeImage }}" alt="QR Code" >
+</div>   
+
+
+    
+    </div>
+     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function downloadTicket() {
+        const ticketElement = document.querySelector('.fils');
+        html2canvas(ticketElement).then(function (canvas) {
+          const imageData = canvas.toDataURL('image/png');
+          const downloadLink = document.createElement('a');
+          downloadLink.href = imageData;
+          downloadLink.download = 'ticket.png';
+          downloadLink.click();
+        });
+      }
+
+      const downloadTicketBtn = document.getElementById('downloadTicketBtn');
+      downloadTicketBtn.addEventListener('click', downloadTicket);
+    });
+  </script>
+{% endblock %}

@@ -204,4 +204,10 @@ class Event
     {
         return $this->nom_e; 
     }
+    public function geteventDataForQrCode(): string
+{
+    $data = "Id: {$this->id}, Title: {$this->nom_e}, Date: {$this->date_e->format('Y-m-d')}, Time: {$this->heure_e}, Location: {$this->lieu_e}, Description: {$this->description}, Theme: {$this->theme_e}, Contact: {$this->cantact_e}";
+
+    return $data;
+}
 }
