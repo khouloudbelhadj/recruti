@@ -39,6 +39,12 @@ class Rendezvous
     #[ORM\ManyToOne(targetEntity: Calendrier::class, inversedBy: 'rendezvouses')]
     private ?Calendrier $calendrier = null;
 
+    #[ORM\ManyToOne(inversedBy: 'rendezvouses')]
+    #[ORM\JoinColumn(nullable: false)]
+    
+    private ?Offer $offer = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +113,18 @@ class Rendezvous
     public function setCalendrier(?Calendrier $calendrier): self
     {
         $this->calendrier = $calendrier;
+        return $this;
+    }
+
+    public function getManyToOne(): ?Offer
+    {
+        return $this->ManyToOne;
+    }
+
+    public function setManyToOne(?Offer $ManyToOne): static
+    {
+        $this->ManyToOne = $ManyToOne;
+
         return $this;
     }
 }

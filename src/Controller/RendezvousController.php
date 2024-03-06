@@ -13,6 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Knp\Component\Pager\PaginatorInterface;
 
+
+
+
 #[Route('/rendezvous')]
 class RendezvousController extends AbstractController
 {
@@ -44,9 +47,27 @@ public function index(RendezvousRepository $rendezvousRepository, Request $reque
     );
 
     // Passer les rendez-vous paginés à votre modèle Twig
-    return $this->render('rendezvous/index.html.twig', [
-        'rendezvouses' => $rendezvouses,
-    ]);
+    
+    $appointmentsByHour = [];
+       
+
+        foreach ($rendezvouses as $rendezvous) {
+            // Calculer les statistiques par heure
+            $hour = $rendezvous->getHeureRendez();
+            if (!isset($appointmentsByHour[$hour])) {
+                $appointmentsByHour[$hour] = 0;
+            }
+            $appointmentsByHour[$hour]++;
+
+           
+        }
+
+        // Passer les rendez-vous paginés et les statistiques à votre modèle Twig
+        return $this->render('rendezvous/index.html.twig', [
+            'rendezvouses' => $rendezvouses,
+            'appointmentsByHour' => $appointmentsByHour,
+           
+        ]);
 }
 
     #[Route('/rendezvous/{id}', name: 'app_rendezvous_show_detail', methods: ['GET'])]
@@ -125,4 +146,5 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         return $this->redirectToRoute('app_rendezvous_index', [], Response::HTTP_SEE_OTHER);
     }
     
+
 }

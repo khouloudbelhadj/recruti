@@ -40,9 +40,13 @@ class Offer
     #[ORM\OneToMany(targetEntity: Condidature::class, mappedBy: 'offer')]
     private Collection $condidatures;
 
+    #[ORM\OneToMany(targetEntity: Rendezvous::class, mappedBy: 'ManyToOne', orphanRemoval: true)]
+    private Collection $rendezvouses;
+
     public function __construct()
     {
         $this->condidatures = new ArrayCollection();
+        $this->rendezvouses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +162,36 @@ class Offer
             // set the owning side to null (unless already changed)
             if ($condidature->getOffer() === $this) {
                 $condidature->setOffer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rendezvous>
+     */
+    public function getRendezvouses(): Collection
+    {
+        return $this->rendezvouses;
+    }
+
+    public function addRendezvouse(Rendezvous $rendezvouse): static
+    {
+        if (!$this->rendezvouses->contains($rendezvouse)) {
+            $this->rendezvouses->add($rendezvouse);
+            $rendezvouse->setManyToOne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezvouse(Rendezvous $rendezvouse): static
+    {
+        if ($this->rendezvouses->removeElement($rendezvouse)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezvouse->getManyToOne() === $this) {
+                $rendezvouse->setManyToOne(null);
             }
         }
 

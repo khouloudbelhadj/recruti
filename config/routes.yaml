@@ -32,3 +32,7 @@ contact:
     controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
     defaults:
         template: 'contact.html.twig'
+
+statistiques:
+    path: /statistiques
+    controller: 'App\Controller\RendezvousController::statistiques'

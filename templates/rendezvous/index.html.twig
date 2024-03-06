@@ -80,6 +80,15 @@
     .filter-button:hover {
         background-color: #cc0000; /* Couleur de fond rouge légèrement plus foncée au survol */
     }
+/* Style pour le conteneur principal */
+.container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
 
 </style>
 <div class="container mt-4">
@@ -90,7 +99,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Appointment date</th>
                 <th scope="col">Hour </th>
-                <th scope="col">place</th>
+                <th scope="col">location</th>
                 <th scope="col">candidate email</th>
                 <th scope="col">Email Company Representative</th>
                 <th scope="col">Actions</th>
@@ -154,5 +163,65 @@
                 </li>
             </ul>
         </div>
+       </style>
+
+
+    <div class="navigation">
+        <ul class="pagination">
+            <!-- Votre pagination -->
+        </ul>
+    </div>
+
+    <div class="container mt-4">
+        <h2>Statistics by hour</h2>
+        <canvas id="hourlyStatisticsChart" width="10" height="10"></canvas>
+
+
+    </div>
+
 </div>
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var hourLabels = [];
+            var appointmentCounts = [];
+
+            {% for hour, count in appointmentsByHour %}
+                hourLabels.push('{{ hour }}');
+                appointmentCounts.push('{{ count }}');
+            {% endfor %}
+
+            var ctx = document.getElementById('hourlyStatisticsChart').getContext('2d');
+            var hourlyStatisticsChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: hourLabels,
+                    datasets: [{
+                        label: 'Number of appointments',
+                        data: appointmentCounts,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    legend: {
+                        position: 'right'
+                    }
+                }
+                
+            });
+        });
+    </script>
+    {% endblock %}
 {% endblock %}

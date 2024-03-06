@@ -159,7 +159,7 @@
                 events: [
                      {% for rendezvou in rendezvouses %}
                         {
-                            title: '{{ rendezvou.emailCondi|raw }}',
+                            title: '{{ rendezvou.emailRepresen|raw }}',
                             start: '{{ rendezvou.dateRendez|date("Y-m-d") }}',
                         }{% if not loop.last %},{% endif %}
                     {% endfor %}
