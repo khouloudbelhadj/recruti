@@ -1,0 +1,115 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Event index</title>{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">List of Events</h1>
+        <a href="{{ path('app_event_new') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
+        <a href="{{ path('app_event_stats') }}" class="btn btn-primary mb-4">Statistics</a>
+
+         <!-- Filter by theme and Search input -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" id="searchInput" placeholder="Search..." class="form-control rounded-pill">
+                    <div class="input-group-append">
+                        <span class="input-group-text bg-light rounded-pill"><i class="bi bi-search"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rs-select2--light rs-select2--md">
+                    <select class="form-select rounded-pill" name="themeFilter" id="themeFilter">
+                        <option value="">Filter by Theme</option>
+                        <option value="Informatique">Informatique</option>
+                        <option value="Santé">Santé</option>
+                        <option value="Genie Civil">Genie Civil</option>
+                        <option value="Electromecanique">Electromecanique</option>
+                        <!-- Ajoutez ici les autres options en fonction de vos thèmes -->
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table table-borderless table-data3">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">Place</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Theme</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    {% set img = event.imageE %}
+                    <tr>
+                        <td>{{ event.id }}</td>
+                        <td>{{ event.nomE }}</td>
+                        <td>{{ event.dateE ? event.dateE|date('Y-m-d') : '' }}</td>
+                        <td>{{ event.heureE }}</td>
+                        <td>{{ event.lieuE }}</td>
+                        <td>{{ event.description }}</td>
+                        <td><img style="width:150px;height:150px;" src="{{asset(img) }}"></td>
+                        <td>{{ event.themeE }}</td>
+                        <td>{{ event.cantactE }}</td>
+                        <td>
+                            <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-outline-secondary btn-sm">show</a>
+                            <a href="{{ path('app_event_edit', {'id': event.id}) }}" class="btn btn-outline-danger btn-sm">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="10">no records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Button to generate Excel -->
+    <a href="{{ path('excel1') }}" class="btn btn-primary m-2" style="display:block; margin-bottom: 2.5em; background-color: #00A8B3;">
+        Générer Excel <i class="fa fa-table" aria-hidden="true"></i>
+    </a>
+
+     <!-- JavaScript for table filtering -->
+    <script>
+        function filterTable() {
+            const filter = document.getElementById('searchInput').value.toUpperCase();
+            const themeFilter = document.getElementById('themeFilter').value.toLowerCase();
+            const rows = document.querySelectorAll('table tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].querySelectorAll('td');
+                let visible = false;
+
+                for (let j = 0; j < cols.length; j++) {
+                    const cell = cols[j];
+                    if (cell.innerText.toUpperCase().indexOf(filter) > -1) {
+                        visible = true;
+                        break;
+                    }
+                }
+
+                // Filtre par thème
+                const themeCell = rows[i].querySelector('td:nth-child(😎'); // Adapté en fonction de l'ordre de votre colonne de thème
+                if (themeFilter !== '' && themeCell) {
+                    visible = visible && themeCell.innerText.toLowerCase().includes(themeFilter);
+                }
+
+                rows[i].style.display = visible ? '' : 'none';
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', filterTable);
+        document.getElementById('themeFilter').addEventListener('change', filterTable);
+    </script>
+{% endblock %}

@@ -4,19 +4,112 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    background-color: transparent;
+    background-color:  #a90909;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    
+}
+.red-icon {
+    color: #a90909;
 }
 
 /* Afficher le bouton de suppression au survol de l'image */
 .position-relative:hover .delete-image-btn {
     opacity: 1;
 }
+@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+
+
+
+.card-no-border .card {
+    border: 0px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05)
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem
+}
+
+.comment-widgets .comment-row:hover {
+    background: rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+}
+
+.comment-widgets .comment-row {
+    border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+    padding: 15px;
+}
+.comment-text:hover{
+    visibility: hidden;
+}
+.comment-text:hover{
+    visibility: visible;
+}
+
+.label {
+    padding: 3px 10px;
+    line-height: 13px;
+    color: #ffffff;
+    font-weight: 400;
+    border-radius: 4px;
+    font-size: 75%;
+}
+
+.round img {
+    border-radius: 100%;
+}
+
+.label-info {
+    background-color: #1976d2;
+}
+
+.label-success {
+    background-color: green;
+}
+
+.label-danger {
+    background-color: #ef5350;
+}
+
+.action-icons a {
+    padding-left: 7px;
+    vertical-align: middle;
+    color: #99abb4;
+}
+
+.action-icons a:hover {
+    color: #1976d2;
+}
+
+.mt-100 {
+    margin-top: 100px
+}
+
+.mb-100 {
+    margin-bottom: 100px
+}
+.comment-content {
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 10px; /* Add padding for spacing */
+    border-radius: 5px; /* Add rounded corners */
+}
+.user-name {
+    display: inline-block; /* Permet de les aligner côte à côte */
+    margin-right: 10px; /* Ajoute un espacement à droite du nom d'utilisateur */
+}
+
+.comment-date {
+    display: inline-block; /* Permet de les aligner côte à côte */
+}
+
 </style>  
 
 {% set i = 0 %}
@@ -28,79 +121,391 @@
         <span class="w3-right w3-opacity">{{ publication.dateCreationpub ? publication.dateCreationpub|date('Y-m-d H:i:s') : '' }}</span>
         
       
-        <!-- Boîte modale -->
-         <div class="modal fade" id="publicationModal{{ publication.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ publication.id }}" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel{{ publication.id }}">Modifier la publication</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                   
-                           <!-- Formulaire pour modifier le contenu de la publication --> 
-                             <div class="modal-body">
-                 <form action="{{ path('app_publication_edit', {id: publication.id}) }}" method="post" id="editPublicationForm{{ publication.id }}">
-                        {{ form(forms[loop.index0]) }}
-                  
-                </form> 
-                 {% if publication.media is not empty %}
-                    {% for media in publication.media %}
-                    <div class="position-relative">
-    <img src="{{ vich_uploader_asset(media, 'file') }}" alt="Image associée à la publication" class="img-fluid">
-    <form method="post" action="{{ path('app_media_delete', {'id': media.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-        <button type="submit" class="btn btn-danger delete-image-btn" data-media-id="{{ media.id }}">X</button>
-    </form>
-</div>
-                    {% endfor %}
-                
-                {% endif %}
-   
-                        <!-- Formulaire pour modifier le contenu de la publication --> 
-                        {# {{ form_start(forms[loop.index0]) }}
-                        {{ form_row(forms[loop.index0].contenu, {'attr': {'class': 'form-control'}}) }}
-                        <hr> <!-- Ajoutez une ligne de séparation --> #}
-                    </div>  
-                    <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" id="addImageBtn">Ajouter une image</button>
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                   
-                       {# <button type="submit" class="btn btn-primary">Enregistrer</button> #}
-                       {# {{ form_end(forms[loop.index0]) }} #}
-                           {{ include('publication/_delete_form.html.twig') }}
-                        
-                    </div>
-            
-                 
-                </div>
+      
+
+                            <div class="modal fade" id="publicationModal{{ publication.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ publication.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel{{ publication.id }}">Modifier la publication</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div> 
+                   
+            <div class="modal-body">
+             <form action="{{ path('app_publication_edit', {id: publication.id}) }}" method="post" id="editPublicationForm{{ publication.id }}">
+                    <textarea name="contenu" rows="1" class="form-control flex-grow-1 mr-2">{{ publication.contenu }}</textarea>
+                </form> 
+                {% if publication.media is not empty %}
+                    {% for media in publication.media %}
+                        <div class="position-relative">
+                         {% set extension = media.chemin|slice(-4) %}
+            {% if extension == '.jpg' or extension == '.jpeg' or extension == '.png' %}
+                <img src="{{ vich_uploader_asset(media, 'file') }}" alt="Image associée à la publication" class="img-fluid">
+            {% else %}
+                <img src="{{ asset('https://cdn-icons-png.flaticon.com/512/607/607674.png') }}" alt="Icone pour les autres types de fichiers" class="img-fluid" style="width: 24px; height: auto;">
+                <span class="ml-2">{{ media.chemin }}</span>
+            {% endif %}
+           
+              
+          
+            
+                            <form method="post" action="{{ path('app_media_delete', {'id': media.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                                <button type="submit" class="btn  delete-image-btn" data-media-id="{{ media.id }}">X</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Formulaire pour modifier le contenu de la publication -->
+            </div>  
+
+            <div class="modal-footer">
+                {# <button type="button" class="btn btn-primary" id="addImageBtn">Ajouter une image</button> #}
+                <button type="submit" form="editPublicationForm{{ publication.id }}" class="btn btn-primary">Enregistrer</button>
+                {{ include('publication/_delete_form.html.twig') }}
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
         <h4>John Doe</h4><br>
           <!-- Bouton "Éditer" -->
           <div class="text-right">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#publicationModal{{ publication.id }}">Éditer</button>
+             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#publicationModal{{ publication.id }}"> <i class="fa fa-edit"></i> </button>
           </div>
         <hr class="w3-clear">
         <p>{{ publication.contenu }}</p>
+         <!-- Affichage des images -->
         <div class="w3-row-padding" style="margin:0 -16px">
-             
-             <!-- Affichage des images -->
-           
             {% for media in publication.media %}
                 {% if media.chemin %}
                    
-                        <img src="{{ vich_uploader_asset(media, 'file') }}" style="width:100%" alt="Image" class="w3-margin-bottom">
+                         {% set extension = media.chemin|slice(-4) %}
+            {% if extension == '.jpg' or extension == '.jpeg' or extension == '.png' %}
+                <img src="{{ vich_uploader_asset(media, 'file') }}" alt="Image associée à la publication" class="img-fluid">
+            {% else %}
+                <img src="{{ asset('https://cdn-icons-png.flaticon.com/512/607/607674.png') }}" alt="Icone pour les autres types de fichiers" class="img-fluid" style="width: 24px; height: auto;">
+                <span class="ml-2">{{ media.chemin }}</span>
+                 <a href="{{ vich_uploader_asset(media, 'file') }}" download><img src="https://cdn-icons-png.flaticon.com/128/7268/7268609.png" alt="Télécharger" style="width: 24px; height: 24px;"></a>
+            {% endif %}
+           
+              
                    
                 {% endif %}
             {% endfor %}
-        
         </div>
-        {# <button type="button" class="w3-button colrouge2-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> {{pubLikes[i]}} <a href="{{ path('app_like_new', {'idP': publication.id , 'idU': 1 }) }}">Like</a></button>  #}
-        <button type="button" class="w3-button colrouge2-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
+    
+
+        {% set hasLiked = false %}
+{% for like in publication.likes %}
+    {% if like.user_id.id == 1 %} 
+   
+        {% set hasLiked = true %}
+    {% endif %}
+{% endfor %}
+
+        {# <button type="button" class="w3-button colrouge2-d1 w3-margin-bottom" onclick="{% if hasLiked %} unlikePublication({{ publication.id }}) {% else %} likePublication({{ publication.id }}) {% endif %}"><i class="fa fa-thumbs-up"></i> {% if hasLiked %} Unlike {% else %} Like {% endif %}</button>   
+        <button type="button" class="w3-button colrouge2-d2 w3-margin-bottom" onclick="toggleComments({{ publication.id }})"><i class="fa fa-comment"></i>  Comment</button>  #}
+       <hr> <!-- Ajoutez une ligne de séparation -->
+       <div class="row">
+    <div class="col-md-6"> <!-- Divise l'espace en deux colonnes -->
+        <button type="button" class="w3-button colrouge2-d1 w3-margin-bottom" style="width: 100%;" onclick="{% if hasLiked %} unlikePublication({{ publication.id }}) {% else %} likePublication({{ publication.id }}) {% endif %}">
+            <i class="fa fa-thumbs-up"></i> {% if hasLiked %} Unlike {% else %} Like {% endif %}
+        </button>
     </div>
+    <div class="col-md-6"> <!-- Divise l'espace en deux colonnes -->
+        <button type="button" class="w3-button colrouge2-d2 w3-margin-bottom" style="width: 100%;" onclick="toggleComments({{ publication.id }})">
+            <i class="fa fa-comment"></i> Comment
+        </button>
+    </div>
+</div>
+       
+       
+        <div id="comment-container-{{ publication.id }}" style="display: none;">
+           
+
+            <!-- Affichage des commentaires -->
+        
+               {% for commentaire in publication.commentaires %}
+    <div class="d-flex flex-row comment-row">
+         <div class="p-2"><span class="round"><img src="https://wac-cdn.atlassian.com/fr/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=1472" alt="user" width="50"></span>
+                                    </div>
+        <div class="comment-text w-100">
+            <h5 class="user-name">{{ commentaire.user.username }}</h5>
+        
+           <span class="w3-right w3-opacity comment-date">
+             {% set now = "now"|date("U") %}
+             {% set diff = now - commentaire.date_creationCom|date("U") %}
+             {% set years = (diff / (3600 * 24 * 365))|round %}
+             {% set months = (diff / (3600 * 24 * 30))|round %}
+             {% set days = (diff / (3600 * 24))|round %}
+             {% set hours = (diff / 3600)|round %}
+             {% set minutes = (diff / 60)|round %}
+    
+                    {% if years > 0 %}
+                        {{ years }} year{{ years > 1 ? 's' }} ago
+                    {% elseif months > 0 %}
+                        {{ months }} month{{ months > 1 ? 's' }} ago
+                    {% elseif days > 0 %}
+                        {{ days }} day{{ days > 1 ? 's' }} ago
+                    {% elseif hours > 0 %}
+                        {{ hours }} hour{{ hours > 1 ? 's' }} ago
+                    {% elseif minutes > 0 %}
+                        {{ minutes }} minute{{ minutes > 1 ? 's' }} ago
+                    {% else %}
+                        Just now
+                    {% endif %}
+           </span>
+  <!-- Icône de suppression avec un bouton -->
+       <!-- Icône de suppression -->
+        <i class="fa fa-trash delete-comment w3-right red-icon " style="margin-left: 5px; margin-right: 5px;"data-comment-id="{{ commentaire.id }}"></i>
+        <!-- Icône de modification -->
+        <i class="far fa-edit edit-comment-btn w3-right red-icon" style="margin-left: 5px; margin-right: 5px;"data-comment-id="{{ commentaire.id }}" ></i>
+   
+            <div class="comment-content">
+              <p class="m-b-5 m-t-10" id="comment-content-{{ commentaire.id }}">{{ commentaire.contenu_com }}</p>  
+            </div>
+        </div>
+    </div>
+    <hr> <!-- Ajoutez une ligne de séparation -->
+{% endfor %}
+ <!-- Formulaire d'ajout de commentaire -->
+          
+             
+    <form action="{{ path('app_commentaire_new', {'publicationId': publication.id}) }}" method="post" class="comment-form">
+    <div class="d-flex flex-row align-items-start">
+        <div class="p-2">
+            <span class="round">
+                <!-- Vous pouvez remplacer l'URL par une image de profil de l'utilisateur connecté -->
+                <img src="https://wac-cdn.atlassian.com/fr/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=1472" alt="user" width="50">
+            </span>
+        </div>
+        <div class="comment-text w-100">
+            <!-- Nom d'utilisateur peut être remplacé par l'utilisateur connecté -->
+            <h5 class="user-name">Nom d'utilisateur</h5>
+            <div class="comment-content d-flex">
+                <!-- Champ de texte pour le contenu du commentaire -->
+                <textarea name="contenu_com" rows="1" class="form-control flex-grow-1 mr-2" placeholder="Votre commentaire"></textarea>
+                <button type="submit" class="btn btn-primary"> <!-- Supprimez la classe ml-auto pour aligner à gauche -->
+                    <i class="fa fa-paper-plane"></i> <!-- Icône d'envoi -->
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+        </div>
+       </div>
     {% set i = i + 1 %}
 {% endfor %} 
 
+<!-- Script JavaScript pour afficher ou masquer le conteneur des commentaires -->
+<script>
+    function toggleComments(publicationId) {
+        var commentContainer = document.getElementById('comment-container-' + publicationId);
+        if (commentContainer.style.display === "none") {
+            commentContainer.style.display = "block";
+        } else {
+            commentContainer.style.display = "none";
+        }
+    }
+
+    ////////////////likeeeee
+ function likePublication(publicationId) {
+        // Effectuer une requête AJAX pour ajouter un like à la publication
+        fetch('/like/' + publicationId + '/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors de la requête');
+            }
+            // Mettre à jour l'interface utilisateur pour refléter le like
+             window.location.reload();
+        })
+        .catch(error => {
+            console.error('Erreur :', error);
+            // Afficher un message d'erreur ou effectuer d'autres actions si nécessaire
+        });
+    }
+
+    function unlikePublication(publicationId) {
+         const data = {
+        publicationId: publicationId
+    };
+        // Effectuer une requête AJAX pour supprimer le like de la publication
+        fetch('/like/' + publicationId + '/remove', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors de la requête');
+            }
+            // Mettre à jour l'interface utilisateur pour refléter le unlike
+          
+    window.location.reload();
+
+        })
+        
+        .catch(error => {
+            console.error('Erreur :', error);
+            // Afficher un message d'erreur ou effectuer d'autres actions si nécessaire
+        });
+    }
+ // Attache un gestionnaire d'événements de clic au bouton
+
+
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionnez toutes les icônes de suppression
+    const deleteIcons = document.querySelectorAll('.delete-comment');
+    // Ajoutez un gestionnaire d'événements à chaque icône de suppression
+    deleteIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+            // Récupérez l'identifiant du commentaire à supprimer
+            const commentId = icon.dataset.commentId;
+            // Envoyez une requête AJAX pour supprimer le commentaire
+            fetch(`/commentaire/${commentId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then(response => {
+                // Redirigez ou actualisez la page après la suppression du commentaire
+                window.location.reload();
+            }).catch(error => {
+                console.error('Une erreur s\'est produite lors de la suppression du commentaire :', error);
+            });
+        });
+    });
+   
+
+    const editButtons = document.querySelectorAll('.edit-comment-btn');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = button.dataset.commentId;
+            const commentContentElement = document.querySelector(`#comment-content-${commentId}`);
+            const currentContent = commentContentElement.textContent.trim();
+const inputElement = document.createElement('textarea');
+inputElement.rows = 1;
+inputElement.classList.add('form-control', 'flex-grow-1', 'mr-2');
+inputElement.value = currentContent;
+
+// Créer un bouton d'envoi
+const saveButton = document.createElement('button');
+saveButton.type = 'button';
+saveButton.classList.add('btn', 'btn-primary');
+saveButton.innerHTML = '<i class="fa fa-paper-plane"></i>'; // Icône d'envoi
+   
+            saveButton.addEventListener('click', function() {
+                const newContent = inputElement.value;
+                // Envoyer une requête AJAX pour mettre à jour le commentaire
+                fetch(`/commentaire/${commentId}/edit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        contenu_com: newContent
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Mettre à jour l'affichage du commentaire avec le nouveau contenu
+                    const newParagraph = document.createElement('p');
+                    newParagraph.textContent = newContent;
+                    commentContentElement.innerHTML = '';
+                    commentContentElement.appendChild(newParagraph);
+                    // Afficher un message de succès ou effectuer d'autres actions si nécessaire
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la mise à jour du commentaire :', error);
+                    // Afficher un message d'erreur ou effectuer d'autres actions si nécessaire
+                });
+            });
+
+const editContainer = document.createElement('div');
+editContainer.classList.add('d-flex', 'align-items-center'); // Ajouter les classes Bootstrap pour aligner horizontalement
+
+// Ajouter le champ de texte et le bouton d'envoi au conteneur
+editContainer.appendChild(inputElement);
+editContainer.appendChild(saveButton);
+
+// Ajouter le conteneur au commentaireContentElement
+commentContentElement.innerHTML = ''; // Vider le contenu actuel
+commentContentElement.appendChild(editContainer);
+        });
+    });
+
+    //////////////////Modification du post 
+    const saveButton = document.querySelector(`#editPublicationForm${publication.id} button[type="submit"]`);
+
+saveButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Empêcher le comportement par défaut du bouton
+
+    // Récupérer le contenu du formulaire
+    const contenu = document.querySelector(`#editPublicationForm${publication.id} textarea[name="contenu"]`).value;
+
+    // Créer un objet contenant les données à envoyer
+    const data = {
+        contenu: contenu
+    };
+// Récupérer l'URL de l'endpoint
+const url = `/publication/${publication.id}/edit`;
+
+// Afficher l'URL dans la console pour le débogage
+console.log('URL de la requête fetch :', url);
+    // Envoyer les données du formulaire via une requête AJAX
+    fetch(`/publication/${publication.id}/edit`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors de la requête');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Gérer la réponse du serveur ici
+        console.log('Réponse du serveur :', data);
+        // Rediriger ou effectuer d'autres actions si nécessaire
+    })
+    .catch(error => {
+        console.error('Erreur :', error);
+        // Afficher un message d'erreur ou effectuer d'autres actions si nécessaire
+    });
+});
+
+
+    })
+
+</script>

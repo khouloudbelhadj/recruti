@@ -1,0 +1,109 @@
+{% extends 'baseBack.html.twig' %}  
+
+{% block title %}Comments list{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-4">
+    <div class="row">
+     <div class="col">
+        <h1 class="mb-4">Comments list</h1>
+          </div>
+        <div class="col-auto">
+            <input type="text" class="form-control mb-2" id="searchTerm" name="searchTerm" placeholder="Search by post...">
+        </div>
+        
+    </div>
+
+        <!-- Conteneur pour les commentaires -->
+        <table id="commentaires-table" class="table table-borderless table-data3">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">ID profile</th>
+                    <th scope="col">User</th>
+                    <th scope="col">ID post</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="commentaires-table-body">
+                {% for commentaire in commentaires %}
+                    <tr>
+                        <td>{{ commentaire.id }}</td>
+                        <td>{{ commentaire.user.id }}</td>
+                        <td>{{ commentaire.user.Username }}</td>
+                        <td>{{ commentaire.Publication.id }}</td>
+                        <td>{{ commentaire.contenu_com }}</td>
+                        <td>{{ commentaire.date_creationCom ? commentaire.date_creationCom|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-outline-secondary btn-sm">Show</a> 
+                            {{ include('commentaire/_delete_back_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">No records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function searchComments() {
+            var searchTerm = document.getElementById('searchTerm').value;
+            if (searchTerm.trim() !== '') {
+                // Envoyer une requête AJAX pour rechercher les commentaires correspondant à l'ID de publication
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            updateCommentsTable(response);
+                        } else {
+                            console.error('Erreur lors de la requête AJAX');
+                        }
+                    }
+                };
+              xhr.open('GET', '/commentaire/search/' + encodeURIComponent(searchTerm), true);
+                xhr.send();
+            } else {
+                // Si le champ de recherche est vide, afficher tous les commentaires
+                updateCommentsTable([]);
+            }
+        }
+var commentairesData = {{ commentaires|json_encode|raw }};
+        function updateCommentsTable(commentaires) {
+            var tableBody = document.getElementById('commentaires-table-body');
+            tableBody.innerHTML = ''; // Effacer le contenu actuel du tableau
+
+            if (commentaires.length > 0) {
+                commentaires.forEach(function(commentaire) {
+                    var row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${commentaire.id}</td>
+                        <td>${commentaire.user.id}</td>
+                        <td>${commentaire.user.Username}</td>
+                        <td>${commentaire.Publication.id}</td>
+                        <td>${commentaire.contenu_com}</td>
+                        <td>${commentaire.date_creationCom ? commentaire.date_creationCom : ''}</td>
+                       
+  <td> <a href="/commentaire/${commentaire.id}" class="btn btn-outline-secondary btn-sm">Show</a>
+                
+                        </td>
+                       
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="7">No records found</td></tr>';
+            }
+        }
+
+        document.getElementById('searchTerm').addEventListener('input', searchComments);
+    </script>
+{% endblock %}
+
+

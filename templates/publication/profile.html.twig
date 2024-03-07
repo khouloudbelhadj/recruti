@@ -194,10 +194,14 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
       {{ form_start(form) }} 
     {{ form_row(form.contenu) }} 
 
-    {% for mediaForm in form.media %}
-        {{ form_widget(mediaForm) }}
+     {% for mediaForm in form.media %}
+ <div class="d-flex align-items-center mb-2">
+        <img src="{{ asset('https://cdn-icons-png.flaticon.com/512/607/607674.png') }}" alt="Icone pour les autres types de fichiers" class="img-fluid" style="width: 24px; height: auto;">
+        {{ form_widget(mediaForm, { 'attr': {'class': 'ml-2', 'onchange': 'updateFileInput(this)' } }) }}
         {{ form_errors(mediaForm) }}
-    {% endfor %}
+    </div>
+        
+    {% endfor %} 
 
     {{ form_row(form.save) }} 
     {{ form_end(form) }}
@@ -327,6 +331,15 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         </div>
         <!-- Footer End -->
 <script>
+
+    function updateFileInput(input) {
+        var file = input.files[0];
+        if (file) {
+            input.nextElementSibling.innerText = file.name;
+        } else {
+            input.nextElementSibling.innerText = '';
+        }
+    }
 
 
 // Accordion

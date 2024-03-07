@@ -74,7 +74,7 @@ class Like
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getuser_id(): ?User
     {
         return $this->user;
     }

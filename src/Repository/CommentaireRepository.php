@@ -45,4 +45,26 @@ class CommentaireRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+  /**
+     * @param int $publicationId
+     * @return Commentaire[]
+     */
+    public function findByPublicationId($publicationId)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.publication = :publicationId')
+            ->setParameter('publicationId', $publicationId)
+            ->getQuery()
+            ->getResult();
+    }
+    // public function findBySearchTerm($searchTerm)
+    // {
+    //     return $this->createQueryBuilder('c')
+    //         ->andWhere('c.user.id = :searchTerm OR c.publication.id = :searchTerm OR c.contenu_com LIKE :content')
+    //         ->setParameter('searchTerm', $searchTerm)
+    //         ->setParameter('content', '%'.$searchTerm.'%')
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 }

@@ -9,6 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Media;
+use App\Entity\Commentaire;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 
@@ -26,16 +27,16 @@ class Publication
     private ?\DateTimeInterface $date_creationpub = null;
 
     #[ORM\ManyToOne(inversedBy: 'publications')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user_id = null;
 
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'publication',orphanRemoval:true, cascade: ["persist"])]
     private Collection $media;
 
-    #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'publication')]
+    #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'publication',orphanRemoval:true, cascade: ["persist"])]
     private Collection $commentaires;
 
-    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'publication')]
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'publication',orphanRemoval:true, cascade: ["persist"])]
     private Collection $likes;
 
     public function __construct()

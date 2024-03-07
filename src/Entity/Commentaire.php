@@ -33,24 +33,24 @@ class Commentaire
         return $this->id;
     }
 
-    public function getContenuCom(): ?string
+    public function getcontenu_com(): ?string
     {
         return $this->contenu_com;
     }
 
-    public function setContenuCom(string $contenu_com): static
+    public function setcontenu_com(string $contenu_com): static
     {
         $this->contenu_com = $contenu_com;
 
         return $this;
     }
 
-    public function getDateCreationCom(): ?\DateTimeInterface
+    public function getdate_creationCom(): ?\DateTimeInterface
     {
         return $this->date_creationCom;
     }
 
-    public function setDateCreationCom(\DateTimeInterface $date_creationCom): static
+    public function setdate_creationCom(\DateTimeInterface $date_creationCom): static
     {
         $this->date_creationCom = $date_creationCom;
 

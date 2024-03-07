@@ -19,14 +19,8 @@ class PubEditType extends AbstractType
            ->add('contenu', TextType::class, [
             'label' => false,
             'attr' => ['class' => 'form-control'] // Ajoutez les classes CSS Bootstrap ici
-        ])
-        
-        ->add('save', SubmitType::class, [
-            'label' => 'Enregistrer',
-            'attr' => ['class' => 'btn btn-primary'] // Ajout de classes CSS au bouton
-         ])
-        
-        ;
+           ]);
+     
     }
 
     public function configureOptions(OptionsResolver $resolver): void

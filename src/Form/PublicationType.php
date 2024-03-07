@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Publication;
 use App\Form\MediaType;
+use App\Form\CommentaireType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use Symfony\Component\Validator\Constraints\Length;
 class PublicationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -21,7 +23,13 @@ class PublicationType extends AbstractType
             'attr' => [
                 'style' => 'resize:none',
                 'class' => 'form-control'
-            ]
+            ],
+            'constraints' => [
+                new Length([
+                    'max' => 10,
+                    'maxMessage' => 'Le contenu de la publication ne peut pas dépasser {{ limit }} caractères.',
+                ]),
+            ],
         ])
         ->add('media', CollectionType::class, [
             'entry_type' => MediaType::class, // Utilisez le formulaire MediaType pour les médias
