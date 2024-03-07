@@ -1,46 +1,92 @@
 {% extends 'baseBack.html.twig' %}
 
 {% block title %}
-    <title>Modifier le calendrier</title>
+    <title>Edit Calendar</title>
 {% endblock %}
 
 {% block body %}
-<div class="container mt-4">
-    <h1 class="mb-4">Modifier le calendrier</h1>
+      <style>
+    /* Styles pour la page Edit Calendar */
+    .container {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
 
-    <form action="{{ path('app_calendrier_edit', {'id': calendrier.id}) }}" method="post">
-        {{ form_start(form) }}
+    h1.mb-4 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #ff0000; /* Couleur rouge */
+    }
 
-        <div class="form-group row">
-            <label for="proprietaire" class="col-sm-2 col-form-label">Propriétaire</label>
-            <div class="col-sm-10">
-                {{ form_widget(form.proprietaire, {'attr': {'class': 'form-control'}}) }}
+    .form-group.row {
+        margin-bottom: 20px;
+    }
+
+    .col-sm-2.col-form-label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #ff0000; /* Couleur rouge */
+        color: #fff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #cc0000; /* Couleur rouge plus foncée au survol */
+    }
+
+    /* Style du tableau */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #ff0000; /* Couleur rouge pour les cellules d'en-tête */
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #ffe6e6; /* Couleur de fond rouge clair pour les lignes paires */
+    }
+</style>
+
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Edit Calendar</h1>
+
+        <form action="{{ path('app_calendrier_edit', {'id': calendrier.id}) }}" method="post">
+            {{ form_start(form) }}
+
+            <div class="form-group row">
+                <label for="proprietaire" class="col-sm-2 col-form-label">Owner</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.proprietaire, {'attr': {'class': 'form-control'}}) }}
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label for="liste" class="col-sm-2 col-form-label">Liste</label>
-            <div class="col-sm-10">
-                {{ form_widget(form.liste, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group row">
+                <label for="liste" class="col-sm-2 col-form-label">List</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.liste, {'attr': {'class': 'form-control', 'id': 'liste'}}) }}
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label for="notification" class="col-sm-2 col-form-label">Notification</label>
-            <div class="col-sm-10">
-                {{ form_widget(form.notification, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-group row">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">Register Changes</button>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-sm-12 text-center">
-                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-            </div>
-        </div>
-        
-        {{ form_end(form) }}
-    </form>
-
-    
-</div>
+            
+            {{ form_end(form) }}
+        </form>
+    </div>
 {% endblock %}

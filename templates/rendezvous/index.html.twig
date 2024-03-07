@@ -118,7 +118,8 @@
             {% for rendezvou in rendezvouses %}
     <tr>
         <td>{{ rendezvou.id }}</td>
-        <td>{{ rendezvou.offer.id }}</td> <!-- Display Offer ID -->
+        <td>{{ rendezvou.offer.id }}</td>
+         <!-- Display Offer ID -->
         <td>{{ rendezvou.dateRendez ? rendezvou.dateRendez|date('Y-m-d') : '' }}</td>
         <td>{{ rendezvou.heureRendez }}</td>
         <td>{{ rendezvou.lieu }}</td>

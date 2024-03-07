@@ -41,4 +41,3 @@ app_rendezvous_calendar_by_email:
     controller: 'App\Controller\RendezvousController::showCalendarByEmail'
     methods: ['GET']
 
-

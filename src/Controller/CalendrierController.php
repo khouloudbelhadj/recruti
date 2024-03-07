@@ -49,6 +49,7 @@ class CalendrierController extends AbstractController
             'calendrier' => $calendrier,
         ]);
     }
+    
 
     #[Route('/{id}/edit', name: 'app_calendrier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Calendrier $calendrier, EntityManagerInterface $entityManager): Response
@@ -78,4 +79,5 @@ class CalendrierController extends AbstractController
 
         return $this->redirectToRoute('app_calendrier_index', [], Response::HTTP_SEE_OTHER);
     }
+   
 }

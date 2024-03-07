@@ -196,6 +196,11 @@ class Offer
 
         return $this;
     }
+    public function __toString(): string
+{
+    // Retourner le titre de l'offre comme représentation de l'objet Offer
+    return $this->getTitreO(); // Utilisation de getTitreO() pour obtenir le titre de l'offre
+}
 
     
 }
