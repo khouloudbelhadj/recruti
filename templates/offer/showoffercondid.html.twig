@@ -2,6 +2,19 @@
 {% block title %}<title>Liste des Offres</title>{% endblock %}
 
 {% block body %}
+<link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- with v4.1.0 Krajee SVG theme is used as default (and must be loaded as below) - include any of the other theme CSS files as mentioned below (and change the theme property of the plugin) -->
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- important mandatory libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/js/star-rating.min.js" type="text/javascript"></script>
+
+    <!-- with v4.1.0 Krajee SVG theme is used as default (and must be loaded as below) - include any of the other theme JS files as mentioned below (and change the theme property of the plugin) -->
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/themes/krajee-svg/theme.js"></script>
+
+    
         <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Offers</h1>
@@ -14,41 +27,138 @@
                 </nav>
             </div>
         </div>
-    {% for offer in offers %}
-        <div class="tab-content">
-                        <div id="tab-1" class="tab-pane fade show p-0 active">
-                            <div class="job-item p-4 mb-4">
-                                <div class="row g-4">
-                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                        <div class="text-start ps-4">
-                                        
-                                            <h5 class="mb-3">{{ offer.titreO }}</h5>
-                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ offer.localisationO }}</span>
-                                            <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{ offer.dureO }}</span>
-                                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>{{ offer.salarieO }} DT</span>
-                                            
-                                            <span class="text-truncate me-0">
-                                                    <img src="{{ asset('FrontOffice/img/list.png') }}" alt="Icone personnalisée" class="icon-img me-2"style="width: 18px; height: auto;margin-left:20px;">{{ offer.typeO }}</span>
-                                            <br>
-                                            </br>
-                                            <span class="text-truncate me-0">
-                                                    <img src="{{ asset('FrontOffice/img/book.png') }}" alt="Icone personnalisée" class="icon-img me-2"style="width: 17px; height: auto;">{{ offer.descriptionO }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                        <div class="d-flex mb-3">
-                                            
-                                            <a class="btn btn-primary" href="{{ path('app_condidature_new_front') }}">Postulate</a>
-                                        </div>
-                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{ offer.dateO ? offer.dateO|date('Y-m-d') : '' }}</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-danger text-white rounded-circle" style="border: none;margin-right:10px;"><i class="bi bi-search"></i></span>
+                </div>
+                <input type="text" class="form-control rounded-pill" style="margin-right:100px;" id="searchInput" placeholder="Search for an offer...">
+                    <div class="rs-select2--light rs-select2--md" style="margin-left:-95px;margin-top:-1px;width: 118px">
+                        <select class="form-select rounded-pill" name="type" id="typeFilter">
+                            <option value="">All Types</option>
+                            <option value="job">Job</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="internship">Internship</option>
+                        </select>
+                    </div>
+            
+
+
+
+
+                
+            </div>
+                <div class="rs-select2--light rs-select2--md bg-danger rounded-pill" style="margin-left: 890px; margin-top: -15px; width: 147px;">
+                        <select class="form-select rounded-pill bg-danger text-light" name="sort" id="sortFilter">
+                            <option value="">Sort by Salary</option>
+                            <option value="asc"><i class="fas fa-arrow-up"></i> Lowest to Highest</option>
+                            <option value="desc"><i class="fas fa-arrow-down"></i> Highest to Lowest</option>
+                        </select>
+                </div>
+                    <br>
+                    </br>
+            
         </div>
-    {% endfor %}
+    </div>
+</div>
 
 
+
+{% for offer in offers %}
+    <div class="tab-content">
+        <div id="tab-1" class="tab-pane fade show p-0 active">
+            <div class="job-item p-4 mb-4" data-search="{{ offer.titreO }} {{ offer.localisationO }} {{ offer.dureO }} {{ offer.typeO }} {{ offer.descriptionO }} {{ offer.dateO ? offer.dateO|date('Y-m-d') : '' }}" data-type="{{ offer.typeO|lower }}" data-salary="{{ offer.salarieO|lower }}">
+            
+                <div class="row g-4">
+                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                        <div class="text-start ps-4">
+
+                            
+                        
+                            <h5 class="mb-3">{{ offer.titreO }}</h5>      
+                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ offer.localisationO }}</span>
+                            <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{ offer.dureO }}</span>
+                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>{{ offer.salarieO }} DT</span>
+                            <span class="text-truncate me-0">
+                                <img src="{{ asset('FrontOffice/img/list.png') }}" alt="Icone personnalisée" class="icon-img me-2" style="width: 18px; height: auto;margin-left:20px;">{{ offer.typeO }}
+                            </span>
+                            <br></br>
+                            <span class="text-truncate me-0">
+                                <img src="{{ asset('FrontOffice/img/book.png') }}" alt="Icone personnalisée" class="icon-img me-2" style="width: 17px; height: auto;">{{ offer.descriptionO }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                        <div class="d-flex mb-3">
+                            <a class="btn btn-primary" style="margin-right: 10px" href="{{ path('app_condidature_new_front') }}">Apply to</a>
+                            <a href="{{ path('app_offer_pdf', {'id': offer.id}) }}" class="btn btn-outline-danger ">PDF</a>
+                        </div>
+                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>{{ offer.dateO ? offer.dateO|date('Y-m-d') : '' }}</small>
+                    </div>
+                </div>
+                <script>
+                    // initialize with defaults
+                    $("#input-id").rating();
+                    // with plugin options (do not attach the CSS class "rating" to your input if using this approach)
+                    $("#input-id").rating({'size':'sm'});
+                </script>
+                
+                <input id="input-id" type="text" class="rating"  data-size="sm" >
+            </div>
+        </div>
+        
+    </div>
+{% endfor %}
+
+    <div class="pagination justify-content-center">
+    {% do offers.setPageRange(3) %}
+    {{ knp_pagination_render(offers, 'pagination.html.twig') }}
+</div>
+
+
+
+<script>
+        function filterCards() {
+            const filter = document.getElementById('searchInput').value.toUpperCase();
+            const typeFilter = document.getElementById('typeFilter').value.toLowerCase();
+            const sortFilter = document.getElementById('sortFilter').value;
+            const cards = document.querySelectorAll('.job-item');
+
+            cards.forEach(card => {
+                const content = card.getAttribute('data-search').toUpperCase();
+                const type = card.getAttribute('data-type').toLowerCase();
+                const isVisible = content.includes(filter) && (typeFilter === '' || type.includes(typeFilter));
+                card.classList.toggle('d-none', !isVisible);
+            });
+
+            // Sort by salary
+            if (sortFilter !== '') {
+                const sortedCards = Array.from(cards).sort((a, b) => {
+                    const salaryA = parseFloat(a.getAttribute('data-salary'));
+                    const salaryB = parseFloat(b.getAttribute('data-salary'));
+                    if (sortFilter === 'asc') {
+                        return salaryA - salaryB;
+                    } else {
+                        return salaryB - salaryA;
+                    }
+                });
+
+                const parent = cards[0].parentNode;
+                parent.innerHTML = '';
+                sortedCards.forEach(card => {
+                    parent.appendChild(card);
+                });
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', filterCards);
+        document.getElementById('typeFilter').addEventListener('change', filterCards);
+        document.getElementById('sortFilter').addEventListener('change', filterCards);
+
+
+    </script>
 
 
 

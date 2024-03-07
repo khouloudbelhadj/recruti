@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
+
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 class Offer
 {
@@ -49,6 +50,9 @@ class Offer
 
     #[ORM\OneToMany(targetEntity: Condidature::class, mappedBy: 'offer')]
     private Collection $condidatures;
+
+    
+    
 
     public function __construct()
     {

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}Recruti{% endblock %}</title>
+    {% block title %}<title> | Recruti</title>{% endblock %}
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -20,6 +20,7 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('FrontOffice/lib/animate/animate.min.css') }}" rel="stylesheet">
@@ -31,6 +32,7 @@
     <!-- Template Stylesheet -->
     <link href="{{ asset('FrontOffice/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('FrontOffice/css/styl.css') }}" rel="stylesheet">
+    <link href="{{ asset('FrontOffice/css/stylle.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
 
@@ -67,8 +69,8 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Offers</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="{{ path('app_offer_index_front') }}" class="dropdown-item">Offer</a>
-                                <a href="{{ path('app_offer_show_front_condi') }}" class="dropdown-item">List of postulas</a>
-                                <a href="{{ path('app_condidature_index_front') }}" class="dropdown-item">My postulas</a>
+                                <a href="{{ path('app_offer_show_front_condi') }}" class="dropdown-item">List of apply</a>
+                                <a href="{{ path('app_condidature_index_front') }}" class="dropdown-item">My apply</a>
                             </div>
                     </div>
 

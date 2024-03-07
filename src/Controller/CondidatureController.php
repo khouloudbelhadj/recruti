@@ -11,9 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twilio\Rest\Client;
 
 #[Route('/condidature')]
 class CondidatureController extends AbstractController
+
 {
     #[Route('/', name: 'app_condidature_index', methods: ['GET'])]
     public function index(CondidatureRepository $condidatureRepository): Response
@@ -57,6 +59,8 @@ class CondidatureController extends AbstractController
             'form' => $form,
         ]);
     }
+    private Client $twilio;
+
     #[Route('/newcondidature', name: 'app_condidature_new_front', methods: ['GET', 'POST'])]
     public function newfront(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -75,6 +79,31 @@ class CondidatureController extends AbstractController
 
             $entityManager->persist($condidature);
             $entityManager->flush();
+             
+
+            $account_sid = 'ACb5f253c601a070c2182351ede8876cc3';
+            $auth_token = 'ade07c14805f8da52e2590cdda0c8711';
+            $from = '+12678708362'; // Twilio phone number from which the SMS will be sent
+            $to = '+21629797918'; // Recipient phone number
+            $message = 'Your application has been sent successfully. Your file is now being processed.'; // Message to be sent
+
+            try {
+                // Create Twilio client
+                $twilio = new Client($account_sid, $auth_token);
+    
+                // Send SMS using Twilio service
+                $twilio->messages->create(
+                    $to,
+                    [
+                        'from' => $from,
+                        'body' => $message
+                    ]
+                );
+    
+            } catch (\Exception $e) {
+                // Handle other exceptions
+                echo "Error: " . $e->getMessage();
+            }
 
             return $this->redirectToRoute('app_condidature_index_front', [], Response::HTTP_SEE_OTHER);
         }

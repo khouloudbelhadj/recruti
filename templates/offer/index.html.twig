@@ -1,29 +1,31 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block title %}<title>Liste des Offres</title>{% endblock %}
+{% block title %}<title>List  Offre</title>{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="mb-4">Liste des Offres</h1>
+        <h1 class="mb-4">List of Offre</h1>
         <a href="{{ path('app_offer_new') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
 
 
         <table class="table table-borderless table-data3">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Titre</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Type</th>
-                    <th scope="col">Localisation</th>
+                    <th scope="col">Location</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Duree</th>
-                    <th scope="col">Salarie</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Salary</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for offer in offers %}
                     <tr>
+                         <td>{{ offer.id }}</td>
                         <td>{{ offer.titreO }}</td>
                         <td>{{ offer.descriptionO }}</td>
                         <td>{{ offer.typeO }}</td>
@@ -43,6 +45,120 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Number of Offers</h5>
+                        <p class="card-text" id="totalOffers"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Most Common Offer Type</h5>
+                        <p class="card-text" id="mostCommonOfferType"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <canvas id="myChart" style="width:100%;max-width:900px;margin-left:80px"></canvas>
     </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+let Title_o = [];
+let salarie_o = [];
+
+{% for offer in offers %}
+    Title_o.push("{{ offer.titreO }}");
+    salarie_o.push("{{ offer.salarieO }}");
+{% endfor %}
+
+// Fonction pour générer des couleurs aléatoires
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 15)];
+    }
+    return color;
+}
+
+
+// Création des données pour le graphique
+let chartData = {
+    labels: Title_o,
+    datasets: [{
+        data: salarie_o,
+        backgroundColor: Title_o.map(name => getRandomColor())
+    }]
+};
+
+// Configuration des options du graphique
+let chartOptions = {
+    legend: { display: false },
+    title: {
+        display: true,
+        text: "Taux des offres"
+    },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+    
+};
+
+// Création du graphique
+let ctx = document.getElementById('myChart').getContext('2d');
+let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: chartData,
+    options: chartOptions
+});
+</script>
+<script>
+    // Function to calculate the most common element in an array
+    function mostCommon(arr) {
+        let counts = {};
+        let maxCount = 0;
+        let mostCommonItem = null;
+
+        for (let item of arr) {
+            counts[item] = (counts[item] || 0) + 1;
+
+            if (counts[item] > maxCount) {
+                maxCount = counts[item];
+                mostCommonItem = item;
+            }
+        }
+
+        return mostCommonItem;
+    }
+
+    // Get data from the table
+    let typeColumnIndex = 4; // Assuming the 'Type' column is at index 4 (replace with the correct index)
+    let typeColumn = document.querySelectorAll('.table-data3 tbody tr td:nth-child(' + typeColumnIndex + ')');
+
+    let offerTypes = [];
+    for (let cell of typeColumn) {
+        offerTypes.push(cell.innerText.trim());
+    }
+
+    // Calculate most common offer type
+    let mostCommonType = mostCommon(offerTypes);
+    document.getElementById('mostCommonOfferType').innerText = mostCommonType;
+
+    // Calculate total number of offers
+    let totalOffers = offerTypes.length;
+    document.getElementById('totalOffers').innerText = totalOffers;
+</script>
+
+
 {% endblock %}
+

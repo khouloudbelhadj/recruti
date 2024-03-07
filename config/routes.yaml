@@ -13,3 +13,7 @@ app_profile:
 back:
     path: back
     controller: App\Controller\TemplateController::indexBack
+
+search_route:
+    path: /search
+    controller: App\Controller\OfferController::searchAction

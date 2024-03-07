@@ -1,55 +1,49 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}<title>List of postulate</title>{% endblock %}
+{% block title %}
+    <title>List of apply</title>
+{% endblock %}
 
 {% block body %}
 <div class="container-xxl py-5 bg-dark page-header mb-5">
             <div class="container my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown"> List of Postulas</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown"> List of Apply</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb text-uppercase">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white active" aria-current="page"> Postulas</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page"> Apply</li>
                     </ol>
                 </nav>
             </div>
+</div>
+<div class="row justify-content-center">
+        {% for condidature in condidatures %}
+        {% set img = condidature.cvC %}
+        <div class="col-md-6 mb-4">
+            <div class="card22">
+                <div class="card22-image">
+                    <img style="width:150px;height:200px;margin-left:230px" src="{{asset(img) }}">
+                </div>
+                <div class="card22-caption">
+                    <h5 class="category text-success" style="margin-left:250px">{{ condidature.nomC }}</h5>
+                    <br>
+                    </br>
+                    <p><strong>Email :     </strong>{{ condidature.emailC }}</p>
+                    <p class="card22-description"><strong>Cover letter :     </strong>{{ condidature.lettreMo }}</p>
+                    <p><strong>Corresponding offer :     </strong>{{ condidature.offer }}</p>
+                </div>
+                <div class="ftr d-flex justify-content-between">
+                    <a href="{{ path('app_condidature_show_front', {'id': condidature.id}) }}" class="btn btn-outline-secondary btn-sm">Show</a>
+                    <a href="{{ path('app_condidature_edit_front', {'id': condidature.id}) }}" class="btn btn-outline-danger btn-sm">Edit</a>
+                </div>
+            </div>
         </div>
- 
-   <div class="container mt-4">
-        <h1 class="mb-4"></h1>
-
-        <table class="table table-borderless table-data3">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nom de condidat</th>
-                    <th scope="col">Email de condidat</th>
-                    <th scope="col">CV de condidat</th>
-                    <th scope="col">Lettre de motivation</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                {% for condidature in condidatures %}
-                    {% set img = condidature.cvC %}
-                    <tr>
-                        <td>{{ condidature.nomC }}</td>
-                        <td>{{ condidature.emailC }}</td>
-                        <td><img style="width:150px;height:150px;" src="{{asset(img) }}"></td>
-                        <td>{{ condidature.lettreMo }}</td>
-                        <td>
-                        <a href="{{ path('app_condidature_show_front', {'id': condidature.id}) }}"class="btn btn-outline-secondary btn-sm">Show</a>
-                        <a href="{{ path('app_condidature_edit_front', {'id': condidature.id}) }}"class="btn btn-outline-danger btn-sm">Edit</a>
-                         </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                         <td colspan="6">no records found</td>
-                     </tr>
-                 {% endfor %}
-            </tbody>
-        </table>
-
+        {% else %}
+        <div class="col-md-12">
+            <p class="text-center">No records found</p>
+        </div>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}

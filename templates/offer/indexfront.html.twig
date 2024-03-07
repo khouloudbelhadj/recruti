@@ -43,12 +43,12 @@
                     </tr>
                     
                     <tr>
-                        <th>Duree : </th>
+                        <th>Duration : </th>
                         <td>{{ offer.dureO }}</td>
                     </tr>
 
                     <tr>
-                        <th>Salaire : </th>
+                        <th>Salary : </th>
                         <td>{{ offer.salarieO }}<strong> DT</strong></td>
                     </tr>
                     <tr>
@@ -72,7 +72,16 @@
                             <td colspan="9">No records found</td>
                         </tr>
             {% endfor %}
+            <br>
+            </br>
+            <br>
+            </br>
+          <div class="pagination justify-content-center">
+                {% do offers.setPageRange(3) %}
+                {{ knp_pagination_render(offers, 'pagination.html.twig') }}
+            </div>
         </div>
-                    
-                 
+
+                
+    
 {% endblock %}

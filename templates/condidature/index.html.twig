@@ -1,21 +1,22 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block title %}<title>Liste des Condidatures</title>{% endblock %}
+{% block title %}<title>Liste of apply</title>{% endblock %}
 
 {% block body %}
 
    <div class="container mt-4">
-        <h1 class="mb-4">Liste des Condidatures</h1>
+        <h1 class="mb-4">List of apply</h1>
         <a href="{{ path('app_condidature_new') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Create new</a>
 
 
         <table class="table table-borderless table-data3">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Nom de condidat</th>
-                    <th scope="col">Email de condidat</th>
-                    <th scope="col">CV de condidat</th>
-                    <th scope="col">Lettre de motivation</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Condidat name</th>
+                    <th scope="col">Email from condidat</th>
+                    <th scope="col">Condidat CV</th>
+                    <th scope="col">Cover letter</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                 {% for condidature in condidatures %}
                     {% set img = condidature.cvC %}
                     <tr>
+                        <td>{{ condidature.id }}</td>
                         <td>{{ condidature.nomC }}</td>
                         <td>{{ condidature.emailC }}</td>
                         <td><img style="width:150px;height:150px;" src="{{asset(img) }}"></td>

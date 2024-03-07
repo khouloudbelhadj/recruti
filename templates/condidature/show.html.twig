@@ -1,28 +1,28 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block title %}<title>Show Condidature</title>{% endblock %}
+{% block title %}<title>Show apply</title>{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="mb-4">Condidature</h1>
+        <h1 class="mb-4">Apply</h1>
         {% set img = condidature.cvC %}
 
         <table class="table">
             <tbody>
                 <tr>
-                    <th>Nom de condidat </th>
+                    <th>Name of condidate </th>
                     <td>{{condidature.nomC }}</td>
                 </tr>
                 <tr>
-                    <th>Email de condidat</th>
+                    <th>Email of Condidate</th>
                     <td>{{ condidature.emailC }}</td>
                 </tr>
                 <tr>
-                    <th>La lettre de motivation</th>
+                    <th>Cover letter</th>
                     <td>{{ condidature.lettreMo }}</td>
                 </tr>
                 <tr>
-                    <th>CV de condidat</th>
+                    <th>CV of condidate</th>
                     <td><img style="width:150px;height:150px;" src="{{ asset(img) }}"></td>
                 </tr>
             </tbody>

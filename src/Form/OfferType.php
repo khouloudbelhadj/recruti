@@ -47,6 +47,7 @@ class OfferType extends AbstractType
                 'html5'=>true,
                 'attr'=>['min'=>(new DateTime())->format('Y-m-d')],
             ])
+            
             ->add('dure_o',TextType::class, [
                 'attr' => [
                     'placeholder' => 'Duree',
