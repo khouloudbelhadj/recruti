@@ -10,6 +10,30 @@
         <a href="{{ path('app_event_stats') }}" class="btn btn-primary mb-4">Statistics</a>
 
 
+
+       <div class="row mb-3">
+    <div class="col-md-6">
+        <div class="input-group">
+            <input type="text" id="searchInput" placeholder="Search..." class="form-control rounded-pill">
+            <div class="input-group-append">
+                <span class="input-group-text bg-light rounded-pill"><i class="bi bi-search"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="rs-select2--light rs-select2--md">
+            <select class="form-select rounded-pill" name="roleFilter" id="roleFilter">
+                <option value="">Filter by Role</option>
+                <option value="Participant actif">Participant actif</option>
+                <option value="Observateur">Observateur</option>
+                <option value="Bénévole">Bénévole</option>
+                <option value="Expert">Expert</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
     <table class="table table-borderless table-data3">
                 <thead class="thead-dark">
             <tr>
@@ -45,4 +69,36 @@
     </table>
 </div>
 <a  href="{{ path('excel') }}" class="btn btn-primary m-2" style="display:block ; margin-bottom: 2.5em; background-color: #00A8B3;">Générer Excel  <i class="fa fa-table" aria-hidden="true"></i></a>
+
+<script>
+function filterTable() {
+    const filter = document.getElementById('searchInput').value.toUpperCase();
+    const roleFilter = document.getElementById('roleFilter').value.toLowerCase();
+    const rows = document.querySelectorAll('table tr');
+
+    for (let i = 1; i < rows.length; i++) {
+        const cols = rows[i].querySelectorAll('td');
+        let visible = false;
+
+        for (let j = 1; j <= 4; j++) {  // Assuming the relevant columns start from 2nd column
+            const cell = cols[j];
+            if (cell.innerText.toUpperCase().indexOf(filter) > -1) {
+                visible = true;
+                break;
+            }
+        }
+
+        // Filtre par thème
+        const roleCell = rows[i].querySelector('td:nth-child(3)'); // Assuming role is in the 8th column
+        if (roleFilter !== '' && roleCell) {
+            visible = visible && roleCell.innerText.toLowerCase().includes(roleFilter);
+        }
+
+        rows[i].style.display = visible ? '' : 'none';
+    }
+}
+
+document.getElementById('searchInput').addEventListener('keyup', filterTable);
+document.getElementById('roleFilter').addEventListener('change', filterTable);
+</script>
 {% endblock %}
