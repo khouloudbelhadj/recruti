@@ -40,7 +40,7 @@ class Rendezvous
     private ?Calendrier $calendrier = null;
 
     #[ORM\ManyToOne(targetEntity: Offer::class, inversedBy: 'rendezvouses')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Offer $offer = null;
 
     public function getId(): ?int
@@ -124,4 +124,6 @@ class Rendezvous
         $this->offer = $offer;
         return $this;
     }
+
+    
 }

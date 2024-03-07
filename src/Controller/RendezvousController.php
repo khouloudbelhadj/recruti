@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Rendezvous;
+use App\Entity\offer;
 use App\Form\RendezvousType;
 use App\Repository\RendezvousRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -90,26 +91,34 @@ public function index(RendezvousRepository $rendezvousRepository, Request $reque
    
    
     #[Route('/create', name: 'app_rendezvous_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager): Response
-{
-    $rendezvous = new Rendezvous();
-    $rendezvous->setDateRendez(new \DateTime());
-
-    $form = $this->createForm(RendezvousType::class, $rendezvous);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager->persist($rendezvous);
-        $entityManager->flush();
-
-        // Redirect to the details page of the newly created rendezvous
-        return $this->redirectToRoute('app_rendezvous_show_detail', ['id' => $rendezvous->getId()]);
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $rendezvous = new Rendezvous();
+        $rendezvous->setDateRendez(new \DateTime());
+    
+        $form = $this->createForm(RendezvousType::class, $rendezvous);
+        $form->handleRequest($request);
+    
+        // Check if the offer is null and set its id to 1
+        if ($rendezvous->getOffer() === null) {
+            $offer = new Offer();
+    // Set the offer ID to 1
+    $offer = $entityManager->getRepository(Offer::class)->find(1);
+    $rendezvous->setOffer($offer);
+        }
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($rendezvous);
+            $entityManager->flush();
+    
+            // Redirect to the details page of the newly created rendezvous
+            return $this->redirectToRoute('app_rendezvous_show_detail', ['id' => $rendezvous->getId()]);
+        }
+    
+        return $this->render('rendezvous/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
-
-    return $this->render('rendezvous/new.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
 
     #[Route('/{id}', name: 'app_rendezvous_show', methods: ['GET'])]
     #[ParamConverter('rendezvou', class: Rendezvous::class)]
