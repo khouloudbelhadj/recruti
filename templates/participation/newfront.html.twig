@@ -23,11 +23,16 @@
         </div>
 
     {{ include('participation/_form.html.twig') }}
+    <div>
+        <td>
         <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
-                <a href="{{ path('app_participation_index_front') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;">go to participation List</a>
+                <a href="{{ path('app_participation_index_front') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;">View My Participations </a>
         </button>
-        <button class="btn btn-sm" style="background-color: white; margin-left:auto;"> 
-                <a href="{{ path('app_event_index_front_condidat') }}"><img  src="{{ asset('BackOffice/img/retour.png') }}" style="width: 30px; height: 30px;">go to event List</a>
+        </td>
+        <td>
+        <button class="btn btn-sm" style="background-color: white; margin-left:850px;"> 
+                <a href="{{ path('app_event_index_front_condidat') }}">Go To Events List<img  src="{{ asset('BackOffice/img/avant.png') }}" style="width: 30px; height: 30px;"></a>
         </button>
+        </td>
     </div>
 {% endblock %}

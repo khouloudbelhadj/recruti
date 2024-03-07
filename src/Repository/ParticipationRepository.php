@@ -52,4 +52,25 @@ class ParticipationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getParticipationCountByEvent()
+{
+    return $this->createQueryBuilder('p')
+        ->select('e.nom_e as event_title, COUNT(p.id) as participation_count')
+        ->join('p.event', 'e')
+        ->groupBy('e.nom_e')
+        ->getQuery()
+        ->getResult();
+}
+public function getParticipationCountByThemechart()
+{
+    return $this->createQueryBuilder('p')
+    ->select('e.theme_e as event_title, COUNT(p.id) as participation_count')
+    ->join('p.event', 'e')
+    ->groupBy('e.theme_e')
+    ->getQuery()
+    ->getResult();
+
+       
+}
 }

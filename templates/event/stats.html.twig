@@ -1,8 +1,9 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block title %}<title>Statistics</title>{% endblock %}
+{% block title %}Event Statistics{% endblock %}
 
 {% block body %}
+
     <div class="container mt-4">
         <h1 class="mb-4">Statistics</h1>
 
@@ -57,17 +58,156 @@
                 </div>
             </div>
         </div>
-
-        <div class="mt-4">
-            <h5>Participations per Event</h5>
-            <ul class="list-group">
-                {% for event in events %}
-                    <li class="list-group-item">
-                        <span class="badge bg-info">{{ event.getParticipations().count() }}</span>
-                        {{ event.getNomE() }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
     </div>
+
+
+    <div class="chart-container" style="position: relative; height: 70vh; width: 60vw; margin: 0 auto; aspect-ratio: auto; margin-top: 8em">
+    <h3>Distribution of events according to their locations</h3>
+     <canvas style="aspect-ratio: auto" id="lieuChart"></canvas>
+    </div>
+
+<div class="chart-container" style="position: relative; height: 70vh; width: 60vw; margin: 0 auto; aspect-ratio: auto; margin-top: 8em">
+    <h3>Distribution of events according to their themes</h3>
+    <canvas style="aspect-ratio: auto" id="themeChart"></canvas>
+</div>
+
+<div class="chart-container" style="position: relative; height: 70vh; width: 60vw; margin: 0 auto; aspect-ratio: auto; margin-top: 8em">
+    <h3>Distribution of participations by event</h3>
+    <canvas style="aspect-ratio: auto" id="participationChart"></canvas>
+</div>
+
+<div class="chart-container" style="position: relative; height: 70vh; width: 60vw; margin: 0 auto; aspect-ratio: auto; margin-top: 8em">
+    <h3>Distribution of participations by theme</h3>
+    <canvas style="aspect-ratio: auto" id="participationByThemeChart"></canvas>
+</div>
+    
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+
+       const generateRandomColor = () => {
+  const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+  return randomColor;
+};
+
+const generateColors = (numColors) => {
+  const colors = [];
+  for (let i = 0; i < numColors; i++) {
+    const color = generateRandomColor();
+    colors.push(color);
+  }
+  return colors;
+};
+
+// Utilisation de la fonction pour générer une séquence de 100 couleurs
+const backgroundColors = generateColors(100);
+
+// Maintenant, backgroundColors contient une séquence de 100 couleurs différentes
+console.log(backgroundColors);
+        document.addEventListener('DOMContentLoaded', function () {
+            let lieuChart = document.querySelector("#lieuChart");
+            let lieuData = {{ lieuData|raw }};
+
+            let dataLieu = {
+                labels: lieuData.map(entry => entry.lieu),
+                datasets: [{
+                    label: "Répartition des événements selon leurs lieux",
+                    data: lieuData.map(entry => entry.nombre),
+                    backgroundColor:  backgroundColors
+                }]
+            };
+
+            let options = {
+                responsive: true,
+                maintainAspectRatio: false
+            };
+
+            let lieuChartInstance = new Chart(lieuChart, {
+                type: "pie",
+                data: dataLieu,
+                options:{
+            title: {
+                display: true,
+                text: 'Répartition des événements selon leurs lieux'
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+            });
+
+            let themeChart = document.querySelector("#themeChart");
+            let themeData = {{ themeData|raw }};
+
+            let dataTheme = {
+                labels: themeData.map(entry => entry.theme),
+                datasets: [{
+                    label: "Répartition des événements selon leurs thèmes",
+                    data: themeData.map(entry => entry.nombre),
+                    backgroundColor: backgroundColors
+                }]
+            };
+
+            let themeChartInstance = new Chart(themeChart, {
+                type: "pie",
+                data: dataTheme,
+                options: {
+            title: {
+                display: true,
+                text: 'Répartition des événements selon leurs thèmes'
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+            });
+             let participationChart = document.querySelector("#participationChart");
+        let participationData = {{ participationByEvent|raw }};
+
+        let dataParticipation = {
+            labels: participationData.map(entry => entry.event_title),
+            datasets: [{
+                label: "Répartition des participations par événement",
+                data: participationData.map(entry => entry.participation_count),
+                backgroundColor: backgroundColors
+            }]
+        };
+
+        let participationChartInstance = new Chart(participationChart, {
+            type: "pie",
+            data: dataParticipation,
+            options: {
+            title: {
+                display: true,
+                text: 'Répartition des participations par événement'
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+        });
+       let participationByThemeChart = document.querySelector("#participationByThemeChart");
+        let participationByThemeData = {{ participationByThemechart|raw }};
+
+        let dataParticipationByTheme = {
+            labels: themeData.map(entry => entry.theme), // Utilisez le champ 'theme' pour les labels
+            datasets: [{
+                label: "Répartition des participations par thème",
+                data: participationByThemeData.map(entry => entry.participation_count),
+                backgroundColor: backgroundColors
+            }]
+        };
+
+        let participationByThemeChartInstance = new Chart(participationByThemeChart, {
+            type: "pie",
+            data: dataParticipationByTheme,
+            options:{
+            title: {
+                display: true,
+                text: 'Répartition des participations par thème'
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+        });
+        });
+    </script>
 {% endblock %}

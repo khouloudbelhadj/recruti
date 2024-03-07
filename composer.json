@@ -18,6 +18,7 @@
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpoffice/phpspreadsheet": "^2.0",
         "phpstan/phpdoc-parser": "^1.25",
+        "picqer/php-barcode-generator": "^2.4",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",

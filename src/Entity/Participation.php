@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[UniqueEntity(fields: ['nom_participant'], message: 'This participant name is already in use. Please choose another one.')]
+
 #[ORM\Entity(repositoryClass: ParticipationRepository::class)]
 class Participation
 {
@@ -101,5 +101,15 @@ class Participation
         $this->event = $event;
 
         return $this;
+    }
+
+
+    public function getparticipationDataForQrCode(): string
+    {
+        $data = "Id: {$this->id}, Role: {$this->role}, Status: {$this->statut}, Feedback: {$this->feedback}, Participant Name: {$this->nom_participant}, event Name: {$this->event}";
+
+        
+
+        return $data;
     }
 }

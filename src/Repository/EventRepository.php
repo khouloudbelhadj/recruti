@@ -90,4 +90,34 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getLieuData()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.lieu_e as lieu, COUNT(e.id) as nombre')
+            ->groupBy('e.lieu_e')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getThemeData()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.theme_e as theme, COUNT(e.id) as nombre')
+            ->groupBy('e.theme_e')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getParticipationCountByThemechart()
+{
+    return $this->createQueryBuilder('e')
+        ->select('e.theme_e as theme, COUNT(p.id) as participationCount')
+        
+        ->groupBy('e.theme_e')
+        ->getQuery()
+        ->getResult();
+
+       
+}
+
 }

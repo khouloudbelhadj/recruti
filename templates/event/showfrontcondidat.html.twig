@@ -59,6 +59,10 @@
                 <th>Number of Participations</th>
                 <td>{{ event.participations.count() }}</td>
             </tr>
+             <tr>
+                <th>Event QRcode</th>
+                <td><img id="qrCodeImage" src="data:image/png;base64,{{ qrCodeImage }}" alt="QR Code" ></td>
+            </tr>
         </tbody>
     </table>
 
