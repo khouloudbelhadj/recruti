@@ -45,4 +45,32 @@ class RessourceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findBySearchTermAndCriteria(string $searchTerm, string $criteria): array
+    {
+        $qb = $this->createQueryBuilder('r');
+
+        if ($criteria === 'titre_b') {
+            $qb->where('r.titre_b LIKE :searchTerm');
+        } elseif ($criteria === 'type_b') {
+            $qb->where('r.type_b LIKE :searchTerm');
+        } else {
+            throw new \InvalidArgumentException('Invalid search criteria.');
+        }
+
+        return $qb
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByCombinedSearch(string $titreSearch, string $typeSearch): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.titre_b LIKE :titreSearch')
+            ->andWhere('r.type_b LIKE :typeSearch')
+            ->setParameter('titreSearch', '%' . $titreSearch . '%')
+            ->setParameter('typeSearch', '%' . $typeSearch . '%')
+            ->getQuery()
+            ->getResult();
+    }    
+
 }

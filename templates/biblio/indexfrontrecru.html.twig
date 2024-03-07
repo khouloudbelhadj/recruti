@@ -1,0 +1,57 @@
+
+{% extends 'basefront.html.twig' %}
+{% block title %}<title>List of Libraries</title>{% endblock %}
+
+{% block body %}
+<div class="container-xxl py-5 bg-dark page-header mb-5">
+    <div class="container my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Libraries</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb text-uppercase">
+                <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('app_biblio_index_front_recru') }}">Libraries</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">Show Libraries List</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Library Listing</h1>
+    <form method="get" action="{{ path('app_biblio_index_front_recru') }}" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="nameSearch" class="form-control" placeholder="Search by Name...">
+            <input type="text" name="fieldSearch" class="form-control" placeholder="Search by Field...">
+            <input type="text" name="dateSearch" class="form-control" placeholder="Search by Date...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+            <a href="{{ path('app_biblio_new') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Add new Library</a>
+
+    {% for biblio in biblios %}
+    {% set img = biblio.imageB %}
+    <a href="{{ path('app_biblio_show_front_recru', {'id': biblio.id}) }}">
+        <div class="slide-container">
+            <div class="wrapper">
+                <div class="clash-card barbarian"><br>
+                    <img style="width:70%;height:70%;border-radius: 14px ;" src="{{ asset(img)}}"><br>
+                    <div class="clash-card__level clash-card__level--barbarian">{{ biblio.nomB }}</div>
+                    <div class="clash-card__unit-description">{{ biblio.domaineB }}</div>
+                    <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+                        <div class="">
+                            <div class="stat-value">Date Creation</div>
+                            <div class="stat">{{ biblio.dateCreationB ? biblio.dateCreationB|date('Y-m-d') : '' }}</div>
+                        </div>
+                    </div>
+
+                </div> <!-- end clash-card barbarian -->
+            </div> <!-- end wrapper -->
+</div> <!-- end container -->
+
+                     {% else %}
+                        <tr>
+                            <td colspan="10">No records found</td>
+                        </tr>
+                    {% endfor %} 
+{% endblock %}

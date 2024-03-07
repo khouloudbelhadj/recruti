@@ -1,0 +1,59 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}<title> Libraries</title>{% endblock %}
+
+{% block body %}
+
+        <!-- Header End -->
+        <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Libraries Listing</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Libraries </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- Header End -->
+
+<a href="{{ path('app_biblio_ressources_front', {'id': biblio.id}) }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Find Resources</a>
+    <br>
+    <div class="container mt-4">
+        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Libraries Listing</h1><br>
+        {% set img = biblio.imageB %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Image</th>
+                <td><img style="width:150px;height:150px;" src="{{ asset(img) }}"></td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ biblio.nomB }}</td>
+            </tr>
+            <tr>
+                <th>Field</th>
+                <td>{{ biblio.domaineB }}</td>
+            </tr>
+            <tr>
+                <th>Creation Date</th>
+                <td>{{ biblio.dateCreationB ? biblio.dateCreationB|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div align="center">
+              <div style="margin-right:700px;margin-top:3px;">
+             <a href="{{ path('app_biblio_edit_front', {'id': biblio.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit</a>
+            <div style="margin-right:47px;margin-top:3px;">
+                {{ include('biblio/delete_formfront.html.twig') }}
+            </div>
+
+        </div>      
+            <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+                <a href="{{ path('app_biblio_index_front_recru') }}"><img  src="{{ asset('FrontOffice/img/arriere.png') }}" style="width: 40px; height: 40px;"></a>
+            </button>
+{% endblock %}

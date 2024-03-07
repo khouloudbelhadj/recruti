@@ -27,9 +27,12 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('FrontOffice/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('FrontOffice/css/bibliofront.css') }}" rel="stylesheet">
+    <link href="{{ asset('FrontOffice/css/bibliorecherche.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('FrontOffice/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('FrontOffice/css/styl.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
 
@@ -68,8 +71,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Libraries</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{{ path('app_biblio_show_front_ressource') }}" class="dropdown-item">Libraries</a>
-                                <a href="{{ path('app_biblio_index_front') }}" class="dropdown-item">Libraries List </a>
+                                <a href="{{ path('app_biblio_index_front_recru') }}" class="dropdown-item">List of Libraries</a>
+                                <a href="{{ path('app_ressource_index_front_recru') }}" class="dropdown-item">List of Resources </a>
                             </div>
                     </div>
                     

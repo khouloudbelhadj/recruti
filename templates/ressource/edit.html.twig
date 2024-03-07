@@ -4,8 +4,8 @@
 {% block body %}
     <div class="card" style="margin-left:40px;margin-top:25px;margin-right:40px;">
         <div class="card-header" align="center"><br>
-           <h1 class="mb-4">Edit Resource</h1></div>
-    {{ include('ressource/_form.html.twig', {'button_label': 'Update'}) }}
+        <h1 class="mb-4"style="color: #a90909;"><strong>Edit Resource</strong></h1>
+    {{ include('ressource/_form.html.twig', {'button_label': 'Edit'}) }}
         <div style="margin-left:350px; margin-top:4px;">
             {{ include('ressource/_delete_form.html.twig') }}
          </div>
@@ -15,4 +15,5 @@
          </div><br>
     
     </div>
+    <br><br>
 {% endblock %}

@@ -1,0 +1,146 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,900);
+
+.slide-container {
+  display: inline-block;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 20px;
+  width: 350px;
+  text-align: center;
+}
+.wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to the next line */
+  justify-content: space-between; /* Distribute wrappers evenly */
+  margin-bottom: 20px; /* Add margin between wrappers */
+  padding-top: 40px;
+  padding-bottom: 40px;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+.clash-card:hover{
+  box-shadow: 10px 10px 10px 10px rgb(151, 145, 145);
+  height: 350px;
+  width: 350px;
+  animation-name: example;
+  animation-duration: 5s;
+  animation-delay: 2s;
+}
+
+.clash-card {
+  background: rgb(239, 218, 218);
+  width: fit-content;
+  display: inline-block;
+  margin: auto;
+  border-radius: 14px ;
+  position: relative;
+  text-align: center;
+}
+
+.clash-card__image {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  
+}
+
+
+
+.clash-card__level {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.clash-card__level--barbarian {
+  color: #a90909;
+  font-size: 15px;
+}
+
+.clash-card__unit-name {
+  font-size: 26px;
+  color: #a90909;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.clash-card__unit-description {
+  align-self: center;
+  inline-size: 300px;
+  overflow-wrap: break-word;
+  padding: 20px;
+  margin-bottom: 10px;  
+  color: #000000;
+}
+
+.clash-card__unit-stats--barbarian {
+  background: #a90909;
+  
+  
+  .one-third {
+    
+     border-right: 1px solid #000000;
+  }
+}
+
+.clash-card__unit-stats {
+
+  width: 100%;
+  color: white;
+  font-weight: 700;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  
+  .one-third {
+    
+    width: 33%;
+    float: left;
+    padding: 20px 15px;
+  }
+  
+  sup {
+    position: absolute;
+    bottom: 4px; 
+    font-size: 12px;
+    margin-left: 2px;
+  }
+  
+  .stat {
+    position: relative;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .stat-value {
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .no-border {
+    border-right: none;
+  }
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.slick-prev {
+  left: 100px;
+  z-index: 999;
+}
+
+.slick-next {
+  right: 100px;
+  z-index: 999;
+}

@@ -1,0 +1,64 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}<title>Resource Details</title>{% endblock %}
+
+{% block body %}
+    <!-- Header End -->
+    <div class="container-xxl py-5 bg-dark page-header mb-5">
+        <div class="container my-5 pt-5 pb-4">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Resource Details</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb text-uppercase">
+                    <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_biblio_index_front_recru') }}">Libraries</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_ressource_index_front_recru') }}">Resources</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">Details Resource </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Header End -->
+      <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Resource Details</h1>
+
+    <!-- Resource Detail Start -->
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row gy-5 gx-4">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center mb-5">
+                        <img class="flex-shrink-0 img-fluid border rounded" src="{{ asset(ressource.imageBRessource) }}" alt="" style="width: 350px; height: 350px;">
+                        <div class="text-start ps-4">
+                         <h4 class="mb-3">Title : {{ ressource.titreB }}</h4>
+                            <span class="text-truncate me-3"><i class=""></i><strong>Type :</strong> {{ ressource.typeB }}</span>
+                            <span class="text-truncate me-3"><i class=""></i><strong>Field : </strong>{{ ressource.categorieRessoB }}</span>
+                         <br><br><h4 class="mb-3">Resource Description : </h4>
+                        <p>{{ ressource.descriptionB }}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
+                        <h4 class="mb-4">Resource Summary</h4>
+                        <p><i class="fa fa-angle-right text-primary me-2"></i><strong>Published On :</strong> {{ ressource.datePublicaB|date('d M, Y') }}</p>
+                        <p><i class="fa fa-angle-right text-primary me-2"></i><strong>Type :</strong> {{ ressource.typeB }}</p>
+                        <p><i class="fa fa-angle-right text-primary me-2"></i><strong>Field :</strong> {{ ressource.categorieRessoB }}</p>
+                         <p><i class="fa fa-angle-right text-primary me-2"></i><strong>Title :</strong> {{ ressource.titreB }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Job Resource End -->
+        <div align="center">
+              <div style="margin-right:700px;margin-top:3px;">
+             <a href="{{ path('app_ressource_edit_front', {'id': ressource.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit</a>
+            <div style="margin-right:47px;margin-top:3px;">
+                {{ include('ressource/_delete_form_front.html.twig') }}
+            </div>
+
+        </div>      
+            <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+                <a href="{{ path('app_ressource_index_front_recru') }}"><img  src="{{ asset('FrontOffice/img/arriere.png') }}" style="width: 40px; height: 40px;"></a>
+            </button>
+{% endblock %}

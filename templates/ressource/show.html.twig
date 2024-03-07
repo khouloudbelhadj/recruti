@@ -1,44 +1,58 @@
 {% extends 'baseBack.html.twig' %}
-{% block title %}<title>Show Ressource</title>{% endblock %}
-
+{% block title %}<title>Show Resource</title>{% endblock %}
 {% block body %}
     <div class="container mt-4"><br>
-            <h1 class="mb-4">Show Resource</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ressource.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ ressource.titreB }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ ressource.typeB }}</td>
-            </tr>
-            <tr>
-                <th>Date Publication</th>
-                <td>{{ ressource.datePublicaB ? ressource.datePublicaB|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Field</th>
-                <td>{{ ressource.categorieRessoB }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <div align="center">
-
-    <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit Resource</a>
-            
+        <div class="card-header" align="center"><br>
+            <h1 class="mb-4" style="color: #a90909;"><strong>Show Resource</strong></h1>
+        </div>
+        {% set img = ressource.imageBRessource %}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ ressource.id }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ ressource.titreB }}</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ ressource.typeB }}</td>
+                </tr>
+                <tr>
+                    <th>Date Publication</th>
+                    <td>{{ ressource.datePublicaB ? ressource.datePublicaB|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Field</th>
+                    <td>{{ ressource.categorieRessoB }}</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>
+                        <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}">
+                            <img style="width:150px;height:150px;" src="{{ asset(img) }}">
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ ressource.descriptionB }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div align="center">
+            <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="btn btn-outline-secondary btn-sm" style="margin:3px;">Edit Resource</a>
             <div style="margin-right:47px;margin-top:3px;">
-                 {{ include('ressource/_delete_form.html.twig') }}
+                {{ include('ressource/_delete_form.html.twig') }}
             </div>
         </div>
-            <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
-                <a href="{{ path('app_ressource_index') }}"><img  src="{{ asset('BackOffice/img/svg/arriere.png') }}" style="width: 40px; height: 40px;"></a>
-            </button> 
-</div>
+        <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
+            <a href="{{ path('app_ressource_index') }}">
+                <img src="{{ asset('BackOffice/img/svg/arriere.png') }}" style="width: 40px; height: 40px;">
+            </a>
+        </button> 
+    </div>
+    <br><br><br>
 {% endblock %}

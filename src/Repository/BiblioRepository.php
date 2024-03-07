@@ -21,6 +21,43 @@ class BiblioRepository extends ServiceEntityRepository
         parent::__construct($registry, Biblio::class);
     }
 
+    /**
+     * Recherche les biblios en fonction du terme de recherche.
+     *
+     * @param string $searchTerm Le terme de recherche
+     *
+     * @return Event[] Liste des biblios correspondant au terme de recherche
+     */
+
+    public function findBySearchTermAndCriteria(string $searchTerm, string $criteria): array
+    {
+        $qb = $this->createQueryBuilder('b');
+
+        if ($criteria === 'nom_b') {
+            $qb->where('b.nom_b LIKE :searchTerm');
+        } elseif ($criteria === 'domaine_b') {
+            $qb->where('b.domaine_b LIKE :searchTerm');
+        } else {
+            throw new \InvalidArgumentException('Invalid search criteria.');
+        }
+
+        return $qb
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findByCombinedSearch(string $nameSearch, string $themeSearch): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('b.nom_b LIKE :nameSearch')
+            ->andWhere('b.domaine_b LIKE :fieldSearch')
+            ->setParameter('nameSearch', '%' . $nameSearch . '%')
+            ->setParameter('fieldSearch', '%' . $fieldSearch . '%')
+            ->getQuery()
+            ->getResult();
+    }    
+
+
 //    /**
 //     * @return Biblio[] Returns an array of Biblio objects
 //     */

@@ -1,6 +1,6 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}<title>Update Resource</title>{% endblock %}
+{% block title %}<title>Edit Resource</title>{% endblock %}
 
 {% block body %}
 <div class="container-xxl py-5 bg-dark page-header mb-5">
@@ -9,8 +9,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb text-uppercase">
                         <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ path('app_biblio_index_front') }}">Libraries</a></li>
-                        <li class="breadcrumb-item"><a href="{{ path('app_ressource_index_front') }}">Resources</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('app_biblio_index_front_recru') }}">Libraries</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('app_ressource_index_front_recru') }}">Resources</a></li>
                         <li class="breadcrumb-item text-white active" aria-current="page"> Edit Resources</li>
                     </ol>
                 </nav>
@@ -25,7 +25,7 @@
              {{ include('ressource/_delete_form_front.html.twig') }}
         </div>
             <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
-                <a href="{{ path('app_ressource_index_front') }}"><img  src="{{ asset('FrontOffice/img/arriere.png') }}" style="width: 40px; height: 40px;"></a>
+                <a href="{{ path('app_ressource_index_front_recru') }}"><img  src="{{ asset('FrontOffice/img/arriere.png') }}" style="width: 40px; height: 40px;"></a>
             </button>
     </div>
 

@@ -19,15 +19,12 @@
  </div>
 
 <div class="card" style="margin-left:40px;margin-top:25px;margin-right:40px;">
-    <br>
+    <br><br>
         <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Add New Resource</h1>
 
             {{ include('ressource/_form.html.twig') }}
                  <button class="btn btn-sm" style="background-color: white; margin-right:auto;"> 
-                <a href="{{ path('app_biblio_index_front') }}"><img  src="{{ asset('FrontOffice/img/arriere.png') }}" style="width: 40px; height: 40px;"></a>
+                <a href="{{ path('app_ressource_index_front_recru') }}"><img  src="{{ asset('FrontOffice/img/arriere.png') }}" style="width: 40px; height: 40px;"></a>
             </button>
                </div>
-
-</div>
-</div>
 {% endblock %}

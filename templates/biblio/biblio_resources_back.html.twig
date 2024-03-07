@@ -1,0 +1,36 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}<title>Resources of {{ biblio.nomB }}</title>{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <div class="card-header" align="center">
+        <h1 class="mb-4" style="color: #a90909;"><strong>Resources of {{ biblio.nomB }}</strong></h1>
+    </div>
+
+    <div class="row">
+        {% if biblio.ressources|length > 0 %}
+            {% for ressource in biblio.ressources %}
+                <div class="col-md-4 mb-4">
+                    <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ asset(ressource.imageBRessource) }}" alt="{{ ressource.titreB }}">
+                            <div class="card-body">
+                                <h5 class="card-title"><span style="color: #a90909;">Title : </span>{{ ressource.titreB }}</h5>
+                                <h5 class="card-title"><span style="color: #a90909;">Type : </span> {{ ressource.typeB }}</h5>
+                                <h5 class="card-title"><span style="color: #a90909;">Date Publication  : </span>{{ ressource.datePublicaB ? ressource.datePublicaB|date('Y-m-d') : '' }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col">
+                <h3 class="text-center" style="color: black;"><strong>No Resources Yet</strong></h3>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<br><br>
+{% endblock %}

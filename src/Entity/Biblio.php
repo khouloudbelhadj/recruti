@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
@@ -19,20 +20,38 @@ class Biblio
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message:"Please enter the library's Name.")]
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Please enter the library's name.")]
     private ?string $nom_b = null;
 
-    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Please enter the library's Field.")]
+    #[ORM\Column(length: 255)]
     private ?string $domaine_b = null;
 
+    
+    #[Assert\NotBlank(message:"Please enter the library's date.")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\GreaterThanOrEqual("now")]
-    private ?\DateTimeInterface $date_creation_b = null;
+    private ?\DateTimeInterface $date_creation_b = null; 
 
     #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'biblio',)]
     private Collection $ressources;
+
+    #[Assert\NotBlank(message:"Please choose an image for the Library.")]
+    #[ORM\Column(length: 255)]
+    private ?string $image_b = null;
+
+
+     public function getImageB(): ?string
+    {
+         return $this->image_b;
+    }
+
+    public function setImageB(?string $image_b): static
+    {
+        $this->image_b = $image_b;
+        return $this;
+    }
+
 
     public function __construct()
     {
