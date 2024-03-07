@@ -45,6 +45,7 @@ class RessourceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 public function findBySearchTermAndCriteria(string $searchTerm, string $criteria): array
     {
         $qb = $this->createQueryBuilder('r');
@@ -71,6 +72,7 @@ public function findBySearchTermAndCriteria(string $searchTerm, string $criteria
             ->setParameter('typeSearch', '%' . $typeSearch . '%')
             ->getQuery()
             ->getResult();
-    }    
+    }
+    
 
 }

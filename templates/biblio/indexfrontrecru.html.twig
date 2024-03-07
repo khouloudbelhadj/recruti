@@ -1,4 +1,3 @@
-
 {% extends 'basefront.html.twig' %}
 {% block title %}<title>List of Libraries</title>{% endblock %}
 
@@ -18,6 +17,8 @@
 
 <div class="container mt-4">
     <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Library Listing</h1>
+    <a href="{{ path('app_biblio_new_front') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Add new Library</a>
+
     <form method="get" action="{{ path('app_biblio_index_front_recru') }}" class="mb-3">
         <div class="input-group">
             <input type="text" name="nameSearch" class="form-control" placeholder="Search by Name...">
@@ -25,33 +26,73 @@
             <input type="text" name="dateSearch" class="form-control" placeholder="Search by Date...">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
-    </form>
+    </form> <br>
 
-            <a href="{{ path('app_biblio_new') }}" class="btn btn-success float-end" style="margin-block-end: 20px;">Add new Library</a>
+    <div class="" style="margin-left: 890px; margin-top: -15px; width: 147px;">
+        <select class="form-select rounded-pill bg-danger text-light" name="sort" id="sortFilter">
+            <option value="">Sort by Date </option>
+            <option value="asc">Oldest to Newest</option>
+            <option value="desc">Newest to Oldest</option>
+        </select>
+    </div>
 
     {% for biblio in biblios %}
-    {% set img = biblio.imageB %}
-    <a href="{{ path('app_biblio_show_front_recru', {'id': biblio.id}) }}">
-        <div class="slide-container">
-            <div class="wrapper">
-                <div class="clash-card barbarian"><br>
-                    <img style="width:70%;height:70%;border-radius: 14px ;" src="{{ asset(img)}}"><br>
-                    <div class="clash-card__level clash-card__level--barbarian">{{ biblio.nomB }}</div>
-                    <div class="clash-card__unit-description">{{ biblio.domaineB }}</div>
-                    <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
-                        <div class="">
-                            <div class="stat-value">Date Creation</div>
-                            <div class="stat">{{ biblio.dateCreationB ? biblio.dateCreationB|date('Y-m-d') : '' }}</div>
+        {% set img = biblio.imageB %}
+        <a href="{{ path('app_biblio_show_front_recru', {'id': biblio.id}) }}">
+            <div class="slide-container" data-date="{{ biblio.dateCreationB ? biblio.dateCreationB|date('Y-m-d') : '' }}">
+                <div class="wrapper">
+                    <div class="clash-card barbarian"><br>
+                        <img style="width:70%;height:70%;border-radius: 14px ;" src="{{ asset(img)}}"><br>
+                        <div class="clash-card__level clash-card__level--barbarian">{{ biblio.nomB }}</div>
+                        <div class="clash-card__unit-description">{{ biblio.domaineB }}</div>
+                        <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+                            <div class="">
+                                <div class="stat-value">Date Creation</div>
+                                <div class="stat">{{ biblio.dateCreationB ? biblio.dateCreationB|date('Y-m-d') : '' }}</div>
+                            </div>
                         </div>
-                    </div>
+                    </div> <!-- end clash-card barbarian -->
+                </div> <!-- end wrapper -->
+            </div> <!-- end slide-container -->
+        </a>
+    {% else %}
+        <tr>
+            <h3 class="text-center" style="color: #a90909;"><strong>No Resources Yet</strong></h3>
+        </tr>
+    {% endfor %}
 
-                </div> <!-- end clash-card barbarian -->
-            </div> <!-- end wrapper -->
-</div> <!-- end container -->
+    <div class="pagination justify-content-center">
+        {% do biblios.setPageRange(3) %}
+        {{ knp_pagination_render(biblios, 'pagination.html.twig') }}
+    </div>
+    <br>
+</div>
+<script>
+    function filterCards() {
+        const sortFilter = document.getElementById('sortFilter').value;
+        const cards = document.querySelectorAll('.slide-container');
 
-                     {% else %}
-                        <tr>
-                            <td colspan="10">No records found</td>
-                        </tr>
-                    {% endfor %} 
+        // Sort by date
+        if (sortFilter !== '') {
+            const sortedCards = Array.from(cards).sort((a, b) => {
+                const dateA = new Date(a.getAttribute('data-date'));
+                const dateB = new Date(b.getAttribute('data-date'));
+                if (sortFilter === 'asc') {
+                    return dateA - dateB;
+                } else {
+                    return dateB - dateA;
+                }
+            });
+
+            const parent = cards[0].parentNode;
+            parent.innerHTML = '';
+            sortedCards.forEach(card => {
+                parent.appendChild(card);
+            });
+        }
+    }
+
+    document.getElementById('sortFilter').addEventListener('change', filterCards);
+</script>
+
 {% endblock %}

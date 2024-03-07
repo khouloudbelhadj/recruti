@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Knp\Component\Pager\PaginatorInterface;
 use Pagerfanta\Pagerfanta;
 
 #[Route('/ressource')]
@@ -44,6 +45,7 @@ class RessourceController extends AbstractController
         }
     
         $ressources = $queryBuilder->getQuery()->getResult();
+
         return $this->render('ressource/index.html.twig', [
             'ressources' => $ressources,
         ]);
@@ -136,11 +138,12 @@ class RessourceController extends AbstractController
 
 /////Show for recru
 #[Route('/front/recru', name: 'app_ressource_index_front_recru', methods: ['GET'])]
-public function indexfrontrecru(Request $request,RessourceRepository $ressourceRepository): Response
+public function indexfrontrecru(Request $request,RessourceRepository $ressourceRepository,PaginatorInterface $paginator): Response
 {
     $titreSearch = $request->query->get('titreSearch');
     $typeSearch = $request->query->get('typeSearch');
     $dateSearch = $request->query->get('dateSearch');
+    $data=$ressourceRepository->findAll();
 
     $queryBuilder = $ressourceRepository->createQueryBuilder('r');
 
@@ -160,6 +163,13 @@ public function indexfrontrecru(Request $request,RessourceRepository $ressourceR
     }
 
     $ressources = $queryBuilder->getQuery()->getResult();
+
+    $ressources=$paginator->paginate(
+        $data,
+        $request->query->getInt('page',1),
+        6
+    );
+
     return $this->render('ressource/indexfront.html.twig', [
         'ressources' => $ressources,
     ]);
@@ -184,7 +194,7 @@ public function showfront(Ressource $ressource): Response
 }
 
 ////Add Resource
-#[Route('/newressource', name: 'app_ressource_new_front', methods: ['GET', 'POST'])]
+#[Route('/new/ressource', name: 'app_ressource_new_front', methods: ['GET', 'POST'])]
 public function newfront(Request $request, EntityManagerInterface $entityManager): Response
 {
     $ressource = new Ressource();

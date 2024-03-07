@@ -13,6 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\JsonResponse;///Rech Ajax
+use Knp\Component\Pager\PaginatorInterface;
+use Twilio\Rest\Client;
+use App\Repository\RessourceRepository;
+
+
 
 
 #[Route('/biblio')]
@@ -140,15 +146,17 @@ class BiblioController extends AbstractController
  }
   
   
+
 //front 
 
 /////Show for recru
 #[Route('/front/recru', name: 'app_biblio_index_front_recru', methods: ['GET'])]
-public function indexfrontrecru(Request $request,BiblioRepository $biblioRepository): Response
+public function indexfrontrecru(Request $request,BiblioRepository $biblioRepository,PaginatorInterface $paginator): Response
 {
     $nameSearch = $request->query->get('nameSearch');
     $fieldSearch = $request->query->get('fieldSearch');
     $dateSearch = $request->query->get('dateSearch');
+    $data=$biblioRepository->findAll();
 
     $queryBuilder = $biblioRepository->createQueryBuilder('b');
 
@@ -168,6 +176,12 @@ public function indexfrontrecru(Request $request,BiblioRepository $biblioReposit
     }
 
     $biblios = $queryBuilder->getQuery()->getResult();
+
+    $biblios=$paginator->paginate(
+        $data,
+        $request->query->getInt('page',1),
+        6
+    );
     return $this->render('biblio/indexfrontrecru.html.twig', [
         'biblios' => $biblios,
     ]);
@@ -187,7 +201,7 @@ public function showfront(Biblio $biblio): Response
 
 
 /////add library
-#[Route('/newfront', name: 'app_biblio_new_front', methods: ['GET', 'POST'])]
+#[Route('/new/front', name: 'app_biblio_new_front', methods: ['GET', 'POST'])]
 public function newfront(Request $request, EntityManagerInterface $entityManager): Response
 {
     $biblio = new Biblio();
@@ -196,8 +210,7 @@ public function newfront(Request $request, EntityManagerInterface $entityManager
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        $entityManager->persist($biblio);
-        $entityManager->flush();
+       
  
         $uploadedFile = $form->get('image_b')->getData();
         $formData = $uploadedFile->getPathname();
@@ -208,6 +221,30 @@ public function newfront(Request $request, EntityManagerInterface $entityManager
 
         $entityManager->persist($biblio);
         $entityManager->flush();
+
+        $account_sid = 'AC7dc9565d6fa5ce2f44b5b2a8f52fe159';
+            $auth_token = '7c574d04aaf7debf603a0c859049b5cd';
+            $from = '+17178645468'; // Twilio phone number from which the SMS will be sent
+            $to = '+21694000142'; // Recipient phone number
+            $message = 'The Library has been added successfully.'; // Message to be sent
+
+            try {
+                // Create Twilio client
+                $twilio = new Client($account_sid, $auth_token);
+    
+                // Send SMS using Twilio service
+                $twilio->messages->create(
+                    $to,
+                    [
+                        'from' => $from,
+                        'body' => $message
+                    ]
+                );
+    
+            } catch (\Exception $e) {
+                // Handle other exceptions
+                echo "Error: " . $e->getMessage();
+            }
 
         return $this->redirectToRoute('app_biblio_index_front_recru', [], Response::HTTP_SEE_OTHER);
     }
@@ -264,5 +301,54 @@ public function showResourcesFront(Biblio $biblio): Response
         'biblio' => $biblio,
     ]);
 }
+
+////Recherche Ajax
+    #[Route('/search', name: 'app_biblio_search', methods: ['GET'])]
+    public function search(Request $request, BiblioRepository $biblioRepository): JsonResponse
+    {
+        $nameSearch = $request->query->get('nameSearch');
+        $fieldSearch = $request->query->get('fieldSearch');
+        $dateSearch = $request->query->get('dateSearch');
+
+        $queryBuilder = $biblioRepository->createQueryBuilder('b');
+
+        if ($nameSearch) {
+            $queryBuilder->andWhere('b.nom_b LIKE :nameSearch')
+                ->setParameter('nameSearch', '%' . $nameSearch . '%');
+        }
+
+        if ($fieldSearch) {
+            $queryBuilder->andWhere('b.domaine_b LIKE :fieldSearch')
+                ->setParameter('fieldSearch', '%' . $fieldSearch . '%');
+        }
+
+        if ($dateSearch) {
+            $queryBuilder->andWhere('b.date_creation_b LIKE :dateSearch')
+                ->setParameter('dateSearch', '%' . $dateSearch . '%');
+        }
+
+        $biblios = $queryBuilder->getQuery()->getResult();
+
+        // Retournez les résultats au format JSON
+        return new JsonResponse(['biblios' => $biblios]);
+    }
+
+    #[Route('/biblio/stat', name: 'app_biblio_stat', methods: ['GET'])]
+public function sats(BiblioRepository $biblioRepository): Response
+{
+    $biblios = $biblioRepository->findAll();
+    $totalBiblios = count($biblios);
+    $biblioCountByDomain = $biblioRepository->getBiblioCountByDomain();
+    $ressourceCountByBiblio = $biblioRepository->getRessourceCountByBiblio();
+
+    return $this->render('biblio/index.html.twig', [
+        'biblios' => $biblios,
+        'totalBiblios' => $totalBiblios,
+        'biblioCountByDomain' => $biblioCountByDomain,
+        'ressourceCountByBiblio' => $ressourceCountByBiblio,
+    ]);
+}
+
+
 
 }
