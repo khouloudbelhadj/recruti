@@ -1,0 +1,57 @@
+<div class="card-body card-block">
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}},{'attr':{'class':'form-horizontal'}}) }}
+    
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.nom_b,"Name :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.nom_b,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.nom_b) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.nom_b) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{ form_label(form.domaine_b,"Field :") }}
+        </div>
+        <div class="col-12 col-md-9">
+            {{ form_widget(form.domaine_b,{'attr':{'class':'form-control'}})}}
+            {% if form_errors(form.domaine_b) is not empty %}
+                <small class="form-text text-muted">{{ form_errors(form.domaine_b) }}</small>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+
+<div class="row form-group">
+    <div class="col col-md-3">
+        {{ form_label(form.date_creation_b, "Creation Date :") }}
+    </div>
+    <div class="col-12 col-md-9">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                {{ form_widget(form.date_creation_b.day) }}
+                {{ form_widget(form.date_creation_b.month) }}
+                {{ form_widget(form.date_creation_b.year) }}
+            </div>
+        </div>
+        {% if form_errors(form.date_creation_b) is not empty %}
+            <small class="form-text text-muted">{{ form_errors(form.date_creation_b) }}</small>
+        {% endif %}
+    </div>
+</div>
+
+
+    <br>
+ 
+
+    <div align="center" class="">
+        <button class="btn btn-outline-secondary btn-sm" style="margin:2px;">{{ button_label|default('Add Library') }}</button>   
+    </div>
+    
+{{ form_end(form) }}
+</div>
+

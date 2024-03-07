@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 #[ORM\Entity(repositoryClass: BiblioRepository::class)]
 class Biblio
@@ -17,15 +20,18 @@ class Biblio
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Please enter the library's name.")]
     private ?string $nom_b = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Please enter the library's Field.")]
     private ?string $domaine_b = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual("now")]
     private ?\DateTimeInterface $date_creation_b = null;
 
-    #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'biblio')]
+    #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'biblio',)]
     private Collection $ressources;
 
     public function __construct()
@@ -102,5 +108,9 @@ class Biblio
         }
 
         return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->nom_b; 
     }
 }

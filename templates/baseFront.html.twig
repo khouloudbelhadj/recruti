@@ -65,7 +65,13 @@
                     <a href="#"  class="nav-item nav-link">Offers</a>
                     <a href="#"  class="nav-item nav-link">Planification</a>
                     <a href="#"  class="nav-item nav-link">Events</a>
-                    <a href="#"  class="nav-item nav-link">Libraries</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Libraries</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="{{ path('app_biblio_show_front_ressource') }}" class="dropdown-item">Libraries</a>
+                                <a href="{{ path('app_biblio_index_front') }}" class="dropdown-item">Libraries List </a>
+                            </div>
+                    </div>
                     
                 </div>
                 <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">SIGN IN<i class="fa fa-arrow-right ms-3"></i></a>
@@ -88,8 +94,8 @@
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Quick Links</h5>
-                        <a class="btn btn-link text-white-50" href="">About Us</a>
-                        <a class="btn btn-link text-white-50" href="">Contact Us</a>
+                        <a class="btn btn-link text-white-50" href="{{ path('app_front_about') }}">About Us</a>
+                        <a class="btn btn-link text-white-50" href="{{ path('app_front_contact') }}">Contact Us</a>
                         <a class="btn btn-link text-white-50" href="">Our Services</a>
                         <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
                         <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
@@ -97,11 +103,11 @@
                     <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Contact</h5>
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>18, rue de l'Usine - ZI Aéroport Charguia II 2035 Ariana</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+216 71517912</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+216 71 517 912</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>recruti@gmail.com</p>
                         <div class="d-flex pt-2">
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/profile.php?id=61555742926746&locale=fr_FR"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
                         </div>
@@ -118,7 +124,7 @@
                         </div>
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
-                                <a href="">Home</a>
+                                <a href="{{ path('app_front') }}">Home</a>
                                 <a href="">Cookies</a>
                                 <a href="">Help</a>
                                 <a href="">FQAs</a>

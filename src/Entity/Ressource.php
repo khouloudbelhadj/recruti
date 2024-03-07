@@ -3,8 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\RessourceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+
 
 #[ORM\Entity(repositoryClass: RessourceRepository::class)]
 class Ressource
@@ -15,19 +21,24 @@ class Ressource
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Please enter the ressource's title.")]
     private ?string $titre_b = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Please enter the ressource's type.")]    
     private ?string $type_b = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual("now")]
     private ?\DateTimeInterface $date_publica_b = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Please enter the ressource's Field.")]
     private ?string $categorie_resso_b = null;
 
     #[ORM\ManyToOne(inversedBy: 'ressources')]
-    private ?biblio $biblio = null;
+    private ?Biblio $biblio = null;
+
 
     public function getId(): ?int
     {
