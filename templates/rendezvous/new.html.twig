@@ -12,35 +12,35 @@
         <div class="card-body">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}})  }}
             <div class="form-group">
-                {{ form_label(form.dateRendez) }}
+                {{ form_label(form.dateRendez, 'Date of appointment') }}
                 {{ form_widget(form.dateRendez, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'date'}}) }}
                 {% if form_errors(form.dateRendez) %}
                     <div class="alert alert-danger">{{ form_errors(form.dateRendez) }}</div>
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form_label(form.heureRendez) }}
+                {{ form_label(form.heureRendez, 'Hour') }}
                 {{ form_widget(form.heureRendez, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'time'}}) }}
                 {% if form_errors(form.heureRendez) %}
                     <div class="alert alert-danger">{{ form_errors(form.heureRendez) }}</div>
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form_label(form.lieu) }}
+                {{ form_label(form.lieu, 'Place') }}
                 {{ form_widget(form.lieu, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
                 {% if form_errors(form.lieu) %}
                     <div class="alert alert-danger">{{ form_errors(form.lieu) }}</div>
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form_label(form.emailCondi) }}
+                {{ form_label(form.emailCondi, 'Candidate Email') }}
                 {{ form_widget(form.emailCondi, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'email'}}) }}
                 {% if form_errors(form.emailCondi) %}
                     <div class="alert alert-danger">{{ form_errors(form.emailCondi) }}</div>
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form_label(form.emailRepresen) }}
+                {{ form_label(form.emailRepresen, 'Email Company Representative') }}
                 {{ form_widget(form.emailRepresen, {'attr': {'class': 'form-control', 'required': 'required', 'type': 'email'}}) }}
                 {% if form_errors(form.emailRepresen) %}
                     <div class="alert alert-danger">{{ form_errors(form.emailRepresen) }}</div>

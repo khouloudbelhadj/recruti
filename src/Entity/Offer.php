@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
@@ -28,7 +27,7 @@ class Offer
     #[ORM\Column(length: 255)]
     private ?string $localisation_o = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $date_o = null;
 
     #[ORM\Column(length: 255)]
@@ -40,7 +39,7 @@ class Offer
     #[ORM\OneToMany(targetEntity: Condidature::class, mappedBy: 'offer')]
     private Collection $condidatures;
 
-    #[ORM\OneToMany(targetEntity: Rendezvous::class, mappedBy: 'ManyToOne', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Rendezvous::class, mappedBy: 'offer', orphanRemoval: true)]
     private Collection $rendezvouses;
 
     public function __construct()
@@ -180,7 +179,7 @@ class Offer
     {
         if (!$this->rendezvouses->contains($rendezvouse)) {
             $this->rendezvouses->add($rendezvouse);
-            $rendezvouse->setManyToOne($this);
+            $rendezvouse->setOffer($this);
         }
 
         return $this;
@@ -190,12 +189,11 @@ class Offer
     {
         if ($this->rendezvouses->removeElement($rendezvouse)) {
             // set the owning side to null (unless already changed)
-            if ($rendezvouse->getManyToOne() === $this) {
-                $rendezvouse->setManyToOne(null);
+            if ($rendezvouse->getOffer() === $this) {
+                $rendezvouse->setOffer(null);
             }
         }
 
         return $this;
     }
-  
 }

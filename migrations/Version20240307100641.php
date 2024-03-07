@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240306153924 extends AbstractMigration
+final class Version20240307100641 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,6 +23,7 @@ final class Version20240306153924 extends AbstractMigration
         $this->addSql('ALTER TABLE condidature DROP FOREIGN KEY FK_FDF2E30B53C674EE');
         $this->addSql('DROP INDEX IDX_FDF2E30B53C674EE ON condidature');
         $this->addSql('ALTER TABLE condidature DROP offer_id');
+        $this->addSql('ALTER TABLE offer CHANGE date_o date_o DATETIME NOT NULL');
         $this->addSql('ALTER TABLE rendezvous CHANGE offer_id offer_id INT NOT NULL');
     }
 
@@ -32,6 +33,7 @@ final class Version20240306153924 extends AbstractMigration
         $this->addSql('ALTER TABLE condidature ADD offer_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE condidature ADD CONSTRAINT FK_FDF2E30B53C674EE FOREIGN KEY (offer_id) REFERENCES offer (id)');
         $this->addSql('CREATE INDEX IDX_FDF2E30B53C674EE ON condidature (offer_id)');
+        $this->addSql('ALTER TABLE offer CHANGE date_o date_o DATE NOT NULL');
         $this->addSql('ALTER TABLE rendezvous CHANGE offer_id offer_id INT DEFAULT NULL');
     }
 }

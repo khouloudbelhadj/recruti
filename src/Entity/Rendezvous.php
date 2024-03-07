@@ -39,10 +39,9 @@ class Rendezvous
     #[ORM\ManyToOne(targetEntity: Calendrier::class, inversedBy: 'rendezvouses')]
     private ?Calendrier $calendrier = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rendezvouses')]
+    #[ORM\ManyToOne(targetEntity: Offer::class, inversedBy: 'rendezvouses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Offer $offer = null;
-
 
     public function getId(): ?int
     {
@@ -125,19 +124,4 @@ class Rendezvous
         $this->offer = $offer;
         return $this;
     }
-
-    public function getCondidature(): ?Condidature
-    {
-        return $this->condidature;
-    }
-
-    public function setCondidature(?Condidature $condidature): self
-    {
-        $this->condidature = $condidature;
-        return $this;
-    }
-     /**
-     * @ORM\Column(type="string", length=255)
-     */
-   
 }
