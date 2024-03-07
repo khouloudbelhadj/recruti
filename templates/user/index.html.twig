@@ -1,0 +1,129 @@
+{% extends 'baseBack.html.twig' %}
+{% block title %}User index{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('userBack.css') }}">
+  <link rel="stylesheet" href="{{ asset('BackOffice/css/style.min.css')}}">
+   <style>
+        .form-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .form-container form {
+            margin-right: 10px;
+        }
+        .form-separator {
+            border-right: 1px solid #ccc; /* Change the color and style as needed */
+            margin: 0 10px;
+            height: 100%;
+        }
+    </style>
+  {% endblock %}
+{% block body %}
+    <h1>User index</h1>
+      <br>
+        <div class="form-container">
+<form action="{{ path('app_user_search') }}" method="get">
+    <input type="text" name="query" id="search_query" placeholder="Enter search query">
+    <label for="search_attribute">Search by:</label>
+    <select name="search_attribute" id="search_attribute">
+        <option value="username">Username</option>
+        <option value="email">Email</option>
+        <option value="role">Role</option>
+    </select>
+</form>
+<div class="form-separator"></div>
+    <form action="{{ path('app_user_sort') }}" method="get" id="sort-form">
+    <label for="sort_attribute">sort by:</label>
+    <select name="sort_attribute" id="sort_attribute">
+        <option value="username">Username</option>
+        <option value="email_user">email_user</option>
+        <option value="role">Role</option>
+    </select>
+    <button type="submit" class="button-link">Sort</button>
+</form>
+</div>
+
+<br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Cin</th>
+                <th>Date_birth</th>
+                <th>Email_user</th>
+                <th>Country</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.cin }}</td>
+                <td>{{ user.dateBirth ? user.dateBirth|date('Y-m-d') : '' }}</td>
+                <td>{{ user.emailUser }}</td>
+                <td>{{ user.country }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                 <div class="inline-inputs">
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}"  class="button-link">show</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="button-link">edit</a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_register') }}" class="button-link">Create new</a>
+         <a href="{{ path('app_user_pdf')}}" class="button-link">PDF</a>
+                  
+
+
+  
+
+
+{% endblock %}
+{% block javascript %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchQueryInput = document.getElementById('search_query');
+        const searchAttributeSelect = document.getElementById('search_attribute');
+
+        // Add event listener to input field
+        searchQueryInput.addEventListener('input', function() {
+            const query = searchQueryInput.value.trim();
+            const searchAttribute = searchAttributeSelect.value;
+
+            // Redirect to search URL
+            const searchUrl = `{{ path('app_user_search') }}?query=${query}&search_attribute=${searchAttribute}`;
+            window.location.href = searchUrl;
+        });
+
+        const sortForm = document.getElementById('sort-form');
+        const sortAttributeSelect = document.getElementById('sort_attribute');
+
+        // Add event listener to sort form submission
+        sortForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+
+            const sortAttribute = sortAttributeSelect.value;
+
+            // Submit the sort form
+            sortForm.action = `{{ path('app_user_sort') }}?sort_attribute=${sortAttribute}`;
+            sortForm.submit();
+        });
+    });
+    </script>
+{% endblock %}
+
+

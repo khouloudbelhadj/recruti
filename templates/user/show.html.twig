@@ -1,0 +1,54 @@
+{% extends 'baseBack.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('show.css') }}">
+  <link rel="stylesheet" href="{{ asset('BackOffice/css/style.min.css')}}">
+  {% endblock %}
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ user.cin }}</td>
+            </tr>
+            <tr>
+                <th>Date_birth</th>
+                <td>{{ user.dateBirth ? user.dateBirth|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email_user</th>
+                <td>{{ user.emailUser }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ user.country }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.role }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="inline-inputs">
+
+    <a href="{{ path('app_user_index') }}" class="button-link">back to list</a>
+
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="button-link">edit</a>
+
+
+    {{ include('user/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

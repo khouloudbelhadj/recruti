@@ -3,23 +3,38 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+
+
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+  #[ORM\Column(length: 255)]
+  /**
+    
+     * @Assert\NotBlank(message = "ce champs est obligatoire")
+     * @Assert\Length(max =20, maxMessage = "username ne peut pas dépasser {{ limit }} caractères")
+   */
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    /**
+    
+     * @Assert\NotBlank(message = "ce champs est obligatoire")
+     * @Assert\Length(max =8 , min =8, maxMessage = "le cin a {{ limit }} chiffres")
+   */
     private ?string $cin = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -32,26 +47,11 @@ class User
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
+   
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
     private ?string $role = null;
-
-    #[ORM\OneToMany(targetEntity: Publication::class, mappedBy: 'user_id')]
-    private Collection $publications;
-
-    #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'user')]
-    private Collection $commentaires;
-
-    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'user')]
-    private Collection $likes;
-
-    public function __construct()
-    {
-        $this->publications = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
-        $this->likes = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -117,6 +117,9 @@ class User
 
         return $this;
     }
+    /**
+     * @see  PasswordAuthenticatedUserInterface
+     */
 
     public function getPassword(): ?string
     {
@@ -134,6 +137,10 @@ class User
     {
         return $this->role;
     }
+    public function getRoles(): ?array
+    {
+        return [$this->role];
+    }
 
     public function setRole(string $role): static
     {
@@ -141,94 +148,17 @@ class User
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Publication>
-     */
-    public function getPublications(): Collection
+    
+    public function eraseCredentials(): void
     {
-        return $this->publications;
+        // Erase any sensitive data on this user object
     }
-
-    public function addPublication(Publication $publication): static
+    public function getSalt(): ?string
     {
-        if (!$this->publications->contains($publication)) {
-            $this->publications->add($publication);
-            $publication->setUserId($this);
-        }
-
-        return $this;
+        return $this->username; 
     }
-
-    public function removePublication(Publication $publication): static
+    public function getUserIdentifier(): string
     {
-        if ($this->publications->removeElement($publication)) {
-            // set the owning side to null (unless already changed)
-            if ($publication->getUserId() === $this) {
-                $publication->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commentaire>
-     */
-    public function getCommentaires(): Collection
-    {
-        return $this->commentaires;
-    }
-
-    public function addCommentaire(Commentaire $commentaire): static
-    {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires->add($commentaire);
-            $commentaire->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentaire(Commentaire $commentaire): static
-    {
-        if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
-            if ($commentaire->getUser() === $this) {
-                $commentaire->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): static
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): static
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getUser() === $this) {
-                $like->setUser(null);
-            }
-        }
-
-        return $this;
+        return (string) $this->email_user;
     }
 }

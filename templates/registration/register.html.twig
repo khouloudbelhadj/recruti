@@ -1,0 +1,104 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('userBack.css') }}">
+    <link rel="stylesheet" href="{{ asset('BackOffice/css/style.min.css')}}">
+    <style>
+        /* Additional CSS for form styling */
+        .form-container {
+            background-color: #f9f9f9; /* Light gray background */
+            border: 1px solid #ddd; /* Light gray border */
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            max-width: 500px;
+            margin: 0 auto; /* Center the form horizontally */
+            margin-left: 0; /* Align the form container to the left */
+        }
+
+        .form-container h1 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Add space below the heading */
+        }
+
+        .form-container button.btn-red {
+            margin-top: 20px; /* Add space above the button */
+            width: 100%; /* Make the button full-width */
+            background-color: #a51b1b; /* Red color for the button */
+            color: #fff; /* White text color */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Add transition effect */
+        }
+
+        .form-container button.btn-red:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        /* Example additional CSS for form fields */
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px); /* Adjust for padding and border */
+            box-sizing: border-box; /* Ensure padding and border are included in the width */
+        }
+
+        /* Example CSS for labels */
+        label {
+            font-weight: bold;
+        }
+
+        /* Example CSS for form rows */
+        .form-row {
+            margin-bottom: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="form-container">
+        <h1>Register</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+            <div class="form-row">
+                {{ form_row(registrationForm.username) }}
+            </div>
+            <div class="form-row">
+                {{ form_row(registrationForm.cin) }}
+            </div>
+            <div class="form-row">
+                {{ form_row(registrationForm.email_user) }}
+            </div>
+            <div class="form-row">
+                {{ form_row(registrationForm.date_birth) }}
+            </div>
+            <div class="form-row">
+                {{ form_row(registrationForm.country) }}
+            </div>
+            <div class="form-row">
+                {{ form_row(registrationForm.role) }}
+            </div>
+            <div class="form-row">
+                {{ form_row(registrationForm.password, {
+                    label: 'Password'
+                }) }}
+            </div>
+            <div class="form-row">
+                {{ form_row(registrationForm.agreeTerms) }}
+                            <button type="submit" class="btn-red">Register</button>
+
+            </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+
+    <!-- Place other content here, above the footer -->
+{% endblock %}

@@ -10,6 +10,8 @@ app_profile:
     path: /front/profile
     controller: App\Controller\TemplateController::profile
 
+
+
 back:
     path: back
     controller: App\Controller\TemplateController::indexBack

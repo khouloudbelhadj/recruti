@@ -21,6 +21,84 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+
+    public function findUserByEmailAndPassword(string $email, string $password): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email_user = :email')
+            ->setParameter('email', $email)
+            ->andWhere('u.password = :password')
+            ->setParameter('password', $password) // Note: Passwords should be securely hashed in a real-world application
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    public function findBySearchQuery($query, $searchAttribute)
+    {
+        $queryBuilder = $this->createQueryBuilder('u');
+    
+        switch ($searchAttribute) {
+            case 'username':
+                $queryBuilder->andWhere('u.username LIKE :query');
+                break;
+            case 'email':
+                $queryBuilder->andWhere('u.email_user LIKE :query');
+                break;
+            case 'role':
+                $queryBuilder->andWhere('u.role LIKE :query');
+                break;
+        }
+    
+        return $queryBuilder
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+  
+
+
+    public function findAllSorted(string $attribute, string $order): array
+{
+    // Define the sorting criteria based on the attribute and order
+    $criteria = [$attribute => $order];
+    
+    // Fetch the sorted list of users using Doctrine's findBy method
+    return $this->findBy([], $criteria);
+}
+
+
+public function findDistinctRoles(): array
+{
+    return $this->createQueryBuilder('u')
+        ->select('DISTINCT u.role')
+        ->getQuery()
+        ->getResult();
+}
+
+
+// UserRepository.php
+public function countUsersByRole(): array
+{
+    $roleCounts = $this->createQueryBuilder('u')
+        ->select('u.role, COUNT(u.id) AS userCount')
+        ->groupBy('u.role')
+        ->getQuery()
+        ->getResult();
+
+    $roleData = [];
+    foreach ($roleCounts as $roleCount) {
+        $roleData[$roleCount['role']] = $roleCount['userCount'];
+    }
+
+    return $roleData;
+}
+
+
+
+
+    
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

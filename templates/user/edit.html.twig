@@ -1,0 +1,94 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('userBack.css') }}">
+    <link rel="stylesheet" href="{{ asset('BackOffice/css/style.min.css')}}">
+    <style>
+        /* Additional CSS for form styling */
+        .form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f9f9f9; /* Light gray background */
+            border: 1px solid #ddd; /* Light gray border */
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            max-width: 500px;
+            width: calc(100% - 40px); /* Adjust width to fit screen */
+            margin-left: 0; /* Align the form container to the left */
+        }
+
+        .form-container h1 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Add space below the heading */
+        }
+
+        .form-container button.btn-red {
+            margin-top: 20px; /* Add space above the button */
+            width: 100%; /* Make the button full-width */
+            background-color: #a51b1b; /* Red color for the button */
+            color: #fff; /* White text color */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Add transition effect */
+        }
+
+        .form-container button.btn-red:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+
+        /* Example additional CSS for form fields */
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px); /* Adjust for padding and border */
+            box-sizing: border-box; /* Ensure padding and border are included in the width */
+        }
+
+        /* Example CSS for labels */
+        label {
+            font-weight: bold;
+        }
+
+        /* Example CSS for form rows */
+        .form-row {
+            margin-bottom: 15px;
+        }
+
+        /* Additional CSS for button and link container */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button-container a,
+        .button-container button {
+            flex: 1;
+            margin-right: 10px; /* Add some spacing between buttons/links */
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="form-container">
+        <h1>Edit User</h1>
+
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <div class="button-container">
+            <a href="{{ path('app_user_index') }}" class="button-link">Back to list</a>
+
+            {{ include('user/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
