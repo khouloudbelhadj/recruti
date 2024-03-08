@@ -15,28 +15,29 @@ class Rendezvous
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime')]
-    #[Assert\NotBlank(message: "La date du rendez-vous ne peut pas être vide")]
+    #[Assert\NotBlank(message: "Appointment date cannot be empty , Do not choose a pre-existing date  ")]
     private ?\DateTimeInterface $dateRendez = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "L'heure du rendez-vous ne peut pas être vide")]
+    #[Assert\NotBlank(message: "Appointment time cannot be empty")]
     private ?string $heureRendez = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Le lieu du rendez-vous ne peut pas être vide")]
+    #[Assert\NotBlank(message: "The meeting place cannot be empty")]
     private ?string $lieu = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "L'email du Condi ne peut pas être vide")]
+    #[Assert\NotBlank(message: "Condi's email cannot be empty")]
     #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     private ?string $emailCondi = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "L'email du représentant ne peut pas être vide")]
+    #[Assert\NotBlank(message: "Representative email cannot be empty")]
     #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     private ?string $emailRepresen = null;
 
     #[ORM\ManyToOne(targetEntity: Calendrier::class, inversedBy: 'rendezvouses')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Calendrier $calendrier = null;
 
     #[ORM\ManyToOne(targetEntity: Offer::class, inversedBy: 'rendezvouses')]

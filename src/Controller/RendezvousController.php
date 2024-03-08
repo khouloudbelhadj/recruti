@@ -20,6 +20,7 @@ use App\Repository\OfferRepository;
 
 
 
+
 #[Route('/rendezvous')]
 class RendezvousController extends AbstractController
 {
@@ -158,17 +159,38 @@ public function index(RendezvousRepository $rendezvousRepository, Request $reque
         return $this->redirectToRoute('app_rendezvous_index', [], Response::HTTP_SEE_OTHER);
     }
     
-    #[Route('/calendar/{emailRepresen}', name: 'app_rendezvous_calendar_by_email', methods: ['GET'])]
-    public function showCalendarByEmail(string $emailRepresen, RendezvousRepository $rendezvousRepository): Response
+  
+
+    #[Route('/calendar/{TitreO}', name: 'app_rendezvous_calendar_by_offer_title', methods: ['GET'])]
+    public function showCalendarByOfferTitle(string $TitreO, RendezvousRepository $rendezvousRepository): Response
     {
-        // Récupérer tous les rendez-vous associés à ce représentant
-        $rendezvouses = $rendezvousRepository->findBy(['emailRepresen' => $emailRepresen]);
+        // Find the offer by title
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneBy(['titre_o' => $TitreO]);
     
-        // Passer les rendez-vous au modèle Twig pour affichage, ainsi que l'email du représentant
-        return $this->render('rendezvous/calendar_by_email.html.twig', [
+        // Check if the offer exists
+        if (!$offer) {
+            throw $this->createNotFoundException('Offer not found');
+        }
+    
+        // Retrieve all rendezvouses associated with this offer
+        $rendezvouses = $rendezvousRepository->findBy(['offer' => $offer]);
+    
+        // Pass the rendezvouses and offer title to the Twig template for display
+        return $this->render('rendezvous/calendar_by_offer_title.html.twig', [
             'rendezvouses' => $rendezvouses,
-            'emailRepresen' => $emailRepresen, // Passer l'email du représentant au template Twig
+            'TitreO' => $TitreO, // Pass the offer title to the Twig template
         ]);
     }
+    
+    
+    #[Route('/index-frontend', name: 'app_rendezvous_index_fronted', methods: ['GET'])]
+    public function indexFrontend(): Response
+    {
+        // Le contenu de cette méthode dépendra de ce que vous souhaitez afficher sur la page d'index dans le front-end.
+        return $this->render('planification/index_frontend.html.twig');
+    }
+    
+
+    
     
 }

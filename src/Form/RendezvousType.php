@@ -16,13 +16,8 @@ class RendezvousType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
 {
     $builder
-        ->add('calendrier', EntityType::class, [
-            'class' => Calendrier::class,
-            'choice_label' => 'proprietaire', // Utilisez l'attribut 'proprietaire' comme étiquette de choix
-            'label' => 'Calendrier', // Étiquette pour le champ
-            'required' => true, // Champ requis
-            'attr' => ['class' => 'form-control'], // Attributs HTML supplémentaires
-        ])
+       
+        
         ->add('dateRendez', DateTimeType::class, [
             'label' => 'Date of Appointment',
             'widget' => 'single_text',

@@ -133,6 +133,9 @@
 
 
    
+<a class="btn-cta fc-center" href="{{ path('app_calendar') }}">view calendar</a>
+
+    
 
         <!-- Content Start -->
         <div class="content">
@@ -158,24 +161,25 @@
         </div>
         <!-- End Add New Appointment Button -->
     </div>
-    <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var calendarEl = document.getElementById('calendar');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    plugins: [ 'dayGrid' ],
-                    events: [
-                        {% for rendezvou in rendezvouses %}
-                            {
-                                title: '{{ rendezvou.emailRepresen|raw }}',
-                                start: '{{ rendezvou.dateRendez|date("Y-m-d") }}',
-                            }{% if not loop.last %},{% endif %}
-                        {% endfor %}
-                    ]
-                });
-                calendar.render();
-            });
-        </script>
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            plugins: [ 'dayGrid' ],
+            events: [
+                {% for rendezvou in rendezvouses %}
+                    {
+                             title: '{{ rendezvous.offer.getTitreO()|default("No Offer")|raw }}', // Access offer title from each rendezvous
+                        start: '{{rendezvou.dateRendez|date("Y-m-d") }}',
+                    }{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ]
+        });
+        calendar.render();
+    });
+</script>
+
 
 
         <!-- Add New Appointment Button -->

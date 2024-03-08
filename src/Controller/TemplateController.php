@@ -24,15 +24,17 @@ class TemplateController extends AbstractController
             'controller_name' => 'TemplateController',
         ]);
     }
-    
-    #[Route('/frontt', name: 'app_frontt')]
-    public function index(): Response
+
+    #[Route('/calendar', name: 'app_calendar')]
+    public function indexFront1(): Response
     {
-        return $this->render('front.html.twig', [
+        return $this->render('calendrier/index.html.twig', [
             'controller_name' => 'TemplateController',
         ]);
     }
+
     
+   
     #[Route('/plan', name: 'app_plan')]
     public function indexx(RendezvousRepository $rendezvousRepository): Response
     {
